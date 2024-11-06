@@ -36,8 +36,8 @@ export default function NavbarClient() {
                         <DropdownMenuLabel>My Account</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem disabled>Profile</DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <Button variant="link" size="sm" onClick={onLogOutClick}>Log Out</Button>
+                        <DropdownMenuItem asChild>
+                            <button className="w-full cursor-pointer" onClick={onLogOutClick}>Log Out</button>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>

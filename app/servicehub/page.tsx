@@ -27,7 +27,7 @@ export default async function ServiceHub() {
     return (
         <main className="min-h-screen">
             <div className="p-4 lg:px-8">
-                <h1 className="text-xl font-bold">{session?.user.sub} Service Hub</h1>
+                <h1 className="text-xl font-bold">Service Hub for {session?.user.sub}</h1>
             </div>
             <div className="p-4 lg:px-8 flex justify-between items-center">
                 <h2 className="font-bold">Tickets</h2>
