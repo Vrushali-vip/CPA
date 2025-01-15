@@ -10,7 +10,7 @@ import NavbarClient from "./NavbarClient";
 export default async function Navbar() {
 
 
-    return <nav className="p-2 lg:px-4 bg-background w-full fixed lg:sticky dark:border-b top-0">
+    return <nav className="p-2 lg:px-4 bg-background w-full fixed lg:sticky dark:border-b top-0 z-50">
         <div className="flex align-center justify-between gap-4 w-full">
             <Link href="/" className="line-height-0">
                 <Image src="/logo-light.png" width={250} height={100} className="dark:hidden" alt="Alphalake Services" />
