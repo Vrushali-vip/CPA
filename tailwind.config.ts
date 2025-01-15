@@ -63,7 +63,8 @@ const config: Config = {
 				'700': 'var(--al-700)',
 				'800': 'var(--al-800)',
 				'900': 'var(--al-900)',
-				'950': 'var(--al-950)'
+				'950': 'var(--al-950)',
+				'1000': 'var(--al-1000)'
 			}
   		},
 		fontFamily: {

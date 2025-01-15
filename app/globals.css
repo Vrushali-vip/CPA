@@ -118,6 +118,7 @@ body {
     --al-800: #0c6263;
     --al-900: #105051;
     --al-950: #013032;
+    --al-1000: #000b0e;
     --bland: #ffffff;
     --background: hsl(0 0% 100%);
     --foreground: var(--al-900);
