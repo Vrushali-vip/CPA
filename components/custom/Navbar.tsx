@@ -65,7 +65,7 @@ export default async function Navbar() {
                             <div className="lg:absolute max-h-0 group-hover/b:max-h-[300px] transition-transform nesteds overflow-hidden lg:py-1 lg:scale-0 group-hover/b:scale-100 bg-card duration-300 rounded-md origin-top-left lg:shadow-lg w-fit top-6 left-[-10px] right-0">
                                 <ul className="w-full">
                                     <li className="w-full">
-                                        <Link href="/services/managed-services" className="px-2 py-1 text-nowrap block text-sm hover:text-primary">APIs</Link>
+                                        <Link href="/build-api" className="px-2 py-1 text-nowrap block text-sm hover:text-primary">APIs</Link>
                                     </li>
                                     <li className="w-full">
                                         <Link href="/services/managed-services" className="px-2 py-1 text-nowrap block text-sm hover:text-primary">User Interfaces &amp; Experience (UI/UX)</Link>
@@ -106,11 +106,11 @@ export default async function Navbar() {
                                 </ul>
                             </div>
                         </div>
-                        <div className="mt-2 border-t lg:border-none pt-2 lg:pt-0 group/c relative pl-3 lg:pl-0">
+                        {/* <div className="mt-2 border-t lg:border-none pt-2 lg:pt-0 group/c relative pl-3 lg:pl-0">
                             <Link href="/servicehub" className="font-semibold hover:text-primary hover:cursor-pointer">
                                 Service Hub
                             </Link>
-                        </div>
+                        </div> */}
                         <div className="mt-2 border-t lg:border-none pt-2 lg:pt-0 group/t relative pl-3 lg:pl-0">
                             <div className="font-semibold group-hover/t:text-primary flex align-center gap-1 hover:cursor-pointer">
                                 <span>

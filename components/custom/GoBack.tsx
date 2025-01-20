@@ -11,7 +11,7 @@ export default function GoBack() {
             variant="link"
             onClick={() => router.back()}
         >
-            <ArrowLeft size={18} />
+            <ArrowLeft size={18} />Back
         </Button>
     );
 };

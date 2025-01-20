@@ -2,28 +2,69 @@ import { getServerSession } from "next-auth";
 import authOptions from "../auth/[...nextauth]/authOptions";
 import pb from "@/lib/pocketbase";
 import { NextRequest, NextResponse } from "next/server";
+import { sendEmail } from "@/utils/email";
 
 export async function POST(request: NextRequest) {
-    const fd = await request.formData();
-    const session = await getServerSession(authOptions);
-    
-    const files_attached = fd.get("files_attached") as string;
-    const attachments = [];
-    for(let i = 0; i < Number(files_attached); i++) {
-        attachments.push(fd.get(`attachments_${i}`));
+  const fd = await request.formData();
+  const session = await getServerSession(authOptions);
+  pb.autoCancellation(false);
+
+  const filesAttached = fd.get("files_attached") as string;
+  const attachments: FormDataEntryValue[] = [];
+  for (let i = 0; i < Number(filesAttached); i++) {
+    attachments.push(fd.get(`attachments_${i}`) as FormDataEntryValue);
+  }
+
+  try {
+    const comment = await pb.collection("ticket_comments").create({
+      ticket: fd.get("ticket") as string,
+      content: fd.get("content") as string,
+      user: session?.user.id,
+      attachments,
+    });
+
+    const ticket = await pb.collection("tickets").getOne(fd.get("ticket") as string, {
+      expand: "customer,support",
+      fields: "id,expand.customer.email,expand.customer.name,expand.support.email,expand.support.name",
+    });
+
+    if (!ticket.expand) {
+      console.error("Ticket expand data is missing.");
+      return NextResponse.json({ error: "Ticket data is incomplete." });
     }
 
-    try {
-        const res = await pb.collection("ticket_comments").create({
-            ticket: fd.get("ticket") as string,
-            content: fd.get("content") as string,
-            user: session?.user.id,
-            attachments: attachments
-        });
+    const isSupportUser = ticket.expand.support.id === session?.user.id;
+    const recipientEmail = isSupportUser
+      ? ticket.expand.customer.email
+      : ticket.expand.support.email;
 
-        return NextResponse.json(res);
-    } catch (error) {
-        console.log(error);
-        return NextResponse.json({ error: "Comment could not be created." });
+    if (!recipientEmail) {
+      throw new Error("Recipient email could not be determined.");
     }
+
+    const ticketUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/servicehub/${ticket.id}`;
+    const emailSubject = isSupportUser
+      ? `Update on Your Ticket #${ticket.id}`
+      : `New Comment on Ticket #${ticket.id}`;
+    const recipientName = isSupportUser
+      ? ticket.expand.customer.name
+      : ticket.expand.support.name;
+    const emailBody = `
+      <p>Hello, <strong>${recipientName}</strong></p>
+      <p>There is a new comment on the ticket <strong>#${ticket.id}</strong>:</p>
+      <blockquote>${fd.get("content")}</blockquote>
+      <p>Click here for more details: <a href="${ticketUrl}" target="_blank">View Ticket</a></p>
+    `;
+
+    await sendEmail({
+      to: recipientEmail,
+      subject: emailSubject,
+      html: emailBody,
+    });
+
+    return NextResponse.json(comment);
+  } catch (error) {
+    console.error("Error creating comment or sending email:", error);
+    return NextResponse.json({ error: "Comment could not be created or email not sent." });
+  }
 }
