@@ -96,13 +96,16 @@ body {
 }
 
 .status-OPEN {
-  @apply bg-green-600;
+  @apply bg-blue-500;
 }
 .status-CLOSED {
   @apply bg-red-600;
 }
-.status-PROGRESSS {
+.status-PROGRESS {
   @apply bg-yellow-600;
+}
+.status-RESOLVED {
+  @apply bg-green-600;
 }
 
 @layer base {
@@ -200,4 +203,27 @@ body {
   100% {
     transform: translateY(0);
   }
+}
+@keyframes scanner {
+  to {
+    background-position: 0 100%, 0 0, 0 0, 0 0;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  }
+}
+
+.animate-scanner {
+  background: linear-gradient(#03a9f4, #03a9f4),
+    linear-gradient(90deg, #ffffff33 1px, transparent 0, transparent 19px),
+    linear-gradient(#ffffff33 1px, transparent 0, transparent 19px),
+    linear-gradient(transparent, #2196f387);
+  background-size: 100% 1.5%, 10% 100%, 100% 10%, 100% 100%;
+  background-repeat: no-repeat, repeat, repeat, no-repeat;
+  background-position: 0 0, 0 0, 0 0, 0 0;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 1.5%, 0% 1.5%);
+  animation: scanner 3s infinite linear;
+}
+
+body {
+  font-family: var(--font-mont);
+  color: #fff;
 }

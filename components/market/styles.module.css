@@ -1,0 +1,354 @@
+.service_section {
+    padding-top: 5rem;
+}
+
+.sd_wrap,
+.sd_wrap_slant {
+    background-color: var(--primary-4);
+    z-index: 2;
+    border-radius: 10px;
+    position: relative;
+}
+
+.sd_card {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* .sd_wrap .sd_card:not(:last-of-type){
+    padding-bottom: 2.5rem;
+  } */
+
+.sd_main {
+    position: relative;
+}
+
+.sd_card>div {
+    z-index: 2;
+}
+
+.sd_download {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 1rem;
+    column-gap: 1.2rem;
+}
+
+
+.dl_link {
+    display: flex;
+    color: inherit;
+    background: none;
+    border: none;
+    box-shadow: none;
+    outline: none;
+    width: fit-content;
+    position: relative;
+    column-gap: 0.5rem;
+    cursor: pointer;
+    font-style: italic;
+}
+
+.dl_link * {
+    pointer-events: none;
+}
+
+.dl_link::after {
+    content: "";
+    width: 100%;
+    height: 2px;
+    background-color: var(--primary-3);
+    position: absolute;
+    bottom: -5px;
+    transition: 0.4s ease;
+}
+
+.dl_link:hover::after {
+    width: 0;
+}
+
+.multipack {
+    position: relative;
+    /* border-bottom: 2px solid var(--primary-3); */
+    font-size: smaller;
+    color: #fff;
+    margin-bottom: 5px;
+    transition: 0.2s ease;
+    text-align: right;
+}
+
+.multipack span {
+    background-color: var(--primary-3);
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.multipack:hover {
+    color: #fff;
+    cursor: pointer;
+}
+
+.multipack::after {
+    text-align: center;
+    content: "If you like we can do this";
+    color: #000;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 0;
+    opacity: 0;
+    scale: 0;
+    right: 0;
+    /* right: -1000px; */
+    min-width: 200px;
+    max-width: 200px;
+    min-height: 100px;
+    background-color: #fff;
+    transition: 0.2s ease;
+}
+
+.multipack:hover::after {
+    right: -210px;
+    scale: 1;
+    opacity: 1;
+}
+
+.caught_eyes {
+    margin-top: 4rem;
+}
+
+.caught_form {
+    padding-top: 0.5rem;
+}
+
+
+@media (width > 992px) {
+    .service_section {
+        padding-bottom: 5rem;
+    }
+
+    .sd_wrap {
+        padding: 3rem 2rem 3rem 3rem;
+    }
+
+    .sd_wrap .sd_card:not(:first-of-type) {
+        padding-top: 3rem;
+    }
+
+    .sd_wrap_slant {
+        padding: 1rem 2rem 3rem 3rem;
+    }
+
+    .sd_wrap_slant .sd_card {
+        padding-top: 3rem;
+        padding-bottom: 0.5rem;
+        border-left: 1px solid var(--primary-3);
+        padding-left: 1.5rem;
+    }
+
+    .sd_wrap_slant .stitle+.sd_card {
+        padding-top: 0;
+    }
+
+    .stitle {
+        margin-top: 2rem;
+        transform: translateX(-1.5rem);
+    }
+
+    .sd_wrap::after,
+    .sd_wrap_slant::after {
+        content: "";
+        position: absolute;
+        right: 2rem;
+        z-index: 1;
+        top: -30px;
+        width: 300px;
+        background-color: var(--primary-3-25);
+        height: calc(100% + 30px);
+        border-top: 30px solid var(--primary-3);
+        border-radius: 12px 12px 0 0;
+    }
+
+    .sd_price {
+        padding-left: 1rem;
+        transform: translateY(1rem);
+        padding-right: 1.2rem;
+    }
+
+    .sd_price>div {
+        width: 100%;
+        margin: auto;
+    }
+
+    .caught_form form {
+        justify-content: flex-start;
+    }
+
+    .sd_main {
+        z-index: 1;
+        position: relative;
+    }
+
+    .sd_main h4 {
+        cursor: pointer;
+        border-bottom: 1.5px dashed var(--primary-1);
+    }
+
+    .sd_main h4+p {
+        /* position: absolute; */
+        /* transform-origin: left top; */
+        /* background-color: var(--primary-2); */
+        /* scale: 0; */
+        /* opacity: 0; */
+        padding-top: 0.5rem;
+        z-index: 3;
+        font-size: small;
+        top: 30px;
+        max-width: 100%;
+        transition: 0.2s ease-in;
+    }
+
+    .sd_main h4:hover+p {
+        scale: 1;
+        opacity: 1;
+    }
+
+    .dl_link span {
+        display: none;
+    }
+}
+
+
+@media (768px < width < 991.98px) {
+    .service_section {
+        padding-bottom: 2rem;
+    }
+
+    .caught_eyes {
+        padding-left: 2rem;
+    }
+
+    .stitle {
+        padding-left: 2rem;
+        padding-top: 2rem;
+        position: relative;
+    }
+
+    .stitle::after {
+        content: "";
+        width: calc(100% - 2rem);
+        height: 1px;
+        bottom: -0.5rem;
+        left: 2rem;
+        position: absolute;
+        background-color: var(--primary-3);
+    }
+
+    .sd_wrap,
+    .sd_wrap_slant {
+        padding-bottom: 2rem;
+    }
+
+    .sd_main {
+        padding: 3rem 2rem 0 2rem;
+    }
+
+    .sd_wrap_slant .sd_main {
+        padding: 0.5rem 2rem 0rem 2rem;
+    }
+
+    .sd_download {
+        flex-direction: column;
+        row-gap: 0.8rem;
+        font-size: small;
+        padding-left: 2rem;
+    }
+
+    .sd_price {
+        background-color: var(--primary-3-25);
+        border-radius: 0 10px 10px 0;
+        padding: 1.5rem 1rem 0rem 1rem;
+        border-right: 20px solid var(--primary-3);
+    }
+
+    .sd_wrap_slant .sd_card {
+        padding-top: 1.5rem;
+        padding-bottom: 0.5rem;
+    }
+
+    .sd_wrap_slant .stitle+.sd_card {
+        padding-top: 0;
+    }
+
+    .caught_eyes {
+        text-align: center;
+    }
+}
+
+
+
+@media (width < 767.98px) {
+
+    .sd_wrap,
+    .sd_wrap_slant {
+        padding-bottom: 1rem;
+    }
+
+    .sd_main {
+        padding: 1rem 1rem 0rem 1rem;
+    }
+
+    .sd_wrap_slant .sd_main {
+        padding: 0.5rem 1rem 0rem 1rem;
+    }
+
+    .sd_main p {
+        font-size: small;
+    }
+
+    .sd_card:not(:last-child) {
+        margin-bottom: 1rem;
+    }
+
+    .sd_price {
+        background-color: var(--primary-3-25);
+        border-radius: 0 10px 10px 0;
+        padding: 1.5rem 1rem 0rem 1rem;
+        border-right: 20px solid var(--primary-3);
+    }
+
+    .sd_download {
+        /* flex-direction: column; */
+        row-gap: 0.8rem;
+        padding: 1rem;
+        font-size: small;
+    }
+
+    .stitle {
+        padding-left: 1rem;
+        padding-top: 1rem;
+        position: relative;
+    }
+
+    .stitle::after {
+        content: "";
+        width: calc(100% - 1rem);
+        height: 2px;
+        bottom: -0.5rem;
+        left: 1rem;
+        position: absolute;
+        background-color: var(--primary-3);
+    }
+
+    .caught_eyes {
+        margin-top: 2rem;
+        text-align: center;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}

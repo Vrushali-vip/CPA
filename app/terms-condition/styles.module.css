@@ -1,0 +1,19 @@
+.span{
+    color: var(--primary-1);
+    font-weight: 600;
+}
+
+.terms_list{
+  border: 1px solid #b0abab;
+  padding: 0.8rem;
+  border-radius: 8px;
+}
+
+.terms_head{
+    display: flex;
+   
+}
+.terms_p{
+    margin-left: 10px;
+    text-align: left;
+}
