@@ -18,9 +18,6 @@ const TeamSheet = async () => {
         console.error("Error fetching team members:", error);
     }
 
-    console.log(users);
-    
-
     const getAvatarUrl = (user: TeamMember) => {
         return getImageUrl("team", user.id, user.avatar);
     };

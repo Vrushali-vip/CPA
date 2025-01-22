@@ -1,12 +1,30 @@
 import pb, { getImageUrl } from "@/lib/pocketbase";
-import { Ticket, TicketComment } from "../../types"
+import { Ticket, TicketComment } from "../../types";
 import FullScreenImage from "@/components/custom/FullScreenImage";
 import CommentForm from "./CommentForm";
 import GoBack from "@/components/custom/GoBack";
 import UpdateTicketStatus from "../UpdateTicketStatus";
 
-
 export const revalidate = 0;
+
+function formatDate(date: Date): string {
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = date.toLocaleString("en-US", { month: "short" }); 
+  const year = date.getFullYear();
+
+  const currentYear = new Date().getFullYear();
+
+  const hours = date.getHours() % 12 || 12; 
+  const minutes = date.getMinutes().toString().padStart(2, "0");
+  const ampm = date.getHours() >= 12 ? "PM" : "AM";
+
+  const time = `${hours}:${minutes} ${ampm}`;
+
+  return year !== currentYear
+    ? `${day} ${month} ${year} ${time}`
+    : `${day} ${month} ${time}`;
+}
+
 export default async function TicketById({ params }: { params: { ticketId: string } }) {
     const [ticket, comments] = await Promise.all([
         pb.collection("tickets").getOne<Ticket>(params.ticketId, {
@@ -50,18 +68,7 @@ export default async function TicketById({ params }: { params: { ticketId: strin
                                 <div className="flex justify-between items-center">
                                     <p className="text-lg font-semibold mt-2">{ticket.title}</p>
                                     <p className="text-sm text-gray-400 mt-2">
-                                        {new Date(ticket.created)
-                                            .toLocaleString("en-US", {
-                                                hour: "numeric",
-                                                minute: "2-digit",
-                                                hour12: true,
-                                                month: "short",
-                                                day: "numeric",
-                                                year: "numeric",
-                                            })
-                                            .replace(/,/g, "")
-                                            .replace("am", "AM")
-                                            .replace("pm", "PM")}
+                                        {formatDate(new Date(ticket.created))}
                                     </p>
                                 </div>
                                 <p className="text-sm text-gray-200 mt-2 flex items-center gap-2">
@@ -106,18 +113,7 @@ export default async function TicketById({ params }: { params: { ticketId: strin
                                         </div>
                                     </div>
                                     <p className="text-sm text-gray-400">
-                                        {new Date(comment.created)
-                                            .toLocaleString("en-US", {
-                                                hour: "numeric",
-                                                minute: "2-digit",
-                                                hour12: true,
-                                                month: "short",
-                                                day: "numeric",
-                                                year: "numeric",
-                                            })
-                                            .replace(/,/g, "")
-                                            .replace("am", "AM")
-                                            .replace("pm", "PM")}
+                                        {formatDate(new Date(comment.created))}
                                     </p>
                                 </div>
                                 <p className="mt-6 whitespace-pre-wrap">{comment.content}</p>
@@ -140,4 +136,3 @@ export default async function TicketById({ params }: { params: { ticketId: strin
         </main>
     );
 }
-

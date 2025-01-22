@@ -5,8 +5,26 @@ import ArticleCardSkeleton from "@/components/custom/ArticleCardSkeleton";
 import { MarkResolvedButton } from "@/components/custom/MarkResolvedButton";
 import FullScreenImage from "@/components/custom/FullScreenImage";
 
-
 export const revalidate = 0;
+
+function formatDate(date: Date): string {
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = date.toLocaleString("en-US", { month: "short" }); 
+  const year = date.getFullYear();
+
+  const currentYear = new Date().getFullYear();
+
+  const hours = date.getHours() % 12 || 12; 
+  const minutes = date.getMinutes().toString().padStart(2, "0");
+  const ampm = date.getHours() >= 12 ? "PM" : "AM";
+
+  const time = `${hours}:${minutes} ${ampm}`;
+
+  return year !== currentYear
+    ? `${day} ${month} ${year} ${time}`
+    : `${day} ${month} ${time}`;
+}
+
 export default async function TicketById({ params }: { params: { ticketId: string } }) {
   const [ticket, comments] = await Promise.all([
     pb.collection("tickets").getOne<Ticket>(params.ticketId, {
@@ -45,18 +63,7 @@ export default async function TicketById({ params }: { params: { ticketId: strin
             <div className="flex justify-between items-center">
               <p className="text-lg font-semibold">{ticket.title}</p>
               <p className="text-sm text-gray-400">
-                {new Date(ticket.created)
-                  .toLocaleString("en-US", {
-                    hour: "numeric",
-                    minute: "2-digit",
-                    hour12: true,
-                    month: "short",
-                    day: "numeric",
-                    year: "numeric",
-                  })
-                  .replace(/,/g, "")
-                  .replace("am", "AM")
-                  .replace("pm", "PM")}
+                {formatDate(new Date(ticket.created))}
               </p>
             </div>
 
@@ -83,7 +90,6 @@ export default async function TicketById({ params }: { params: { ticketId: strin
           </div>
         </div>
 
-
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-20 p-6 shadow-md rounded-md ">
           <div className="lg:col-span-2 space-y-4 ">
             {comments.map((comment) => (
@@ -107,18 +113,7 @@ export default async function TicketById({ params }: { params: { ticketId: strin
                       <p className="text-xs text-gray-400">{comment.expand.user.sub}</p>
                     </div>
                     <p className="text-sm text-gray-400 ml-auto">
-                      {new Date(comment.created)
-                        .toLocaleString("en-US", {
-                          hour: "numeric",
-                          minute: "2-digit",
-                          hour12: true,
-                          month: "short",
-                          day: "numeric",
-                          year: "numeric",
-                        })
-                        .replace(/,/g, "")
-                        .replace("am", "AM")
-                        .replace("pm", "PM")}
+                      {formatDate(new Date(comment.created))}
                     </p>
                   </div>
                 </div>
@@ -139,7 +134,6 @@ export default async function TicketById({ params }: { params: { ticketId: strin
             ))}
             <CommentForm ticketId={params.ticketId} />
           </div>
-
 
           <div className="space-y-4">
             {ticket.expand.support && (
@@ -167,9 +161,7 @@ export default async function TicketById({ params }: { params: { ticketId: strin
             </div>
           </div>
         </div>
-
       </div>
     </main>
   );
 }
-

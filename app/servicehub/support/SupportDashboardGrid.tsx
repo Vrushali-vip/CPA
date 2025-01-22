@@ -1,4 +1,3 @@
-
 "use client";
 
 import { TicketListItemForSupport, UserListItem } from "../types";
@@ -23,15 +22,14 @@ export default function SupportDashboardGrid({
   unassignedTickets,
 }: SupportDashboardGridProps) {
   const formatDate = (date: Date) => {
-    return new Date(date).toLocaleString("en-GB", {
+    return new Date(date).toLocaleDateString("en-GB", {
       day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
+      month: "short", // Short month name (e.g., Jan, Feb)
+      year: "numeric"
     });
   };
+  
+
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -86,16 +84,16 @@ export default function SupportDashboardGrid({
 
     switch (periodFilter) {
       case "this-week": {
-        const currentDay = new Date(currentTimestamp).getDay(); // 0 (Sunday) to 6 (Saturday)
-        const startOfWeekTimestamp = currentTimestamp - currentDay * 24 * 60 * 60 * 1000 + 1 * 24 * 60 * 60 * 1000; // Monday
-        const endOfWeekTimestamp = startOfWeekTimestamp + 6 * 24 * 60 * 60 * 1000 - 1; // Sunday
+        const currentDay = new Date(currentTimestamp).getDay(); 
+        const startOfWeekTimestamp = currentTimestamp - currentDay * 24 * 60 * 60 * 1000 + 1 * 24 * 60 * 60 * 1000; 
+        const endOfWeekTimestamp = startOfWeekTimestamp + 6 * 24 * 60 * 60 * 1000 - 1; 
         return ticketTimestamp >= startOfWeekTimestamp && ticketTimestamp <= endOfWeekTimestamp;
       }
     
       case "last-week": {
-        const currentDay = new Date(currentTimestamp).getDay(); // 0 (Sunday) to 6 (Saturday)
-        const endOfLastWeekTimestamp = currentTimestamp - currentDay * 24 * 60 * 60 * 1000 - 1; // Last week's Sunday
-        const startOfLastWeekTimestamp = endOfLastWeekTimestamp - 6 * 24 * 60 * 60 * 1000 + 1; // Last week's Monday
+        const currentDay = new Date(currentTimestamp).getDay(); 
+        const endOfLastWeekTimestamp = currentTimestamp - currentDay * 24 * 60 * 60 * 1000 - 1; 
+        const startOfLastWeekTimestamp = endOfLastWeekTimestamp - 6 * 24 * 60 * 60 * 1000 + 1; 
         return (
           ticketTimestamp >= startOfLastWeekTimestamp &&
           ticketTimestamp <= endOfLastWeekTimestamp
@@ -187,7 +185,6 @@ export default function SupportDashboardGrid({
         />
       </div>
 
-     
       <Tabs defaultValue="assigned" className="w-full">
           <div className="flex justify-center mb-6">
             <TabsList className="space-x-2 w-full bg-background">
@@ -255,24 +252,30 @@ export default function SupportDashboardGrid({
               <div key={ticket.id} className="hover:shadow-lg transition-shadow">
                 <div className="p-4 bg-gray-800 shadow-sm h-full">
                   <h1 className="text-lg md:text-xl font-semibold mb-3 line-clamp-2">
-                    {ticket.title.split(" ").slice(0, 5).join(" ")}
+                    {ticket.title.split(" ").slice(0, 3).join(" ")}
                   </h1>
                   <div className="space-y-2 mb-4">
                     <p className="text-sm">Status: {ticket.status}</p>
                     <p className="text-sm">Customer: {ticket.expand?.customer?.name || "Unknown"}</p>
                     <p className="text-sm">Created: {formatDate(ticket.created)}</p>
                   </div>
-                  <div className="flex flex-col sm:flex-row gap-2">
+                  <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-4">
                     <Button
                       onClick={() => setSelectedTicketIdToAssign(ticket.id)}
                       variant="outline"
                       size="sm"
-                      className="w-full sm:w-auto"
+                      className="w-full sm:w-auto flex-1 sm:flex-initial min-w-[120px] justify-center"
                     >
                       Assign Ticket
                     </Button>
-                    <Link href={`/servicehub/support/${ticket.id}`} className="w-full sm:w-auto">
-                      <Button className="w-full" size="sm">
+                    <Link
+                      href={`/servicehub/support/${ticket.id}`}
+                      className="w-full sm:w-auto flex-1 sm:flex-initial"
+                    >
+                      <Button
+                        className="w-full min-w-[120px] justify-center"
+                        size="sm"
+                      >
                         View Ticket
                       </Button>
                     </Link>
@@ -281,14 +284,14 @@ export default function SupportDashboardGrid({
               </div>
             ))}
           </TabsContent>
-        </Tabs>
-      
+      </Tabs>
+
       <AssignTicketDialog
-          supportUsers={supportUsers}
-          ticketId={selectedTicketIdToAssign}
-          open={Boolean(selectedTicketIdToAssign)}
-          setOpen={handleAssignDialogOpenChange}
-        />
+        open={selectedTicketIdToAssign !== undefined}
+        setOpen={handleAssignDialogOpenChange}
+        ticketId={selectedTicketIdToAssign}
+        supportUsers={supportUsers}
+      />
     </div>
   );
 }
