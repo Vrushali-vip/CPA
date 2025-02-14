@@ -1,12 +1,12 @@
-
-import React, { ChangeEvent, useState } from "react";
-import { Paperclip } from "lucide-react";
+import React, { ChangeEvent } from "react";
+import { Paperclip, X } from "lucide-react";
 
 interface FileInputProps {
   onChange: (files: File[]) => void;
   label?: string;
   accept?: string;
   multiple?: boolean;
+  value?: File[];
 }
 
 const FileInput: React.FC<FileInputProps> = ({
@@ -14,17 +14,23 @@ const FileInput: React.FC<FileInputProps> = ({
   multiple = false,
   accept = "image/*",
   label = "Upload attachment",
+  value = [],
 }) => {
-  const [fileNames, setFileNames] = useState<string[]>([]);
-
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault(); 
+    
     const fileList = event.target.files;
     if (fileList) {
       const filesArray = Array.from(fileList);
       onChange(filesArray);
-      const namesArray = filesArray.map((file) => file.name);
-      setFileNames(namesArray);
     }
+
+    event.target.value = "";
+  };
+
+  const removeFile = (index: number) => {
+    const newFiles = value.filter((_, i) => i !== index);
+    onChange(newFiles);
   };
 
   return (
@@ -33,7 +39,7 @@ const FileInput: React.FC<FileInputProps> = ({
         htmlFor="file-input"
         className="bg-white text-blue-500 border border-gray-300 px-4 py-2 rounded-md inline-flex items-center gap-2 cursor-pointer hover:bg-blue-50 transition"
       >
-        <Paperclip size={24} /> 
+        <Paperclip size={24} />
         {label}
       </label>
       <input
@@ -45,10 +51,19 @@ const FileInput: React.FC<FileInputProps> = ({
         onChange={handleFileChange}
       />
       <p className="mt-2 text-sm text-gray-500">Or drop files</p>
-      {fileNames.length > 0 && (
+      {value.length > 0 && (
         <ul className="mt-3 text-sm text-gray-600">
-          {fileNames.map((name, index) => (
-            <li key={index}>{name}</li>
+          {value.map((file, index) => (
+            <li key={index} className="flex items-center justify-between py-1">
+              <span>{file.name}</span>
+              <button
+                type="button"
+                onClick={() => removeFile(index)}
+                className="text-red-500 hover:text-red-700"
+              >
+                <X size={16} />
+              </button>
+            </li>
           ))}
         </ul>
       )}
@@ -57,4 +72,3 @@ const FileInput: React.FC<FileInputProps> = ({
 };
 
 export default FileInput;
-
