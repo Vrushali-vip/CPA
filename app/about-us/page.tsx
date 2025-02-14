@@ -13,7 +13,6 @@ const TeamSheet = async () => {
             fields: "id,name,email,avatar,sub,linkedin_url,facebook_url,description,eid",
             sort: "eid",
         });
-        // users.push(...fetchedUsers);
     } catch (error) {
         console.error("Error fetching team members:", error);
     }
