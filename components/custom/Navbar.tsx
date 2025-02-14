@@ -8,11 +8,13 @@ import NavbarClient from "./NavbarClient";
 
 
 export default async function Navbar() {
+
+
     return <nav className="p-2 lg:px-4 bg-background w-full fixed lg:sticky dark:border-b top-0 z-50">
         <div className="flex align-center justify-between gap-4 w-full">
             <Link href="/" className="line-height-0">
-                <Image src="/logo-light.png" width={250} height={100} className="dark:hidden" alt="Alphalake Services" />
-                <Image src="/logo-dark.png" width={250} height={100} className="hidden dark:block" alt="Alphalake Services" />
+                <Image src="/Alphalake_Services_NonW.png" width={250} height={100} className="dark:hidden" alt="Alphalake Services" />
+                <Image src="/Alphalake_Services_W.png" width={250} height={100} className="hidden dark:block" alt="Alphalake Services" />
             </Link>
             <div className="flex-grow">
                 <div className="flex align-center">
@@ -33,7 +35,7 @@ export default async function Navbar() {
                             <div className="lg:absolute max-h-0 group-hover/ms:max-h-[300px] transition-transform nesteds overflow-hidden lg:py-1 lg:scale-0 group-hover/ms:scale-100 bg-card  duration-300 rounded-md origin-top-left lg:shadow-lg w-fit top-6 left-[-10px] right-0">
                                 <ul className="w-full">
                                 <li className="w-full">
-                                        <Link href="/services/managed-services" className="px-2 py-1 text-nowrap block text-sm hover:text-primary">APIs</Link>
+                                        <Link href="/build-api" className="px-2 py-1 text-nowrap block text-sm hover:text-primary">APIs</Link>
                                     </li>
                                     <li className="w-full">
                                         <Link href="/services/managed-services" className="px-2 py-1 text-nowrap block text-sm hover:text-primary">Automation / App Connectors</Link>
@@ -70,13 +72,16 @@ export default async function Navbar() {
                             <div className="lg:absolute max-h-0 group-hover/b:max-h-[300px] transition-transform nesteds overflow-hidden lg:py-1 lg:scale-0 group-hover/b:scale-100 bg-card duration-300 rounded-md origin-top-left lg:shadow-lg w-fit top-6 left-[-10px] right-0">
                                 <ul className="w-full">
                                 <li className="w-full">
-                                        <Link href="/services/managed-services" className="px-2 py-1 text-nowrap block text-sm hover:text-primary">24/7 &quot;eyes on glass&quot; premium support</Link>
+                                        <Link href="/services/managed-services" className="px-2 py-1 text-nowrap block text-sm hover:text-primary">{'24/7 "eyes on glass" premium support'}</Link>
                                     </li>
                                     <li className="w-full">
                                         <Link href="/servicehub" className="px-2 py-1 text-nowrap block text-sm hover:text-primary">ServiceHub Portal</Link>
                                     </li>
                                     <li className="w-full">
                                         <Link href="/services/managed-services" className="px-2 py-1 text-nowrap block text-sm hover:text-primary">Process-as-a-Service</Link>
+                                    </li>
+                                    <li className="w-full">
+                                        <Link href="/support/integration-as-a-service" className="px-2 py-1 text-nowrap block text-sm hover:text-primary">Integration-as-a-service</Link>
                                     </li>
                                     <li className="w-full">
                                         <Link href="/services/managed-services" className="px-2 py-1 text-nowrap block text-sm hover:text-primary">Solution Support</Link>
@@ -142,13 +147,13 @@ export default async function Navbar() {
                             <div className="lg:absolute max-h-0 group-hover/a:max-h-[300px] transition-transform nesteds overflow-hidden lg:py-1 lg:scale-0 group-hover/a:scale-100 bg-card duration-300 rounded-md origin-top-left lg:shadow-lg w-fit top-6 left-[-10px] right-0">
                                 <ul className="w-full">
                                     <li className="w-full">
-                                        <Link href="/services/managed-services" className="px-2 py-1 text-nowrap block text-sm hover:text-primary">ServiceNow to SAP Cost Centres recipe</Link>
+                                        <Link href="/recipes/cost-center" className="px-2 py-1 text-nowrap block text-sm hover:text-primary">ServiceNow to SAP Cost Centres recipe</Link>
                                     </li>
                                     <li className="w-full">
-                                        <Link href="/services/managed-services" className="px-2 py-1 text-nowrap block text-sm hover:text-primary">ServiceNow to SAP Vendor Mgmt recipe </Link>
+                                        <Link href="/recipes/vendor-management" className="px-2 py-1 text-nowrap block text-sm hover:text-primary">ServiceNow to SAP Vendor Mgmt recipe </Link>
                                     </li>
                                     <li className="w-full">
-                                        <Link href="/services/managed-services" className="px-2 py-1 text-nowrap block text-sm hover:text-primary">HubSpot RevOps recipe</Link>
+                                        <Link href="/recipes/hubspot-revops" className="px-2 py-1 text-nowrap block text-sm hover:text-primary">HubSpot RevOps recipe</Link>
                                     </li>
                                 </ul>
                             </div>

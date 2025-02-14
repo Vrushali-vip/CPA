@@ -1,9 +1,11 @@
+
 import pb, { getImageUrl } from "@/lib/pocketbase";
 import { Ticket, TicketComment } from "../types";
 import CommentForm from "./CommentForm";
 import ArticleCardSkeleton from "@/components/custom/ArticleCardSkeleton";
 import { MarkResolvedButton } from "@/components/custom/MarkResolvedButton";
 import FullScreenImage from "@/components/custom/FullScreenImage";
+import { User } from "lucide-react"; // Import the User icon
 
 export const revalidate = 0;
 
@@ -46,15 +48,17 @@ export default async function TicketById({ params }: { params: { ticketId: strin
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-20 p-6 shadow-md rounded-md">
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-4">
-              <img
-                src={
-                  ticket.expand.customer.avatar
-                    ? pb.files.getUrl(ticket.expand.customer, ticket.expand.customer.avatar)
-                    : "/default-avatar.png"
-                }
-                alt={ticket.expand.customer.name}
-                className="w-12 h-12 rounded-full object-cover"
-              />
+              {ticket.expand.customer.avatar ? (
+                <img
+                  src={pb.files.getUrl(ticket.expand.customer, ticket.expand.customer.avatar)}
+                  alt={ticket.expand.customer.name}
+                  className="w-12 h-12 rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center">
+                  <User  className="w-8 h-8 text-primary" />
+                </div>
+              )}
               <div>
                 <h2 className="text-2xl font-bold">{ticket.expand.customer.name}</h2>
               </div>
@@ -98,15 +102,17 @@ export default async function TicketById({ params }: { params: { ticketId: strin
                 className="shadow-sm p-6 bg-gray-800"
               >
                 <div className="flex items-center gap-3">
-                  <img
-                    src={
-                      comment.expand.user.avatar
-                        ? pb.files.getUrl(comment.expand.user, comment.expand.user.avatar)
-                        : "/default-avatar.png"
-                    }
-                    alt={comment.expand.user.name}
-                    className="w-10 h-10 rounded-full object-cover"
-                  />
+                  {comment.expand.user.avatar ? (
+                    <img
+                      src={pb.files.getUrl(comment.expand.user, comment.expand.user.avatar)}
+                      alt={comment.expand.user.name}
+                      className="w-10 h-10 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
+                      <User  className="w-8 h-8 text-primary" />
+                    </div>
+                  )}
                   <div className="flex w-full items-center">
                     <div>
                       <p className="text-sm font-semibold">{comment.expand.user.name}</p>
@@ -140,15 +146,17 @@ export default async function TicketById({ params }: { params: { ticketId: strin
               <div className="border rounded-lg p-4 shadow-sm">
                 <h3 className="text-lg font-semibold">Support Specialist</h3>
                 <div className="flex items-center gap-3 mt-2">
-                  <img
-                    src={
-                      ticket.expand.support.avatar
-                        ? pb.files.getUrl(ticket.expand.support, ticket.expand.support.avatar)
-                        : "/default-avatar.png"
-                    }
-                    alt={ticket.expand.support.name}
-                    className="w-10 h-10 rounded-full object-cover"
-                  />
+                  {ticket.expand.support.avatar ? (
+                    <img
+                      src={pb.files.getUrl(ticket.expand.support, ticket.expand.support.avatar)}
+                      alt={ticket.expand.support.name}
+                      className="w-10 h-10 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
+                      <User  className="w-8 h-8 text-primary" />
+                    </div>
+                  )}
                   <div>
                     <h4 className="font-medium">{ticket.expand.support.name}</h4>
                   </div>
