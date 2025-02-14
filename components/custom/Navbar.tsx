@@ -13,8 +13,8 @@ export default async function Navbar() {
     return <nav className="p-2 lg:px-4 bg-background w-full fixed lg:sticky dark:border-b top-0 z-50">
         <div className="flex align-center justify-between gap-4 w-full">
             <Link href="/" className="line-height-0">
-                <Image src="/Alphalake_Services_NonW.png" width={250} height={100} className="dark:hidden" alt="Alphalake Services" />
-                <Image src="/Alphalake_Services_W.png" width={250} height={100} className="hidden dark:block" alt="Alphalake Services" />
+                <Image src="/Alphalake_Services_NonW_.png" width={250} height={100} className="dark:hidden" alt="Alphalake Services" />
+                <Image src="/Alphalake_Services_W_.png" width={250} height={100} className="hidden dark:block" alt="Alphalake Services" />
             </Link>
             <div className="flex-grow">
                 <div className="flex align-center">
