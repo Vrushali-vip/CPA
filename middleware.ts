@@ -16,13 +16,12 @@ export async function middleware(request: NextRequest) {
 
     const role = token.role;
     
-    if(path === '/api/logs'){
+    if(path === 'api/logs'){
       const key = request.headers.get('x-secret-key');
       if(key === process.env.SECRET_KEY){
         return NextResponse.next();
       }else{
-        NextResponse.next();
-      }
+        return NextResponse.json({ error: "Invalid secret key" }, { status: 405 });      }
     }
 
     if(path.startsWith('/api')){

@@ -26,7 +26,6 @@ export default async function ServiceHub({
         <h1 className="text-xl font-bold mb-6">
           Service Hub for {session?.user.sub}
         </h1>
-
         <div className=" flex justify-between items-center mb-2">
           <Suspense>
             <TicketForm />

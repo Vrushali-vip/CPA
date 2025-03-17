@@ -105,6 +105,41 @@ export default function Home() {
                 AI reads paper-scanned Penalty Notices for large enterprise business and automates appeals / payments to 100+ UK councils.
               </p>
             </div>
+
+            <div className="grid items-center justify-center p-2 rounded-lg shadow-md">
+              <Image src="/abc.jpg" width={150} height={200} className="mx-auto bg-white" alt="Alphabot" />
+              <p className="text-sm pt-2 text-center">
+                AI reads paper-scanned Penalty Notices for large enterprise business and automates appeals / payments to 100+ UK councils.
+              </p>
+            </div>
+
+            <div className="grid items-center justify-center p-2 rounded-lg shadow-md">
+              <Image src="/FF-logo.png" width={150} height={200} className="mx-auto" alt="Alphabot" />
+              <p className="text-sm pt-2 text-center">
+                AI reads paper-scanned Penalty Notices for large enterprise business and automates appeals / payments to 100+ UK councils.
+              </p>
+            </div>
+
+            <div className="grid items-center justify-center p-2 rounded-lg shadow-md">
+              <Image src="/sizaf1.jpg" width={150} height={200} className="mx-auto bg-white" alt="Alphabot" />
+              <p className="text-sm pt-2 text-center">
+                AI reads paper-scanned Penalty Notices for large enterprise business and automates appeals / payments to 100+ UK councils.
+              </p>
+            </div>
+
+            <div className="grid items-center justify-center p-2 rounded-lg shadow-md">
+              <Image src="/nordic-logo.webp" width={150} height={200} className="mx-auto bg-white" alt="Alphabot" />
+              <p className="text-sm pt-2 text-center">
+                AI reads paper-scanned Penalty Notices for large enterprise business and automates appeals / payments to 100+ UK councils.
+              </p>
+            </div>
+
+            <div className="grid items-center justify-center p-2 rounded-lg shadow-md">
+              <Image src="/liva.jpg" width={150} height={200} className="mx-auto bg-white" alt="Alphabot" />
+              <p className="text-sm pt-2 text-center">
+                AI reads paper-scanned Penalty Notices for large enterprise business and automates appeals / payments to 100+ UK councils.
+              </p>
+            </div>
           </div>
         </div>
       </section>

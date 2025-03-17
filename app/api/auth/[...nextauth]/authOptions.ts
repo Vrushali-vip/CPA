@@ -1,6 +1,6 @@
 import type { NextAuthOptions } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
-import pb from "@/lib/pocketbase"
+import pb, { getImageUrl } from "@/lib/pocketbase"
 
 
 const authOptions: NextAuthOptions = {
@@ -14,16 +14,18 @@ const authOptions: NextAuthOptions = {
       authorize: async (credentials) => {
         try {
             const authData = await pb.collection("users").authWithPassword(credentials!.email!, credentials!.password!);
-            
             return {
                 id: authData.record.id,
                 name: authData.record.name,
                 email: authData.record.email,
                 role: authData.record.role,
-                sub: authData.record.sub
-            }
+                sub: authData.record.sub,
+                image: authData.record.avatar
+        ? getImageUrl("users", authData.record.id, authData.record.avatar)
+        : "/img.jpg",           }
         } catch (error) {
             console.log(error);
+            
             return null;            
         }
       },

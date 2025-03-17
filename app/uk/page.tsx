@@ -1,30 +1,21 @@
+// // import Pricing from "@/components/market/Pricing";
+// import { Metadata } from "next";
+
+// export const metadata: Metadata = {
+//     title: "UK"
+// }
+
+// export default function UK() {
+//     return (
+//         <main className="container comp-nav">
+//             {/* <Pricing country="UK"/> */}
+//         </main>
+//     )
+// }
+
 
 
 import { Metadata } from "next";
-
-// type ModalFormData = {
-//   email: string,
-//   code?: string;
-// };
-
-// function praseForm(target: HTMLFormElement): ModalFormData {
-//   const form = new FormData(target);
-//   let formData = Object.fromEntries(form.entries());
-//   return formData as ModalFormData;
-// }
-
-// async function registerDownload(docCode: string, email?: string) {
-//   if (!docCode) return;
-//   let em = email || localStorage.getItem("EMAIL");
-
-//   let lastSentRef = localStorage.getItem(docCode);
-//   if (lastSentRef) {
-//     let lastSentExpire = parseInt(lastSentRef);
-//     let nowTime = new Date().getTime();
-
-//     if (nowTime < lastSentExpire) return;
-//   }
-// }
 
 export const metadata: Metadata = {
   title: "India",

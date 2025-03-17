@@ -1,3 +1,110 @@
+// import { Metadata } from "next";
+// import styles from "./styles.module.css";
+
+// export const metadata: Metadata = {
+//   title: "Terms and Conditions",
+// };
+
+// export default function TermsCondition() {
+//   return (
+//     <main>
+//       <section className="py-4 container text-center">
+//         <h2 className="text-white fw-300 py-4">Terms and Services</h2>
+//         <div className="terms_content">
+//           <h4 className="fw-500 mb-4 text-primary-1">Payment</h4>
+//           <div className={styles.terms_list}>
+//             <div className={styles.terms_head}>
+//               <span className={styles.span}>1.1</span>
+//               <p className={styles.terms_p}>
+//                 ALPHALAKE TECHNOLOGIES LIMITED will invoice the Customer in
+//                 accordance with the timescales specified in &quot;<i>Reference To
+//                 Payment Schedule</i>&quot;. Payment is due in pounds sterling thirty (30)
+//                 days after the end of the month of the date of such invoice
+//                 unless agreed otherwise.
+//               </p>
+//             </div>
+
+//             <div className={styles.terms_head}>
+//               <span className={styles.span}>1.2</span>
+//               <p className={styles.terms_p}>
+//                 No payment will be deemed to have been received until ALPHALAKE
+//                 TECHNOLOGIES LIMITED has received cleared funds.
+//               </p>
+//             </div>
+
+//             <div className={styles.terms_head}>
+//               <span className={styles.span}>1.3</span>
+//               <p className={styles.terms_p}>
+//                 Save for any sums disputed in accordance with clause 1.5 below,
+//                 all sums payable to ALPHALAKE TECHNOLOGIES LIMITED under this
+//                 Agreement for Products and Services provided by ALPHALAKE
+//                 TECHNOLOGIES LIMITED prior to the date of termination will
+//                 become due immediately upon termination of this Agreement.
+//               </p>
+//             </div>
+
+//             <div className={styles.terms_head}>
+//               <span className={styles.span}>1.4</span>
+//               <p className={styles.terms_p}>
+//                 All payments to be made by the Customer under this Agreement
+//                 will be made in full and without any set-off, restriction or
+//                 condition and without any deduction or withholding for or on
+//                 account of any counterclaim or any present or future taxes,
+//                 levies, duties, charges, fees, deductions or withholdings of any
+//                 nature, unless the Customer is required by law to make any such
+//                 deduction or withholding.
+//               </p>
+//             </div>
+
+//             <div className={styles.terms_head}>
+//               <span className={styles.span}>1.5</span>
+//               <p className={styles.terms_p}>
+//                 Acting in good faith at all times, the Customer shall inform
+//                 ALPHALAKE TECHNOLOGIES LIMITED as soon as it is aware that any
+//                 Charges are in dispute, giving ALPHALAKE TECHNOLOGIES LIMITED
+//                 the reason that Charges are considered to be in dispute. The
+//                 Customer shall pay all undisputed sums in accordance with clause
+//                 1.1 above and the Parties shall use all reasonable endeavours to
+//                 resolve any dispute in respect of sums payable and/or due in
+//                 accordance with clause 16, Dispute Resolution Procedure.
+//               </p>
+//             </div>
+
+//             <div className={styles.terms_head}>
+//               <span className={styles.span}>1.6</span>
+//               <p className={styles.terms_p}>
+//                 If any undisputed payment remains unpaid under this Agreement 5
+//                 days after the terms of Clause 1.1 it shall be considered
+//                 overdue until the date payment is received by it and ALPHALAKE
+//                 TECHNOLOGIES LIMITED may charge interest on the sum overdue at
+//                 the rate of 8% per annum plus the current base lending rate of
+//                 the Bank of England from the due date until the date payment is
+//                 made to it (both dates inclusive). The Parties agree that this
+//                 shall constitute a substantial remedy in accordance with the
+//                 Late Payment of Commercial Debts (Interest) Act 1998.
+//               </p>
+//             </div>
+
+//             <div className={styles.terms_head}>
+//               <span className={styles.span}>1.7</span>
+//               <p className={styles.terms_p}>
+//               If Products are delivered in instalments or Services are performed in 
+// stages then in the absence of an agreed payment schedule in <i>&quot;Reference To 
+// Payment Schedule</i>&quot;, ALPHALAKE TECHNOLOGIES LIMITED reserves the right to 
+// invoice each instalment or stage as and when delivery is made to the Customer 
+// or the performance of a stage commences in which case payment shall be due in
+// accordance with Clause 1.1 above notwithstanding non-delivery of other 
+// instalments or stages or fulfilment of the entire Order.
+
+//               </p>
+//             </div>
+//           </div>
+//         </div>
+//       </section>
+//     </main>
+//   );
+// }
+
 
 import { Metadata } from "next";
 

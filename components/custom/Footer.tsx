@@ -7,7 +7,6 @@ import { FacebookIcon, InstagramIcon, LinkedinIcon, TwitterIcon, YoutubeIcon } f
 export default function Footer() {
   return (
     <footer>
-
       <div className="mx-auto max-w-6xl py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
         <div className="flex justify-center">
           <Image

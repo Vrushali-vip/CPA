@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
       issue: fd.get("issue") as string,
       subIssue: fd.get("subIssue") as string,
       status: "OPEN",
-      email: fd.get("email") as string,
+      invitation_mail: fd.get("invitation_mail") as string,
       attachments,
     });
 

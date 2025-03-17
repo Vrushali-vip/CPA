@@ -3,16 +3,14 @@ import { Linkedin, Facebook, Mail } from "lucide-react";
 import pb, { getImageUrl } from '@/lib/pocketbase';
 import { TeamMember } from '../servicehub/types';
 
-// revalidate once a day
-export const revalidate = 86400;
- 
 const TeamSheet = async () => {
-    let users: TeamMember[] = [];
+    const users: TeamMember[] = [];
     try {
-        users = await pb.collection("team").getFullList<TeamMember>({
+        const fetchedUsers = await pb.collection("team").getFullList<TeamMember>({
             fields: "id,name,email,avatar,sub,linkedin_url,facebook_url,description,eid",
             sort: "eid",
         });
+        users.push(...fetchedUsers);
     } catch (error) {
         console.error("Error fetching team members:", error);
     }
