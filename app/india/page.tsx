@@ -83,35 +83,34 @@ export default function Home() {
             <div className="grid items-center justify-center p-2 rounded-lg shadow-md">
               <Image src="/ABCC.jpg" width={150} height={200} className="mx-auto bg-white" alt="Alphabot" />
               <p className="text-sm pt-2 text-center">
-                AI reads paper-scanned Penalty Notices for large enterprise business and automates appeals / payments to 100+ UK councils.
+              Automating operations with 30+ bots for one of India&rsquo;s leading financial services groups.
               </p>
             </div>
 
             <div className="grid items-center justify-center p-2 rounded-lg shadow-md">
               <Image src="/FFlogo.png" width={150} height={200} className="mx-auto" alt="Alphabot" />
               <p className="text-sm pt-2 text-center">
-                AI reads paper-scanned Penalty Notices for large enterprise business and automates appeals / payments to 100+ UK councils.
-              </p>
+                Enhancing digital presence through website, social media, and high-potential branding projects.              </p>
             </div>
 
             <div className="grid items-center justify-center p-2 rounded-lg shadow-md">
               <Image src="/logosizaf.jpg" width={150} height={200} className="mx-auto bg-white" alt="Alphabot" />
               <p className="text-sm pt-2 text-center">
-                AI reads paper-scanned Penalty Notices for large enterprise business and automates appeals / payments to 100+ UK councils.
+                Built a custom operating system to streamline workflows for a Malaysian software development firm.                            
               </p>
             </div>
 
             <div className="grid items-center justify-center p-2 rounded-lg shadow-md">
               <Image src="/nordic-logo.webp" width={150} height={200} className="mx-auto bg-white" alt="Alphabot" />
               <p className="text-sm pt-2 text-center">
-                AI reads paper-scanned Penalty Notices for large enterprise business and automates appeals / payments to 100+ UK councils.
+                Website development and potential for hardware-software integration for fleet management.
               </p>
             </div>
 
             <div className="grid items-center justify-center p-2 rounded-lg shadow-md">
               <Image src="/livai.JPG" width={150} height={200} className="mx-auto bg-white" alt="Alphabot" />
               <p className="text-sm pt-2 text-center">
-                AI reads paper-scanned Penalty Notices for large enterprise business and automates appeals / payments to 100+ UK councils.
+                Transitioning from manual paperwork to digital efficiency with custom-built online forms.
               </p>
             </div>
           </div>
