@@ -1,4 +1,3 @@
-// import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import { Metadata } from "next";
@@ -96,48 +95,13 @@ export default function Home() {
             <div className="grid items-center justify-center p-2 rounded-lg shadow-md">
               <Image src="/allcare_white.png" width={150} height={200} className="mx-auto" alt="Allcare Pharmaceuticals" />
               <p className="text-sm pt-2 text-center">
-                Cara / Allcare Pharmacy: Automating complex drug invoicing to Care Home customers for Ireland&apos;s pharmacy group
+              Cara/Allcare Pharmacy: Automating drug invoicing for Irish Care Homes
               </p>
             </div>
             <div className="grid items-center justify-center p-2 rounded-lg shadow-md">
               <Image src="/alphabot_white.png" width={150} height={200} className="mx-auto" alt="Alphabot" />
               <p className="text-sm pt-2 text-center">
-                AI reads paper-scanned Penalty Notices for large enterprise business and automates appeals / payments to 100+ UK councils.
-              </p>
-            </div>
-
-            <div className="grid items-center justify-center p-2 rounded-lg shadow-md">
-              <Image src="/abc.jpg" width={150} height={200} className="mx-auto bg-white" alt="Alphabot" />
-              <p className="text-sm pt-2 text-center">
-                AI reads paper-scanned Penalty Notices for large enterprise business and automates appeals / payments to 100+ UK councils.
-              </p>
-            </div>
-
-            <div className="grid items-center justify-center p-2 rounded-lg shadow-md">
-              <Image src="/FF-logo.png" width={150} height={200} className="mx-auto" alt="Alphabot" />
-              <p className="text-sm pt-2 text-center">
-                AI reads paper-scanned Penalty Notices for large enterprise business and automates appeals / payments to 100+ UK councils.
-              </p>
-            </div>
-
-            <div className="grid items-center justify-center p-2 rounded-lg shadow-md">
-              <Image src="/sizaf1.jpg" width={150} height={200} className="mx-auto bg-white" alt="Alphabot" />
-              <p className="text-sm pt-2 text-center">
-                AI reads paper-scanned Penalty Notices for large enterprise business and automates appeals / payments to 100+ UK councils.
-              </p>
-            </div>
-
-            <div className="grid items-center justify-center p-2 rounded-lg shadow-md">
-              <Image src="/nordic-logo.webp" width={150} height={200} className="mx-auto bg-white" alt="Alphabot" />
-              <p className="text-sm pt-2 text-center">
-                AI reads paper-scanned Penalty Notices for large enterprise business and automates appeals / payments to 100+ UK councils.
-              </p>
-            </div>
-
-            <div className="grid items-center justify-center p-2 rounded-lg shadow-md">
-              <Image src="/liva.jpg" width={150} height={200} className="mx-auto bg-white" alt="Alphabot" />
-              <p className="text-sm pt-2 text-center">
-                AI reads paper-scanned Penalty Notices for large enterprise business and automates appeals / payments to 100+ UK councils.
+              AI reads & automates Penalty Notice processing for 100+ UK councils.
               </p>
             </div>
           </div>

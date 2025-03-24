@@ -1,196 +1,119 @@
 
+import { Button } from "@/components/ui/button";
 import { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
-  title: "India",
-};
+  title: {
+    template: '%s | Alphalake Services',
+    default: 'Alphalake Services - for Efficient Business Processes',
+  },
+  icons: [
+    {
+      rel: 'icon',
+      sizes: '32x32',
+      href: "/favicon-32x32.png",
+      url: "/favicon-32x32.png"
+    }
+  ],
+  robots: {
+    index: true,
+    follow: true
+  },
+  description: "Tailored end-to-end implementation services for automation and Ai solutions. Alphalake Ai are specialists in health and human services.",
+  openGraph: {
+    title: {
+      template: '%s | Alphalake Services',
+      default: 'Alphalake Services - for Efficient Business Processes',
+    },
+    description: "Tailored end-to-end implementation services for automation and Ai solutions. Alphalake Ai are specialists in health and human services.",
+    type: "website",
+    url: "https://alphalake.services",
+    siteName: "Alphalake Services",
+    images: [
+      {
+        url: "/service-hub-bot.png",
+        width: 500,
+        height: 500
+      }
+    ],
+    locale: "en_US"
+  },
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL!),
+  keywords: "RPA, Automation, iPaaS, Workflow Management, Workato Solution, Microsoft Integration, UiPath Automation",
+}
 
-export default function India() {
+export default function Home() {
   return (
-    <main className="container mx-auto px-4 py-8">
-      <section className="space-y-8">
-        <h1 className="text-2xl font-bold text-center">Alpha ServiceHub 24/7 Follow-the-sun Support Services</h1>
+    <main >
+      <section className="mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8 max-w-7xl min-h-screen ">
+        <div className="p-4 md:p-8 lg:p-12 xl:p-16 mx-auto my-auto gap-y-8 justify-between align-center flex flex-col-reverse lg:flex-row">
+          <div className="w-full max-w-4xl pt-8">
+            <h1 className="text-3xl xl:text-5xl font-extrabold mb-6">
+              Transform Your Business with Alphalake&apos;s AI-powered Solutions
+            </h1>
+            <p className="font-mono py-3">
+              <b>Alphalake AI</b> is a consultancy and advisory firm providing customized automation
+              and Al solutions to the healthcare industry. We specialize in system integration,
+              change management, RPA management, and digital worker health-check assessments.
+            </p>
+            <p className="font-mono py-3 mb-8">
+              The company values organizational efficiency, sustainable transformation, and
+              prioritizes providing optimal solutions to our clients.
+            </p>
 
-        {/* Software Development aaS Section */}
-        <div className="bg-gray-900 text-white p-6 rounded-lg space-y-6">
-          <h2 className="text-xl font-semibold font-robo text-primary">Software Development aaS</h2>
-          <p>Outsource automation via a simple per-process monthly fee.</p>
+            <Button>Book a Demo</Button>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {[
-              {
-                title: "Managed RPA (Low Volume)",
-                price: "₹4,000",
-                description:
-                  "For use with applications with smaller 'digests' reducing costs to achieve minimum user activity.",
-                per: "per process per month",
-              },
-              {
-                title: "Managed RPA (Medium Volume)",
-                price: "₹9,000",
-                description:
-                  "For use with applications with larger 'digests' allowing scalable automation processes.",
-                per: "per process per month",
-              },
-              {
-                title: "Managed RPA (High Volume)",
-                price: "₹17,000",
-                description:
-                  "For high automation needs with maximum data handling and user activity.",
-                per: "per process per month",
-              },
-              {
-                title: "Managed iPaaS",
-                price: "₹42,000",
-                description:
-                  "For use with modern software to enable seamless API or NoCode Automation Connectivity.",
-                per: "per process per month",
-              },
-            ].map((item, index) => (
-              <div
-                key={index}
-                className="bg-gray-800 p-4 rounded-lg shadow-md space-y-4"
-              >
-                <h3 className="text-lg font-semibold">{item.title}</h3>
-                <p>{item.description}</p>
-                <p className="text-lg font-bold">{item.price}</p>
-                <p className="text-sm text-gray-400">{item.per}</p>
-              </div>
-            ))}
+          </div>
+          <div className="mx-auto w-4/5 sm:w-2/5 lg:w-1/3 pt-8">
+            <Image src="/service-hub-bot.png" className="mx-auto" alt="Alphalake Services Bot" width={500} height={500} />
           </div>
         </div>
+      </section>
+      <section className="p-4 md:p-8 lg:p-12 xl:p-16 mx-auto bg-al-1000 min-h-screen flex items-center">
+        <div className="max-w-5xl mx-auto text-center">
+          <h2 className="text-2xl xl:text-3xl my-4 font-bold">
+            Customer Success
+          </h2>
+          <p className="text-center text-xl">
+            (Through value/impact obsession)
+          </p>
 
-        {/* IT / User Support aaS Section */}
-        <div className="bg-gray-900 text-white p-6 rounded-lg space-y-6">
-          <h2 className="text-xl font-semibold font-robo text-primary">IT / User Support aaS</h2>
-          <p>Buy technology and we will support you to deliver the solution.</p>
+          <div className="my-24 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <div className="grid items-center justify-center p-2 rounded-lg shadow-md">
+              <Image src="/abc.jpg" width={150} height={200} className="mx-auto bg-white" alt="Alphabot" />
+              <p className="text-sm pt-2 text-center">
+                AI reads paper-scanned Penalty Notices for large enterprise business and automates appeals / payments to 100+ UK councils.
+              </p>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {[
-              {
-                title: "Process Build for Workato, UiPath, Automation Anywhere, Robocorp, Microsoft",
-                price: "₹1,25,000",
-                description:
-                  "Process design and build from Alphaiake to run on any RPA/NoCode platform.",
-                per: "Priced per process build-time",
-              },
-              {
-                title:
-                  "System implementation and setup from Alphaiake's SysOps team",
-                price: "₹47,000",
-                description:
-                  "Includes setup, integration, and ongoing maintenance of tools.",
-                per: "Priced per process.",
-              },
-              {
-                title:
-                  "System Support for UiPath, Automation Anywhere, Workato, Microsoft",
-                price: "₹63,000",
-                description:
-                  "Ongoing support services for automation tools.",
-                per: "Priced per System/Platform.",
-              },
-            ].map((item, index) => (
-              <div
-                key={index}
-                className="bg-gray-800 p-4 rounded-lg shadow-md space-y-4"
-              >
-                <h3 className="text-lg font-semibold">{item.title}</h3>
-                <p>{item.description}</p>
-                <p className="text-lg font-bold">{item.price}</p>
-                <p className="text-sm text-gray-400">{item.per}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+            <div className="grid items-center justify-center p-2 rounded-lg shadow-md">
+              <Image src="/FF-logo.png" width={150} height={200} className="mx-auto" alt="Alphabot" />
+              <p className="text-sm pt-2 text-center">
+                AI reads paper-scanned Penalty Notices for large enterprise business and automates appeals / payments to 100+ UK councils.
+              </p>
+            </div>
 
-        {/* Field Engineering and Break-Fix aaS Section */}
-        <div className="bg-gray-900 text-white p-6 rounded-lg space-y-6">
-          <h2 className="text-xl font-semibold font-robo text-primary">Field Engineering and Break-Fix aaS</h2>
-          <p>Utilise flexible consultancy for workflow strategy and API development.</p>
+            <div className="grid items-center justify-center p-2 rounded-lg shadow-md">
+              <Image src="/sizaf1.jpg" width={150} height={200} className="mx-auto bg-white" alt="Alphabot" />
+              <p className="text-sm pt-2 text-center">
+                AI reads paper-scanned Penalty Notices for large enterprise business and automates appeals / payments to 100+ UK councils.
+              </p>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {[
-              {
-                title: "Strategy for Automating Healthcare workflow for Healthcare Providers",
-                price: "₹1,65,000",
-                description:
-                  "Includes 10 days of Consultancy per month to assist and support automation workflow strategies.",
-                per: "Priced per engagement",
-              },
-              {
-                title: "Design and Build your Healthcare API",
-                price: "₹2,08,000",
-                description:
-                  "Development and delivery of secure and scalable APIs for healthcare use cases.",
-                per: "Priced per build-time",
-              },
-              {
-                title: "API Maintenance for SLA-backed support, documentation and proactive API updates",
-                price: "₹42,000",
-                description:
-                  "Includes ongoing API monitoring, SLA-backed support, and maintenance services.",
-                per: "Subscription",
-              },
-            ].map((item, index) => (
-              <div
-                key={index}
-                className="bg-gray-800 p-4 rounded-lg shadow-md space-y-4"
-              >
-                <h3 className="text-lg font-semibold">{item.title}</h3>
-                <p>{item.description}</p>
-                <p className="text-lg font-bold">{item.price}</p>
-                <p className="text-sm text-gray-400">{item.per}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+            <div className="grid items-center justify-center p-2 rounded-lg shadow-md">
+              <Image src="/nordic-logo.webp" width={150} height={200} className="mx-auto bg-white" alt="Alphabot" />
+              <p className="text-sm pt-2 text-center">
+                AI reads paper-scanned Penalty Notices for large enterprise business and automates appeals / payments to 100+ UK councils.
+              </p>
+            </div>
 
-        <div className="bg-gray-900 text-white p-6 rounded-lg space-y-6">
-          <h2 className="text-xl font-semibold font-robo text-primary">Add Ons</h2>
-          <p>Add-Ons to optimise your solution.</p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {[
-              {
-                title: "SysOps Monitor aaS - Automation Infrastructure",
-                price: "₹16,000",
-                description:
-                  "System monitoring and ongoing support for automation infrastructure.",
-                per: "Priced per system monitored.",
-              },
-              {
-                title: "SysOps Monitor aaS - Website Content",
-                price: "₹500",
-                description:
-                  "Monitoring website content for performance and uptime.",
-                per: "Priced per webpage.",
-              },
-              {
-                title: "DataOps Monitor for any process automations operated or delivered by Alphaiake",
-                price: "₹16,000",
-                description:
-                  "Daily support and monitoring for automation processes.",
-                per: "Priced per dashboard.",
-              },
-              {
-                title: "ServiceHub Hypercare and Userservice for assured User Experience excellence",
-                price: "₹2,00,000",
-                description:
-                  "User experience assurance and advanced support services.",
-                per: "Priced per project/solution.",
-              },
-            ].map((item, index) => (
-              <div
-                key={index}
-                className="bg-gray-800 p-4 rounded-lg shadow-md space-y-4"
-              >
-                <h3 className="text-lg font-semibold">{item.title}</h3>
-                <p>{item.description}</p>
-                <p className="text-lg font-bold">{item.price}</p>
-                <p className="text-sm text-gray-400">{item.per}</p>
-              </div>
-            ))}
+            <div className="grid items-center justify-center p-2 rounded-lg shadow-md">
+              <Image src="/liva.jpg" width={150} height={200} className="mx-auto bg-white" alt="Alphabot" />
+              <p className="text-sm pt-2 text-center">
+                AI reads paper-scanned Penalty Notices for large enterprise business and automates appeals / payments to 100+ UK councils.
+              </p>
+            </div>
           </div>
         </div>
       </section>
