@@ -81,21 +81,21 @@ export default function Home() {
 
           <div className="my-24 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             <div className="grid items-center justify-center p-2 rounded-lg shadow-md">
-              <Image src="/abc.jpg" width={150} height={200} className="mx-auto bg-white" alt="Alphabot" />
+              <Image src="/ABCC.jpg" width={150} height={200} className="mx-auto bg-white" alt="Alphabot" />
               <p className="text-sm pt-2 text-center">
                 AI reads paper-scanned Penalty Notices for large enterprise business and automates appeals / payments to 100+ UK councils.
               </p>
             </div>
 
             <div className="grid items-center justify-center p-2 rounded-lg shadow-md">
-              <Image src="/FF-logo.png" width={150} height={200} className="mx-auto" alt="Alphabot" />
+              <Image src="/FFlogo.png" width={150} height={200} className="mx-auto" alt="Alphabot" />
               <p className="text-sm pt-2 text-center">
                 AI reads paper-scanned Penalty Notices for large enterprise business and automates appeals / payments to 100+ UK councils.
               </p>
             </div>
 
             <div className="grid items-center justify-center p-2 rounded-lg shadow-md">
-              <Image src="/sizaf1.jpg" width={150} height={200} className="mx-auto bg-white" alt="Alphabot" />
+              <Image src="/sizaf.jpg" width={150} height={200} className="mx-auto bg-white" alt="Alphabot" />
               <p className="text-sm pt-2 text-center">
                 AI reads paper-scanned Penalty Notices for large enterprise business and automates appeals / payments to 100+ UK councils.
               </p>
@@ -109,7 +109,7 @@ export default function Home() {
             </div>
 
             <div className="grid items-center justify-center p-2 rounded-lg shadow-md">
-              <Image src="/liva.jpg" width={150} height={200} className="mx-auto bg-white" alt="Alphabot" />
+              <Image src="/livai.JPG" width={150} height={200} className="mx-auto bg-white" alt="Alphabot" />
               <p className="text-sm pt-2 text-center">
                 AI reads paper-scanned Penalty Notices for large enterprise business and automates appeals / payments to 100+ UK councils.
               </p>
