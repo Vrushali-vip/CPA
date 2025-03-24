@@ -95,7 +95,7 @@ export default function Home() {
             </div>
 
             <div className="grid items-center justify-center p-2 rounded-lg shadow-md">
-              <Image src="/sizaf.jpg" width={150} height={200} className="mx-auto bg-white" alt="Alphabot" />
+              <Image src="/logosizaf.jpg" width={150} height={200} className="mx-auto bg-white" alt="Alphabot" />
               <p className="text-sm pt-2 text-center">
                 AI reads paper-scanned Penalty Notices for large enterprise business and automates appeals / payments to 100+ UK councils.
               </p>
