@@ -1,3 +1,4 @@
+
 "use client";
 import Link from "next/link";
 import Image from "next/image";
@@ -78,237 +79,193 @@ function NavbarClient() {
 
   // Region-specific menu configurations
   const getRegionSpecificMenu = () => {
-    if (selectedCountry.code === "uk") {
-      return (
-        <>
-          <div className="group/ms relative pl-3 lg:pl-0 lg:mt-2 lg:ml-auto">
-            <div className="font-semibold group-hover/ms:text-primary flex align-center gap-1 hover:cursor-pointer">
-              <span className="text-nowrap">Build</span>
-              <ChevronDown
-                className="group-hover/ms:rotate-180 transition-transform duration-300"
-                size={18}
-              />
-            </div>
-            <div className="lg:absolute max-h-0 group-hover/ms:max-h-[300px] transition-transform nesteds overflow-hidden lg:py-1 lg:scale-0 group-hover/ms:scale-100 bg-card duration-300 rounded-md origin-top-left lg:shadow-lg w-fit top-6 left-[-10px] right-0">
-              <ul className="w-full">
-                <li className="w-full">
-                  <Link
-                    href="/build-api-india"
-                    className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
-                  >
-                    APIs
-                  </Link>
-                </li>
-                <li className="w-full">
-                  <Link
-                    href="/services/managed-services"
-                    className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
-                  >
-                    Automation / App Connectors
-                  </Link>
-                </li>
-                {/* ... other links ... */}
-              </ul>
-            </div>
+    const isIndia = selectedCountry.code === "ind";
+    return (
+      <>
+        <div className="group/ms relative pl-3 lg:pl-0 lg:mt-2 lg:ml-auto">
+          <div className="font-semibold group-hover/ms:text-primary flex align-center gap-1 hover:cursor-pointer">
+            <span className="text-nowrap">Build</span>
+            <ChevronDown
+              className="group-hover/ms:rotate-180 transition-transform duration-300"
+              size={18}
+            />
           </div>
-          {/* Support Menu UK */}
-          <div className="mt-2 border-t lg:border-none pt-2 lg:pt-0 group/train-india relative pl-3 lg:pl-0">
-            <div className="font-semibold group-hover/train-india:text-primary flex align-center gap-1 hover:cursor-pointer">
-              <span className="text-nowrap">Support</span>
-              <ChevronDown
-                className="group-hover/train-india:rotate-180 transition-transform duration-300"
-                size={18}
-              />
-            </div>
-            <div className="lg:absolute max-h-0 group-hover/train-india:max-h-[300px] transition-transform nesteds overflow-hidden lg:py-1 lg:scale-0 group-hover/train-india:scale-100 bg-card duration-300 rounded-md origin-top-left lg:shadow-lg w-fit top-6 left-[-10px] right-0">
-              <ul className="w-full">
-                <li className="w-full">
-                  <Link
-                    href="/services/managed-services"
-                    className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
-                  >
-                    {'24/7 "eyes on glass" premium support'}
-                  </Link>
-                </li>
-                {/* ... other links ... */}
-              </ul>
-            </div>
+          <div className="lg:absolute max-h-0 group-hover/ms:max-h-[300px] transition-transform nesteds overflow-hidden lg:py-1 lg:scale-0 group-hover/ms:scale-100 bg-card duration-300 rounded-md origin-top-left lg:shadow-lg w-fit top-6 left-[-10px] right-0">
+            <ul className="w-full">
+              <li className="w-full">
+                <Link
+                  href={isIndia ? "/services/build-api-india" : "/build-api-india"}
+                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                >
+                  APIs
+                </Link>
+              </li>
+              <li className="w-full">
+                <Link
+                  href={isIndia ? "/services/managed-services-india" : "/services/managed-services"}
+                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                >
+                  Automation / App Connectors
+                </Link>
+              </li>
+              <li className="w-full">
+                <Link
+                  href={isIndia ? "/services/managed-services-india" : "/services/managed-services"}
+                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                >
+                  User Centred Design
+                </Link>
+              </li>
+              <li className="w-full">
+                <Link
+                  href={isIndia ? "/services/managed-services-india" : "/services/managed-services"}
+                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                >
+                  Process Optimisation
+                </Link>
+              </li>
+              <li className="w-full">
+                <Link
+                  href={isIndia ? "/services/managed-services-india" : "/services/managed-services"}
+                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                >
+                  Custom Apps
+                </Link>
+              </li>
+              <li className="w-full">
+                <Link
+                  href={isIndia ? "/services/managed-services-india" : "/services/managed-services"}
+                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                >
+                  Custom Automation Recipes
+                </Link>
+              </li>
+              <li className="w-full">
+                <Link
+                  href={isIndia ? "/services/managed-services-india" : "/services/managed-services"}
+                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                >
+                  Custom Bots
+                </Link>
+              </li>
+              <li className="w-full">
+                <Link
+                  href={isIndia ? "/services/managed-services-india" : "/services/managed-services"}
+                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                >
+                  Services Rates Card
+                </Link>
+              </li>
+            </ul>
           </div>
-          {/* Train Menu - UK */}
-          <div className="mt-2 border-t lg:border-none pt-2 lg:pt-0 group/train relative pl-3 lg:pl-0">
-            <div className="font-semibold group-hover/train:text-primary flex align-center gap-1 hover:cursor-pointer">
-              <span className="text-nowrap">Train</span>
-              <ChevronDown
-                className="group-hover/train:rotate-180 transition-transform duration-300"
-                size={18}
-              />
-            </div>
-            <div className="lg:absolute max-h-0 group-hover/train:max-h-[300px] transition-transform nesteds overflow-hidden lg:py-1 lg:scale-0 group-hover/train:scale-100 bg-card duration-300 rounded-md origin-top-left lg:shadow-lg w-fit top-6 left-[-10px] right-0">
-              <ul className="w-full">
-                <li className="w-full">
-                  <Link
-                    href="/train/workshops"
-                    className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
-                  >
-                    UK Reskilling Partnership
-                  </Link>
-                </li>
-              </ul>
-            </div>
+        </div>
+        <div className="mt-2 border-t lg:border-none pt-2 lg:pt-0 group/train-india relative pl-3 lg:pl-0">
+          <div className="font-semibold group-hover/train-india:text-primary flex align-center gap-1 hover:cursor-pointer">
+            <span className="text-nowrap">Support</span>
+            <ChevronDown
+              className="group-hover/train-india:rotate-180 transition-transform duration-300"
+              size={18}
+            />
           </div>
-          {/* Bots Menu - UK */}
-          <div className="mt-2 border-t lg:border-none pt-2 lg:pt-0 group/bots relative pl-3 lg:pl-0">
-            <div className="font-semibold group-hover/bots:text-primary flex align-center gap-1 hover:cursor-pointer">
-              <span className="text-nowrap">Alphabots</span>
-              <ChevronDown
-                className="group-hover/bots:rotate-180 transition-transform duration-300"
-                size={18}
-              />
-            </div>
-            <div className="lg:absolute max-h-0 group-hover/bots:max-h-[300px] transition-transform nesteds overflow-hidden lg:py-1 lg:scale-0 group-hover/bots:scale-100 bg-card duration-300 rounded-md origin-top-left lg:shadow-lg w-fit top-6 left-[-10px] right-0">
-              <ul className="w-full">
-                <li className="w-full">
-                  <Link
-                    href="/alphabots/penalty-charge-notices"
-                    className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
-                  >
-                    Penalty Charge Notices
-                  </Link>
-                </li>
-                {/* ... other links ... */}
-              </ul>
-            </div>
+          <div className="lg:absolute max-h-0 group-hover/train-india:max-h-[300px] transition-transform nesteds overflow-hidden lg:py-1 lg:scale-0 group-hover/train-india:scale-100 bg-card duration-300 rounded-md origin-top-left lg:shadow-lg w-fit top-6 left-[-10px] right-0">
+            <ul className="w-full">
+              <li className="w-full">
+                <Link
+                  href="/services/managed-services"
+                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                >
+                  {'24/7 "eyes on glass" premium support'}
+                </Link>
+              </li>
+              <li className="w-full">
+                <Link
+                  href="/servicehub"
+                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                >
+                  ServiceHub Portal
+                </Link>
+              </li>
+              <li className="w-full">
+                <Link
+                  href="/services/managed-services"
+                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                >
+                  Process-as-a-Service
+                </Link>
+              </li>
+              <li className="w-full">
+                <Link
+                  href="/services/integration-as-a-service"
+                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                >
+                  Integration-as-a-service
+                </Link>
+              </li>
+              <li className="w-full">
+                <Link
+                  href="/services/managed-services"
+                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                >
+                  Solution Support
+                </Link>
+              </li>
+            </ul>
           </div>
-          {/* Recipes Menu - UK */}
-          <div className="mt-2 border-t lg:border-none pt-2 lg:pt-0 group/recipes relative pl-3 lg:pl-0">
-            <div className="font-semibold group-hover/recipes:text-primary flex align-center gap-1 hover:cursor-pointer">
-              <span className="text-nowrap">Recipes</span>
-              <ChevronDown
-                className="group-hover/recipes:rotate-180 transition-transform duration-300"
-                size={18}
-              />
-            </div>
-            <div className="lg:absolute max-h-0 group-hover/recipes:max-h-[300px] transition-transform nesteds overflow-hidden lg:py-1 lg:scale-0 group-hover/recipes:scale-100 bg-card duration-300 rounded-md origin-top-left lg:shadow-lg w-fit top-6 left-[-10px] right-0">
-              <ul className="w-full">
-                <li className="w-full">
-                  <Link
-                    href="/services/cost-center"
-                    className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
-                  >
-                    ServiceNow to SAP Cost Centres recipe
-                  </Link>
-                </li>
-                {/* ... other links ... */}
-              </ul>
-            </div>
+        </div>
+        {/* Train Menu */}
+        <div className="mt-2 border-t lg:border-none pt-2 lg:pt-0 group/train-india relative pl-3 lg:pl-0">
+          <div className="font-semibold group-hover/train-india:text-primary flex align-center gap-1 hover:cursor-pointer">
+            <span className="text-nowrap">Train</span>
+            <ChevronDown
+              className="group-hover/train-india:rotate-180 transition-transform duration-300"
+              size={18}
+            />
           </div>
-          {/* Apps Menu - UK */}
-          <div className="mt-2 border-t lg:border-none pt-2 lg:pt-0 group/apps relative pl-3 lg:pl-0">
-            <div className="font-semibold group-hover/apps:text-primary flex align-center gap-1 hover:cursor-pointer">
-              <span className="text-nowrap">Apps</span>
-              <ChevronDown
-                className="group-hover/apps:rotate-180 transition-transform duration-300"
-                size={18}
-              />
-            </div>
-            <div className="lg:absolute max-h-0 group-hover/apps:max-h-[300px] transition-transform nesteds overflow-hidden lg:py-1 lg:scale-0 group-hover/apps:scale-100 bg-card duration-300 rounded-md origin-top-left lg:shadow-lg w-fit top-6 left-[-10px] right-0">
-              <ul className="w-full">
-                <li className="w-full">
-                  <Link
-                    href="/services/managed-services"
-                    className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
-                  >
-                    Employee Onboarding workflow
-                  </Link>
-                </li>
-                {/* ... other links ... */}
-              </ul>
-            </div>
+          <div className="lg:absolute max-h-0 group-hover/train-india:max-h-[300px] transition-transform nesteds overflow-hidden lg:py-1 lg:scale-0 group-hover/train-india:scale-100 bg-card duration-300 rounded-md origin-top-left lg:shadow-lg w-fit top-6 left-[-10px] right-0">
+            <ul className="w-full">
+              <li className="w-full">
+                <Link
+                  href={isIndia ? "/services/india-workshops" : "/train/workshops"}
+                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                >
+                  {isIndia ? "Online automation courses" : "UK Reskilling Partnership"}
+                </Link>
+              </li>
+              {isIndia && (
+                <>
+                  <li className="w-full">
+                    <Link
+                      href="/services/india-certifications"
+                      className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                    >
+                      In-person automation courses
+                    </Link>
+                  </li>
+                  <li className="w-full">
+                    <Link
+                      href="/services/india-resources"
+                      className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                    >
+                      Hybrid automation courses
+                    </Link>
+                  </li>
+                </>
+              )}
+            </ul>
           </div>
-        </>
-      );
-    } else {
-      // INDIA specific menu
-      return (
-        <>
-          <div className="group/ms relative pl-3 lg:pl-0 lg:mt-2 lg:ml-auto">
-            <div className="font-semibold group-hover/ms:text-primary flex align-center gap-1 hover:cursor-pointer">
-              <span className="text-nowrap">Build</span>
-              <ChevronDown
-                className="group-hover/ms:rotate-180 transition-transform duration-300"
-                size={18}
-              />
-            </div>
-            <div className="lg:absolute max-h-0 group-hover/ms:max-h-[300px] transition-transform nesteds overflow-hidden lg:py-1 lg:scale-0 group-hover/ms:scale-100 bg-card duration-300 rounded-md origin-top-left lg:shadow-lg w-fit top-6 left-[-10px] right-0">
-              <ul className="w-full">
-                <li className="w-full">
-                  <Link
-                    href="/services/build-api-india"
-                    className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
-                  >
-                    APIs
-                  </Link>
-                </li>
-                {/* ... other links ... */}
-              </ul>
-            </div>
+        </div>
+        {/* Bots Menu */}
+        <div className="mt-2 border-t lg:border-none pt-2 lg:pt-0 group/bots-india relative pl-3 lg:pl-0">
+          <div className="font-semibold group-hover/bots-india:text-primary flex align-center gap-1 hover:cursor-pointer">
+            <span className="text-nowrap">Alphabots</span>
+            <ChevronDown
+              className="group-hover/bots-india:rotate-180 transition-transform duration-300"
+              size={18}
+            />
           </div>
-          <div className="mt-2 border-t lg:border-none pt-2 lg:pt-0 group/train-india relative pl-3 lg:pl-0">
-            <div className="font-semibold group-hover/train-india:text-primary flex align-center gap-1 hover:cursor-pointer">
-              <span className="text-nowrap">Support</span>
-              <ChevronDown
-                className="group-hover/train-india:rotate-180 transition-transform duration-300"
-                size={18}
-              />
-            </div>
-            <div className="lg:absolute max-h-0 group-hover/train-india:max-h-[300px] transition-transform nesteds overflow-hidden lg:py-1 lg:scale-0 group-hover/train-india:scale-100 bg-card duration-300 rounded-md origin-top-left lg:shadow-lg w-fit top-6 left-[-10px] right-0">
-              <ul className="w-full">
-                <li className="w-full">
-                  <Link
-                    href="/services/managed-services"
-                    className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
-                  >
-                    {'24/7 "eyes on glass" premium support'}
-                  </Link>
-                </li>
-                {/* ... other links ... */}
-              </ul>
-            </div>
-          </div>
-          {/* Train Menu - India */}
-          <div className="mt-2 border-t lg:border-none pt-2 lg:pt-0 group/train-india relative pl-3 lg:pl-0">
-            <div className="font-semibold group-hover/train-india:text-primary flex align-center gap-1 hover:cursor-pointer">
-              <span className="text-nowrap">Train</span>
-              <ChevronDown
-                className="group-hover/train-india:rotate-180 transition-transform duration-300"
-                size={18}
-              />
-            </div>
-            <div className="lg:absolute max-h-0 group-hover/train-india:max-h-[300px] transition-transform nesteds overflow-hidden lg:py-1 lg:scale-0 group-hover/train-india:scale-100 bg-card duration-300 rounded-md origin-top-left lg:shadow-lg w-fit top-6 left-[-10px] right-0">
-              <ul className="w-full">
-                <li className="w-full">
-                  <Link
-                    href="/services/india-workshops"
-                    className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
-                  >
-                    Online automation courses
-                  </Link>
-                </li>
-                {/* ... other links ... */}
-              </ul>
-            </div>
-          </div>
-          {/* Bots Menu - India */}
-          <div className="mt-2 border-t lg:border-none pt-2 lg:pt-0 group/bots-india relative pl-3 lg:pl-0">
-            <div className="font-semibold group-hover/bots-india:text-primary flex align-center gap-1 hover:cursor-pointer">
-              <span className="text-nowrap">Alphabots</span>
-              <ChevronDown
-                className="group-hover/bots-india:rotate-180 transition-transform duration-300"
-                size={18}
-              />
-            </div>
-            <div className="lg:absolute max-h-0 group-hover/bots-india:max-h-[300px] transition-transform nesteds overflow-hidden lg:py-1 lg:scale-0 group-hover/bots-india:scale-100 bg-card duration-300 rounded-md origin-top-left lg:shadow-lg w-fit top-6 left-[-10px] right-0">
-              <ul className="w-full">
+          <div className="lg:absolute max-h-0 group-hover/bots-india:max-h-[300px] transition-transform nesteds overflow-hidden lg:py-1 lg:scale-0 group-hover/bots-india:scale-100 bg-card duration-300 rounded-md origin-top-left lg:shadow-lg w-fit top-6 left-[-10px] right-0">
+            <ul className="w-full">
+              {isIndia ? (
                 <li className="w-full">
                   <Link
                     href="/services/india-chatbots"
@@ -317,58 +274,107 @@ function NavbarClient() {
                     Health Insurance Backoffice Bot
                   </Link>
                 </li>
-              </ul>
-            </div>
+              ) : (
+                <>
+                  <li className="w-full">
+                    <Link
+                      href="/alphabots/penalty-charge-notices"
+                      className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                    >
+                      Penalty Charge Notices
+                    </Link>
+                  </li>
+                  <li className="w-full">
+                    <Link
+                      href="/services/workflow"
+                      className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                    >
+                      NHS Hospital Patient Administration bot
+                    </Link>
+                  </li>
+                  <li className="w-full">
+                    <Link
+                      href="/services/ai-assistants"
+                      className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                    >
+                      HMRC Imports Tariff Lookup bot
+                    </Link>
+                  </li>
+                </>
+              )}
+            </ul>
           </div>
-          {/* Recipes Menu - India */}
-          <div className="mt-2 border-t lg:border-none pt-2 lg:pt-0 group/recipes-india relative pl-3 lg:pl-0">
-            <div className="font-semibold group-hover/recipes-india:text-primary flex align-center gap-1 hover:cursor-pointer">
-              <span className="text-nowrap">Recipes </span>
-              <ChevronDown
-                className="group-hover/recipes-india:rotate-180 transition-transform duration-300"
-                size={18}
-              />
-            </div>
-            <div className="lg:absolute max-h-0 group-hover/recipes-india:max-h-[300px] transition-transform nesteds overflow-hidden lg:py-1 lg:scale-0 group-hover/recipes-india:scale-100 bg-card duration-300 rounded-md origin-top-left lg:shadow-lg w-fit top-6 left-[-10px] right-0">
-              <ul className="w-full">
-                <li className="w-full">
-                  <Link
-                    href="/services/cost-center"
-                    className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
-                  >
-                    ServiceNow to SAP Cost Centres recipe
-                  </Link>
-                </li>
-                {/* ... other links ... */}
-              </ul>
-            </div>
+        </div>
+        {/* Recipes Menu */}
+        <div className="mt-2 border-t lg:border-none pt-2 lg:pt-0 group/recipes-india relative pl-3 lg:pl-0">
+          <div className="font-semibold group-hover/recipes-india:text-primary flex align-center gap-1 hover:cursor-pointer">
+            <span className="text-nowrap">Recipes </span>
+            <ChevronDown
+              className="group-hover/recipes-india:rotate-180 transition-transform duration-300"
+              size={18}
+            />
           </div>
-          {/* Apps Menu - India */}
-          <div className="mt-2 border-t lg:border-none pt-2 lg:pt-0 group/apps-india relative pl-3 lg:pl-0">
-            <div className="font-semibold group-hover/apps-india:text-primary flex align-center gap-1 hover:cursor-pointer">
-              <span className="text-nowrap">Apps </span>
-              <ChevronDown
-                className="group-hover/apps-india:rotate-180 transition-transform duration-300"
-                size={18}
-              />
-            </div>
-            <div className="lg:absolute max-h-0 group-hover/apps-india:max-h-[300px] transition-transform nesteds overflow-hidden lg:py-1 lg:scale-0 group-hover/apps-india:scale-100 bg-card duration-300 rounded-md origin-top-left lg:shadow-lg w-fit top-6 left-[-10px] right-0">
-              <ul className="w-full">
-                <li className="w-full">
-                  <Link
-                    href="/services/managed-services"
-                    className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
-                  >
-                    Employee Onboarding workflow
-                  </Link>
-                </li>
-                {/* ... other links ... */}
-              </ul>
-            </div>
+          <div className="lg:absolute max-h-0 group-hover/recipes-india:max-h-[300px] transition-transform nesteds overflow-hidden lg:py-1 lg:scale-0 group-hover/recipes-india:scale-100 bg-card duration-300 rounded-md origin-top-left lg:shadow-lg w-fit top-6 left-[-10px] right-0">
+            <ul className="w-full">
+              <li className="w-full">
+                <Link
+                  href="/services/cost-center"
+                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                >
+                  ServiceNow to SAP Cost Centres recipe
+                </Link>
+              </li>
+              <li className="w-full">
+                <Link
+                  href="/services/vendor-management"
+                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                >
+                  ServiceNow to SAP Vendor Mgmt recipe{" "}
+                </Link>
+              </li>
+              <li className="w-full">
+                <Link
+                  href="/services/hubspot-revops"
+                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                >
+                  HubSpot RevOps recipe
+                </Link>
+              </li>
+            </ul>
           </div>
-        </>
-      );
-    }
+        </div>
+        {/* Apps Menu */}
+        <div className="mt-2 border-t lg:border-none pt-2 lg:pt-0 group/apps-india relative pl-3 lg:pl-0">
+          <div className="font-semibold group-hover/apps-india:text-primary flex align-center gap-1 hover:cursor-pointer">
+            <span className="text-nowrap">Apps </span>
+            <ChevronDown
+              className="group-hover/apps-india:rotate-180 transition-transform duration-300"
+              size={18}
+            />
+          </div>
+          <div className="lg:absolute max-h-0 group-hover/apps-india:max-h-[300px] transition-transform nesteds overflow-hidden lg:py-1 lg:scale-0 group-hover/apps-india:scale-100 bg-card duration-300 rounded-md origin-top-left lg:shadow-lg w-fit top-6 left-[-10px] right-0">
+            <ul className="w-full">
+              <li className="w-full">
+                <Link
+                  href="/services/managed-services"
+                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                >
+                  Employee Onboarding workflow
+                </Link>
+              </li>
+              <li className="w-full">
+                <Link
+                  href="/services/managed-services"
+                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                >
+                  Patient Tracking workflow
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </>
+    );
   };
 
   return (
@@ -529,7 +535,7 @@ function NavbarClient() {
                           </DropdownMenuItem>
                           <DropdownMenuItem>
                             <Link
-                              href="/dashboardd"
+                              href="/dashboard"
                               className="w-full cursor-pointer"
                             >
                               Dashboard
