@@ -382,7 +382,7 @@ function NavbarClient() {
       <div className="flex align-center justify-between gap-4 w-full">
         <Link href="/" className="line-height-0">
           <Image
-            src="/Alphalake_Services_NonW.png"
+            src="/Alphalake_services.png"
             width={250}
             height={100}
             className="dark:hidden"
