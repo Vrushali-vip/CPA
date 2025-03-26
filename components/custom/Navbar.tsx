@@ -32,7 +32,7 @@ const countries: Country[] = [
 function NavbarClient() {
   const session = useSession();
   const { toast } = useToast();
-  const [selectedCountry, setSelectedCountry] = useState<Country>(countries[0]); // UK as default
+  const [selectedCountry, setSelectedCountry] = useState<Country>(countries[0]);  
   const [isCountryMenuOpen, setIsCountryMenuOpen] = useState(false);
   const countryDropdownRef = useRef<HTMLDivElement>(null);
   const [isDropdownOpen] = useState(false);
@@ -77,7 +77,6 @@ function NavbarClient() {
     session?.data?.user?.role === "ADMIN" ||
     session?.data?.user?.role === "SUPPORT";
 
-  // Region-specific menu configurations
   const getRegionSpecificMenu = () => {
     const isIndia = selectedCountry.code === "ind";
     return (
@@ -378,7 +377,7 @@ function NavbarClient() {
   };
 
   return (
-    <nav className="p-2 lg:px-4 bg-background w-full fixed lg:sticky dark:border-b top-0 z-50">
+    <nav className="p-2 lg:px-4 bg-background w-full fixed lg:sticky dark:border-b top-0 z-50 flex items-center">
       <div className="flex align-center justify-between gap-4 w-full">
         <Link href="/" className="line-height-0">
           <Image
@@ -411,7 +410,7 @@ function NavbarClient() {
               <div className="mt-2 border-t lg:border-none pt-2 lg:pt-0 lg:mt-0 lg:ml-auto">
                 <div className="flex items-center gap-4">
                   <div
-                    style={{ width: "150px", flexShrink: 0 }} // Fixed width
+                    style={{ width: "150px", flexShrink: 0 }}
                     ref={countryDropdownRef}
                     className={`relative transition-transform duration-300 ease-in-out`}
                   >
@@ -502,12 +501,10 @@ function NavbarClient() {
                             {isDropdownOpen ? (
                               <ChevronUp
                                 size={16}
-                                className="text-gray-600"
                               />
                             ) : (
                               <ChevronDown
                                 size={16}
-                                className="text-gray-600"
                               />
                             )}
                           </button>

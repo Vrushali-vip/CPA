@@ -137,8 +137,8 @@ body {
     --muted-foreground: hsl(240 3.8% 46.1%);
     --accent: hsl(240 4.8% 95.9%);
     --accent-foreground: hsl(240 5.9% 10%);
-    --destructive: hsl(0 84.2% 60.2%);
-    --destructive-foreground: hsl(0 0% 98%);
+    --destructive: #949493;
+    --destructive-foreground: #949493;
     --border: hsl(240 5.9% 90%);
     --input: hsl(240 5.9% 90%);
     --ring: var(--al-100);
@@ -166,8 +166,8 @@ body {
     --muted-foreground: hsl(240 5% 64.9%);
     --accent: hsl(12 6.5% 15.1%);
     --accent-foreground: hsl(0 0% 98%);
-    --destructive: hsl(0 62.8% 30.6%);
-    --destructive-foreground: hsl(0 85.7% 97.3%);
+    --destructive: #949493;
+    --destructive-foreground: #949493;
     --border: var(--al-800);
     --input: var(--al-800);
     --ring: var(--al-800);;

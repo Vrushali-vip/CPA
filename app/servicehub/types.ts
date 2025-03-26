@@ -63,6 +63,7 @@ declare module "next-auth" {
             sub?: string;
             email?: string;
             role: UserRole; 
+            client: string;
         };
     }
 }

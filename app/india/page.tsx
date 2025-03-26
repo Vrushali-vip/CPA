@@ -78,9 +78,8 @@ export default function Home() {
           <p className="text-center text-xl">
             (Through value/impact obsession)
           </p>
-
           <div className="my-24 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            <div className="grid items-center justify-center p-2 rounded-lg shadow-md">
+            <div className="grid items-center justify-center p-2 rounded-lg shadow-md ">
               <Image src="/ABCC.jpg" width={150} height={200} className="mx-auto bg-white" alt="Alphabot" />
               <p className="text-sm pt-2  w-full">
                 Automating complex operations with 30+ bots for one of India&rsquo;s leading financial services groups.

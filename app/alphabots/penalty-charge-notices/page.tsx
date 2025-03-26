@@ -3,7 +3,25 @@ import { Metadata } from "next";
 import Image from "next/image";
 
 export const metadata: Metadata = {
-    title: "Parking Charge Notice",
+    title: "Automated Parking Charge Notice Processing | Alphalake Services",
+    description: "Automate penalty charge notice processing and payment with AI-powered bot. Save time and reduce errors with our automated solution. Ideal for organizations managing fleets.",
+    keywords: ["parking charge notice", "penalty charge notice", "AI automation", "fleet management", "payment processing", "appeals process", "road penalties"],
+    openGraph: {
+        title: "Automated Parking Charge Notice Processing | Alphalake Services",
+        description: "Automate penalty charge notice processing and payment with AI-powered bot. Save time and reduce errors with our automated solution. Ideal for organizations managing fleets.",
+        url: "https://alphalake.services/alphabots/penalty-charge-notices", 
+        images: [
+            {
+                url: "/alphabot.webp", 
+                width: 500,
+                height: 500,
+            },
+        ],
+    },
+    robots: {
+        index: true,
+        follow: true,
+    },
 };
 
 const PriceOutline = [
