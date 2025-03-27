@@ -224,7 +224,7 @@ function NavbarClient() {
             <ul className="w-full">
               <li className="w-full">
                 <Link
-                  href={isIndia ? "/services/india-workshops" : "/train/workshops"}
+                  href={isIndia ? "/services/india-workshops" : "/train/uk-reskilling-partnership"}
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
                   {isIndia ? "Online automation courses" : "UK Reskilling Partnership"}
