@@ -9,10 +9,10 @@ export const metadata: Metadata = {
     openGraph: {
         title: "Automated Parking Charge Notice Processing | Alphalake Services",
         description: "Automate penalty charge notice processing and payment with AI-powered bot. Save time and reduce errors with our automated solution. Ideal for organizations managing fleets.",
-        url: "https://alphalake.services/alphabots/penalty-charge-notices", 
+        url: "https://alphalake.services/alphabots/penalty-charge-notices",
         images: [
             {
-                url: "/alphabot.webp", 
+                url: "/alphabot.webp",
                 width: 500,
                 height: 500,
             },
@@ -32,7 +32,7 @@ const PriceOutline = [
         ns: true
     },
     {
-        item: "Upto 30 authorities / local councils setup",
+        item: "Upto 50 authorities / local councils setup",
         desc: "Able to scan and pay via automation",
         es: true,
         ms: true,
@@ -186,7 +186,7 @@ export default function AlphabotParkingCharge() {
                         </div>
 
 
-                        <Button className="text-black rounded-full">Jump straight to Pricing</Button>
+                        <Button className=" rounded-full">Jump straight to Pricing</Button>
                     </div>
                     <div className="ml-8 rounded-2xl p-1.5 relative w-2/3 flex justify-end items-center hidden md:flex">
                         <Image src="/PCN.jpg" alt="PCN" width={350} height={450} className="rounded-2xl" />
@@ -278,30 +278,17 @@ export default function AlphabotParkingCharge() {
                         Live demo of the AI automation processing a Penalty Charge Notice (PCN)
                     </h2>
                 </div>
-                {/* <div className="w-full md:w-auto flex-shrink-0">
-                    <iframe
+                <div className="w-full md:w-auto flex-shrink-0">
+                    <video
                         width="460"
                         height="315"
-                        src="https://www.youtube.com/embed/9QIZgrLi1T4?si=4yGZvQoC7JVa7f4Y"
-                        title="YouTube video player"
                         className="rounded-lg shadow-lg w-full md:w-[460px]"
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        referrerPolicy="strict-origin-when-cross-origin"
-                        allowFullScreen
-                    />
-                </div> */}
-                <div className="w-full md:w-auto flex-shrink-0">
-    <video
-        width="460"
-        height="315"
-        className="rounded-lg shadow-lg w-full md:w-[460px]"
-        controls
-    >
-        <source src="/video1.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-    </video>
-</div>
+                        controls
+                    >
+                        <source src="/video1.mp4" type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
             </section>
 
             <section className="mx-auto max-w-6xl my-32 px-4 md:px-6">

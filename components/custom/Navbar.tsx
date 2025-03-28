@@ -32,7 +32,7 @@ const countries: Country[] = [
 function NavbarClient() {
   const session = useSession();
   const { toast } = useToast();
-  const [selectedCountry, setSelectedCountry] = useState<Country>(countries[0]);  
+  const [selectedCountry, setSelectedCountry] = useState<Country>(countries[0]);
   const [isCountryMenuOpen, setIsCountryMenuOpen] = useState(false);
   const countryDropdownRef = useRef<HTMLDivElement>(null);
   const [isDropdownOpen] = useState(false);
@@ -83,7 +83,7 @@ function NavbarClient() {
       <>
         <div className="group/ms relative pl-3 lg:pl-0 lg:mt-2 lg:ml-auto">
           <div className="font-semibold group-hover/ms:text-primary flex align-center gap-1 hover:cursor-pointer">
-            <span className="text-nowrap">Build</span>
+            <span className="text-nowrap">Design</span>
             <ChevronDown
               className="group-hover/ms:rotate-180 transition-transform duration-300"
               size={18}
@@ -96,7 +96,7 @@ function NavbarClient() {
                   href={isIndia ? "/services/build-api-india" : "/build-api-india"}
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  APIs
+                  Process design workshop
                 </Link>
               </li>
               <li className="w-full">
@@ -104,7 +104,7 @@ function NavbarClient() {
                   href={isIndia ? "/services/managed-services-india" : "/services/managed-services"}
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  Automation / App Connectors
+                  User design workshop
                 </Link>
               </li>
               <li className="w-full">
@@ -112,7 +112,7 @@ function NavbarClient() {
                   href={isIndia ? "/services/managed-services-india" : "/services/managed-services"}
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  User Centred Design
+                  Product definition workshop
                 </Link>
               </li>
               <li className="w-full">
@@ -120,28 +120,41 @@ function NavbarClient() {
                   href={isIndia ? "/services/managed-services-india" : "/services/managed-services"}
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  Process Optimisation
+                  Design-as-a-Service
                 </Link>
               </li>
+            </ul>
+          </div>
+        </div>
+        <div className="mt-2 border-t lg:border-none pt-2 lg:pt-0 group/train-india relative pl-3 lg:pl-0">
+          <div className="font-semibold group-hover/train-india:text-primary flex align-center gap-1 hover:cursor-pointer">
+            <span className="text-nowrap">Build</span>
+            <ChevronDown
+              className="group-hover/train-india:rotate-180 transition-transform duration-300"
+              size={18}
+            />
+          </div>
+          <div className="lg:absolute max-h-0 group-hover/train-india:max-h-[300px] transition-transform nesteds overflow-hidden lg:py-1 lg:scale-0 group-hover/train-india:scale-100 bg-card duration-300 rounded-md origin-top-left lg:shadow-lg w-fit top-6 left-[-10px] right-0">
+            <ul className="w-full">
               <li className="w-full">
                 <Link
-                  href={isIndia ? "/services/managed-services-india" : "/services/managed-services"}
+                  href="/services/managed-services"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  Custom Apps
+                  {'Custom AI'}
                 </Link>
               </li>
               <li className="w-full">
                 <Link
-                  href={isIndia ? "/services/managed-services-india" : "/services/managed-services"}
+                  href="/servicehub"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  Custom Automation Recipes
+                  Custom Workflows
                 </Link>
               </li>
               <li className="w-full">
                 <Link
-                  href={isIndia ? "/services/managed-services-india" : "/services/managed-services"}
+                  href="/services/managed-services"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
                   Custom Bots
@@ -149,10 +162,42 @@ function NavbarClient() {
               </li>
               <li className="w-full">
                 <Link
-                  href={isIndia ? "/services/managed-services-india" : "/services/managed-services"}
+                  href="/support/integration-as-a-service"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  Services Rates Card
+                  Custom Apps
+                </Link>
+              </li>
+              <li className="w-full">
+                <Link
+                  href="/services/managed-services"
+                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                >
+                 Custom API&apos;s
+                </Link>
+              </li>
+              <li className="w-full">
+                <Link
+                  href="/services/managed-services"
+                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                >
+                 Process design (consultancy)
+                </Link>
+              </li>
+              <li className="w-full">
+                <Link
+                  href="/services/managed-services"
+                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                >
+                 User design (consultancy)
+                </Link>
+              </li>
+              <li className="w-full">
+                <Link
+                  href="/services/managed-services"
+                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                >
+                 Services Rates Card
                 </Link>
               </li>
             </ul>
@@ -170,7 +215,7 @@ function NavbarClient() {
             <ul className="w-full">
               <li className="w-full">
                 <Link
-                  href="/services/managed-services"
+                  href="/support/eyes-on-glass"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
                   {'24/7 "eyes on glass" premium support'}
@@ -194,7 +239,7 @@ function NavbarClient() {
               </li>
               <li className="w-full">
                 <Link
-                  href="/services/integration-as-a-service"
+                  href="/support/integration-as-a-service"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
                   Integration-as-a-service
@@ -227,28 +272,34 @@ function NavbarClient() {
                   href={isIndia ? "/services/india-workshops" : "/train/uk-reskilling-partnership"}
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  {isIndia ? "Online automation courses" : "UK Reskilling Partnership"}
+                  {isIndia ? "Online automation courses" : "Online automation courses"}
                 </Link>
               </li>
-              {isIndia && (
-                <>
-                  <li className="w-full">
-                    <Link
-                      href="/services/india-certifications"
-                      className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
-                    >
-                      In-person automation courses
-                    </Link>
-                  </li>
-                  <li className="w-full">
-                    <Link
-                      href="/services/india-resources"
-                      className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
-                    >
-                      Hybrid automation courses
-                    </Link>
-                  </li>
-                </>
+              <li className="w-full">
+                <Link
+                  href={isIndia ? "/services/india-certifications" : "/train/uk-certifications"}
+                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                >
+                  {isIndia ? "In-person automation courses" : "In-person automation courses"}
+                </Link>
+              </li>
+              <li className="w-full">
+                <Link
+                  href={isIndia ? "/services/india-resources" : "/train/uk-resources"}
+                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                >
+                  {isIndia ? "Hybrid automation courses" : "Hybrid automation courses"}
+                </Link>
+              </li>
+              {!isIndia && (
+                <li className="w-full">
+                  <Link
+                    href="/train/uk-reskilling-partnership"
+                    className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                  >
+                    UK Reskilling Partnership
+                  </Link>
+                </li>
               )}
             </ul>
           </div>
@@ -256,7 +307,7 @@ function NavbarClient() {
         {/* Bots Menu */}
         <div className="mt-2 border-t lg:border-none pt-2 lg:pt-0 group/bots-india relative pl-3 lg:pl-0">
           <div className="font-semibold group-hover/bots-india:text-primary flex align-center gap-1 hover:cursor-pointer">
-            <span className="text-nowrap">Alphabots</span>
+            <span className="text-nowrap">Alpha-bots</span>
             <ChevronDown
               className="group-hover/bots-india:rotate-180 transition-transform duration-300"
               size={18}
@@ -275,6 +326,14 @@ function NavbarClient() {
                 </li>
               ) : (
                 <>
+                  <li className="w-full">
+                    <Link
+                      href="/services/ai-assistants"
+                      className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                    >
+                      Recipes
+                    </Link>
+                  </li>
                   <li className="w-full">
                     <Link
                       href="/alphabots/penalty-charge-notices"
@@ -304,48 +363,11 @@ function NavbarClient() {
             </ul>
           </div>
         </div>
-        {/* Recipes Menu */}
-        <div className="mt-2 border-t lg:border-none pt-2 lg:pt-0 group/recipes-india relative pl-3 lg:pl-0">
-          <div className="font-semibold group-hover/recipes-india:text-primary flex align-center gap-1 hover:cursor-pointer">
-            <span className="text-nowrap">Recipes </span>
-            <ChevronDown
-              className="group-hover/recipes-india:rotate-180 transition-transform duration-300"
-              size={18}
-            />
-          </div>
-          <div className="lg:absolute max-h-0 group-hover/recipes-india:max-h-[300px] transition-transform nesteds overflow-hidden lg:py-1 lg:scale-0 group-hover/recipes-india:scale-100 bg-card duration-300 rounded-md origin-top-left lg:shadow-lg w-fit top-6 left-[-10px] right-0">
-            <ul className="w-full">
-              <li className="w-full">
-                <Link
-                  href="/services/cost-center"
-                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
-                >
-                  ServiceNow to SAP Cost Centres recipe
-                </Link>
-              </li>
-              <li className="w-full">
-                <Link
-                  href="/services/vendor-management"
-                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
-                >
-                  ServiceNow to SAP Vendor Mgmt recipe{" "}
-                </Link>
-              </li>
-              <li className="w-full">
-                <Link
-                  href="/services/hubspot-revops"
-                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
-                >
-                  HubSpot RevOps recipe
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
+
         {/* Apps Menu */}
         <div className="mt-2 border-t lg:border-none pt-2 lg:pt-0 group/apps-india relative pl-3 lg:pl-0">
           <div className="font-semibold group-hover/apps-india:text-primary flex align-center gap-1 hover:cursor-pointer">
-            <span className="text-nowrap">Apps </span>
+            <span className="text-nowrap">Alpha-apps</span>
             <ChevronDown
               className="group-hover/apps-india:rotate-180 transition-transform duration-300"
               size={18}
