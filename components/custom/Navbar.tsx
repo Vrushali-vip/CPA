@@ -93,7 +93,7 @@ function NavbarClient() {
             <ul className="w-full">
               <li className="w-full">
                 <Link
-                  href={isIndia ? "/services/build-api-india" : "/build-api-india"}
+                  href={isIndia ? "/design/process-design-workshop-india" : "design/process-design-workshop"}
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
                   Process design workshop
@@ -101,7 +101,7 @@ function NavbarClient() {
               </li>
               <li className="w-full">
                 <Link
-                  href={isIndia ? "/services/managed-services-india" : "/services/managed-services"}
+                  href={isIndia ? "/design/user-design-workshop-india" : "/design/user-design-workshop"}
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
                   User design workshop
@@ -109,7 +109,7 @@ function NavbarClient() {
               </li>
               <li className="w-full">
                 <Link
-                  href={isIndia ? "/services/managed-services-india" : "/services/managed-services"}
+                  href={isIndia ? "/design/product-definition-workshop-india" : "/design/product-definition-workshop"}
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
                   Product definition workshop
@@ -117,10 +117,18 @@ function NavbarClient() {
               </li>
               <li className="w-full">
                 <Link
-                  href={isIndia ? "/services/managed-services-india" : "/services/managed-services"}
+                  href={isIndia ? "/design/design-as-a-service-india" : "/design/design-as-a-service"}
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
                   Design-as-a-Service
+                </Link>
+              </li>
+              <li className="w-full">
+                <Link
+                  href={isIndia ? "/design/design-pricing-india" : "/design/managed-services"}
+                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                >
+                  Design Pricing                
                 </Link>
               </li>
             </ul>
@@ -138,66 +146,66 @@ function NavbarClient() {
             <ul className="w-full">
               <li className="w-full">
                 <Link
-                  href="/services/managed-services"
+                  href="/build/connect-ai-to-your-data"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  {'Custom AI'}
+                  {'Connect AI to your data'}
                 </Link>
               </li>
               <li className="w-full">
                 <Link
-                  href="/servicehub"
+                  href="/build/your-custom-automation"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  Custom Workflows
+                  Your custom Automation
                 </Link>
               </li>
               <li className="w-full">
                 <Link
-                  href="/services/managed-services"
+                  href="/build/your-custom-integration"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  Custom Bots
+                  Your custom Integration
                 </Link>
               </li>
               <li className="w-full">
                 <Link
-                  href="/support/integration-as-a-service"
+                  href="/build/your-market-facing-api"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  Custom Apps
+                  Your market-facing API
                 </Link>
               </li>
               <li className="w-full">
                 <Link
-                  href="/services/managed-services"
+                  href="/build/your-no-code-connector"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                 Custom API&apos;s
+                  Your no-code Connector
                 </Link>
               </li>
               <li className="w-full">
                 <Link
-                  href="/services/managed-services"
+                  href="/build/your-custom-app"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                 Process design (consultancy)
+                  Your custom App
                 </Link>
               </li>
               <li className="w-full">
                 <Link
-                  href="/services/managed-services"
+                  href="/build/build-as-a-service"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                 User design (consultancy)
+                  Build-as-a-Service
                 </Link>
               </li>
               <li className="w-full">
                 <Link
-                  href="/services/managed-services"
+                  href="/build/build-pricing"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                 Services Rates Card
+                  Build Pricing
                 </Link>
               </li>
             </ul>
@@ -215,10 +223,10 @@ function NavbarClient() {
             <ul className="w-full">
               <li className="w-full">
                 <Link
-                  href="/support/eyes-on-glass"
+                  href="/support/premiun-support"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  {'24/7 "eyes on glass" premium support'}
+                  {'Premium Support (24/7)'}
                 </Link>
               </li>
               <li className="w-full">
@@ -226,31 +234,39 @@ function NavbarClient() {
                   href="/servicehub"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  ServiceHub Portal
+                  Alphalake Services Hub
                 </Link>
               </li>
               <li className="w-full">
                 <Link
-                  href="/services/managed-services"
+                  href="/support/process-support"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  Process-as-a-Service
+                  Process Support
                 </Link>
               </li>
               <li className="w-full">
                 <Link
-                  href="/support/integration-as-a-service"
+                  href="/support/integration-support"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  Integration-as-a-service
+                  Integration Support
                 </Link>
               </li>
               <li className="w-full">
                 <Link
-                  href="/services/managed-services"
+                  href="/support/solution-support"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  Solution Support
+                 Solution Support
+                </Link>
+              </li>
+              <li className="w-full">
+                <Link
+                  href="/support/support-pricing"
+                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                >
+                 Support Pricing
                 </Link>
               </li>
             </ul>
@@ -269,38 +285,37 @@ function NavbarClient() {
             <ul className="w-full">
               <li className="w-full">
                 <Link
-                  href={isIndia ? "/services/india-workshops" : "/train/uk-reskilling-partnership"}
+                  href={isIndia ? "/train/india-workshops" : "/train/uk-reskilling-partnership"}
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  {isIndia ? "Online automation courses" : "Online automation courses"}
+                  {isIndia ? "Online automation courses" : "Reskilling in Wales"}
                 </Link>
               </li>
               <li className="w-full">
                 <Link
-                  href={isIndia ? "/services/india-certifications" : "/train/uk-certifications"}
+                  href={isIndia ? "/train/india-workshops" : "/train/"}
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  {isIndia ? "In-person automation courses" : "In-person automation courses"}
+                  {isIndia ? "In-person automation courses " : "Online AI Automation Courses"}
                 </Link>
               </li>
               <li className="w-full">
                 <Link
-                  href={isIndia ? "/services/india-resources" : "/train/uk-resources"}
+                  href={isIndia ? "/services/india-workshops" : "/train/"}
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  {isIndia ? "Hybrid automation courses" : "Hybrid automation courses"}
+                  {isIndia ? "Hybrid automation courses" : "Customer Mentoring/Handover"}
                 </Link>
               </li>
-              {!isIndia && (
-                <li className="w-full">
-                  <Link
-                    href="/train/uk-reskilling-partnership"
-                    className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
-                  >
-                    UK Reskilling Partnership
-                  </Link>
-                </li>
-              )}
+              <li className="w-full">
+                <Link
+                  href={isIndia ? "/train/training-pricing-india" : "/train/training-pricing"}
+                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                >
+                  {isIndia ? "" : "Training Pricing "}
+                </Link>
+              </li>
+              
             </ul>
           </div>
         </div>
@@ -318,7 +333,7 @@ function NavbarClient() {
               {isIndia ? (
                 <li className="w-full">
                   <Link
-                    href="/services/india-chatbots"
+                    href="/alpha-bots/health-insurance-backoffice-bot"
                     className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                   >
                     Health Insurance Backoffice Bot
@@ -326,15 +341,7 @@ function NavbarClient() {
                 </li>
               ) : (
                 <>
-                  <li className="w-full">
-                    <Link
-                      href="/services/ai-assistants"
-                      className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
-                    >
-                      Recipes
-                    </Link>
-                  </li>
-                  <li className="w-full">
+                <li className="w-full">
                     <Link
                       href="/alphabots/penalty-charge-notices"
                       className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
@@ -344,18 +351,35 @@ function NavbarClient() {
                   </li>
                   <li className="w-full">
                     <Link
-                      href="/services/workflow"
+                      href="/alphabots/nhs-hospital-patient-admin"
                       className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                     >
-                      NHS Hospital Patient Administration bot
+                      NHS Hospital Patient Admin
+                    </Link>
+                  </li>
+                  
+                  <li className="w-full">
+                    <Link
+                      href="/alphabots/hmrc-import-lookup"
+                      className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                    >
+                      HMRC Import Lookup
                     </Link>
                   </li>
                   <li className="w-full">
                     <Link
-                      href="/services/ai-assistants"
+                      href="/alphabots/snow-to-sap-sync"
                       className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                     >
-                      HMRC Imports Tariff Lookup bot
+                      SNow to SAP sync
+                    </Link>
+                  </li>
+                  <li className="w-full">
+                    <Link
+                      href="/alphabots/recipes"
+                      className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                    >
+                      Recipes
                     </Link>
                   </li>
                 </>
@@ -377,18 +401,34 @@ function NavbarClient() {
             <ul className="w-full">
               <li className="w-full">
                 <Link
-                  href="/services/managed-services"
+                  href="/alpha-appa/employee-onboarding"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  Employee Onboarding workflow
+                  Employee onboarding
                 </Link>
               </li>
               <li className="w-full">
                 <Link
-                  href="/services/managed-services"
+                  href="/alpha-apps/pharmacy-billing-portal"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  Patient Tracking workflow
+                  Pharmacy billing portal 
+                </Link>
+              </li>
+              <li className="w-full">
+                <Link
+                  href="/alpha-apps/sigma-patient-waiting-lists"
+                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                >
+                  Sigma (patient waiting lists)
+                </Link>
+              </li>
+              <li className="w-full">
+                <Link
+                  href="/alpha-apps/rate-my-shift-healthcare"
+                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                >
+                  RateMyShift (healthcare)
                 </Link>
               </li>
             </ul>
@@ -406,14 +446,14 @@ function NavbarClient() {
             src="/Alphalake_services.png"
             width={250}
             height={100}
-            className="dark:hidden"
+            className="dark:hidden mt-2"
             alt="Alphalake Services"
           />
           <Image
             src="/Alphalake_Services_W.png"
             width={250}
             height={100}
-            className="hidden dark:block"
+            className="hidden dark:block mt-2"
             alt="Alphalake Services"
           />
         </Link>
