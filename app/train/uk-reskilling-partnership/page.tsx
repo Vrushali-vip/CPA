@@ -1,8 +1,7 @@
 
-
 // "use client";
 
-// import React, { useState } from 'react'; 
+// import React, { useState, useEffect } from 'react';
 // import Image from "next/image";
 // import { Button } from "@/components/ui/button";
 
@@ -25,15 +24,16 @@
 
 // export default function ReskillingHub() {
 
-//   const [openDropdownKey, setOpenDropdownKey] = useState<string | null>(null); 
-//   const [selectedValues, setSelectedValues] = useState<{ [key: string]: string }>({}); 
+//   const [openDropdownKey, setOpenDropdownKey] = useState<string | null>(null);
+//   const [selectedValues, setSelectedValues] = useState<{ [key: string]: string }>({});
+//   const [currentSlide, setCurrentSlide] = useState(0);
 
 //   const courses = [
 //     { name: "Building automations with Python", info: "Details about Python automation." },
 //     { name: "Getting it right - tool selection in automation", info: "Getting It Right - Tool Selection in Automation:\n• Understanding Business Requirements.\n• Evaluating Tool Features.\n• Comparing Open-Source and Proprietary Solutions.\n• Implementing a Test Environment." },
 //     { name: "Working with Large Language Models", info: "Details about working with LLMs." },
 //     { name: "Using RPA to build automations", info: "Details about using RPA." },
-//     { name: "Using AI Large Language Models (LLM) to automate", info: "Details about LLM automation." }, 
+//     { name: "Using AI Large Language Models (LLM) to automate", info: "Details about LLM automation." },
 //     { name: "Introduction to process automation", info: "Details about process automation intro." },
 //     { name: "Using Integration Platform as a Service (IPaaS) to automate processes", info: "Details about using IPaaS." },
 //     { name: "The history and future of automation and integration.", info: "Details about history/future of automation." },
@@ -44,33 +44,48 @@
 //   const priceOptions = ["Online: 40€ / month", "Offline: 100€ / month"];
 
 //   const trainers = [
-//     { name: "Olly Cogan", title: "Founder at Alphalake AI", imgSrc: "/olly.jpg" }, 
+//     { name: "Olly Cogan", title: "Founder at Alphalake AI", imgSrc: "/olly.jpg" },
 //     { name: "Nischay Chandra", title: "Full Stack Developer", imgSrc: "/nischay.png" }, // Replace with actual path
 //     { name: "Lewis Urwin", title: "Service Hub & Data Engineer", imgSrc: "/Lewis_Urwin.jpeg" }, // Replace with actual path
 //     { name: "Andrew Massey", title: "Project Manager", imgSrc: "/andrew.png" }, // Replace with actual path
 //     { name: "Tony O'Neill", title: "Sr Business System Analyst", imgSrc: "/tony.png" } // Replace with actual path
-// ];
+//   ];
 
+//   const rpaPrograms = [
+//     { title: "Trial / Demo", imgSrc: "/course1.png" },
+//     { title: "Past Class", imgSrc: "/course1.png" },
+//     { title: "Live Class", imgSrc: "/course1.png" },
+//     { title: "E-book", imgSrc: "/course1.png" }
+//   ];
+
+//   // Carousel auto-slide effect
+//   useEffect(() => {
+//     const interval = setInterval(() => {
+//       setCurrentSlide((prevSlide) => (prevSlide + 1) % 4);
+//     }, 3000); // Change slide every 3 seconds
+
+//     return () => clearInterval(interval);
+//   }, []);
 
 //   const handleToggleDropdown = (key: string) => {
-//     setOpenDropdownKey(prevKey => (prevKey === key ? null : key)); 
+//     setOpenDropdownKey(prevKey => (prevKey === key ? null : key));
 //   };
 
 //   const handleSelectOption = (key: string, value: string) => {
 //     setSelectedValues(prevValues => ({
 //       ...prevValues,
-//       [key]: value, 
+//       [key]: value,
 //     }));
-//     setOpenDropdownKey(null); 
+//     setOpenDropdownKey(null);
 //   };
 
 
 //   return (
 //     <main className="flex flex-col justify-center items-center min-h-screen px-4 mt-12">
 
-//       <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-6 p-6 rounded-lg shadow-lg bg-gray-800 text-white">
+//       <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-6 p-6 rounded-lg  text-white">
 
-//         <div className="p-6 rounded-lg flex flex-col justify-between">
+//         <div className="p-6 rounded-lg flex flex-col justify-between bg-gray-800 shadow-md ">
 //           <div>
 //             <h1 className="text-3xl font-bold mb-4">Reskilling Hub</h1>
 //             <div className="flex items-center gap-3 mb-4">
@@ -98,7 +113,7 @@
 //           </div>
 //         </div>
 
-//         <div className="p-6 rounded-lg flex items-center justify-center">
+//         <div className="p-6 rounded-lg flex items-center justify-center bg-gray-800 shadow-md">
 //           <Image
 //             src="/OL.jpg"
 //             alt="Olly Cogan with team"
@@ -107,7 +122,9 @@
 //             className="rounded-lg"
 //           />
 //         </div>
+
 //       </div>
+
 
 
 //       <div className="max-w-5xl w-full text-center mt-16">
@@ -203,13 +220,13 @@
 //               <React.Fragment key={course.name}>
 //                 <div className="bg-gray-800 p-3 rounded-lg flex justify-between items-center relative group h-full">
 //                   <span className="text-sm">{course.name}</span>
-//                   <button className="ml-2 flex-shrink-0 relative"> 
+//                   <button className="ml-2 flex-shrink-0 relative">
 //                     <InfoIcon />
 //                     {course.info && (
 //                       <div className={`absolute bottom-full right-0 mb-2 w-max max-w-xs p-3
 //                                 bg-white text-gray-700 text-xs rounded-md shadow-lg border border-gray-300
 //                                 opacity-0 invisible group-hover:opacity-100 group-hover:visible whitespace-pre-line
-//                                 transition-opacity duration-300 pointer-events-none z-20`}> 
+//                                 transition-opacity duration-300 pointer-events-none z-20`}>
 //                         {course.info}
 //                       </div>
 //                     )}
@@ -217,12 +234,12 @@
 //                 </div>
 
 //                 {levels.map((level, levelIndex) => {
-//                   const cellKey = `${courseIndex}-${levelIndex}`; 
+//                   const cellKey = `${courseIndex}-${levelIndex}`;
 //                   const isOpen = openDropdownKey === cellKey;
 //                   const selectedValue = selectedValues[cellKey];
 
 //                   return (
-//                     <div key={cellKey} className="relative h-full"> 
+//                     <div key={cellKey} className="relative h-full">
 //                       <button
 //                         type="button"
 //                         onClick={() => handleToggleDropdown(cellKey)}
@@ -269,27 +286,85 @@
 //       </section>
 //       <section className="w-full max-w-6xl mx-auto py-12 px-4">
 //         <h2 className="text-center text-3xl font-bold mb-10">
-//             Meet the Trainers
+//           Meet the Trainers
 //         </h2>
 
 //         <div className="flex flex-wrap justify-center gap-6">
-//             {trainers.map((trainer) => (
-//                 <div key={trainer.name} className="bg-gray-800 rounded-lg shadow-md overflow-hidden w-48 text-center"> {/* Fixed width card */}
-//                     <div className="relative h-56 w-full"> {/* Container for image */}
-//                        <Image
-//                             src={trainer.imgSrc}
-//                             alt={trainer.name}
-//                             layout="fill" // Fill the container
-//                             objectFit="cover" // Crop image to fit container
-//                             className="rounded-t-lg" // Only round top corners if needed, but objectFit might make this less obvious
-//                         />
+//           {trainers.map((trainer) => (
+//             <div key={trainer.name} className="bg-gray-800 rounded-lg shadow-md overflow-hidden w-48 text-center"> {/* Fixed width card */}
+//               <div className="relative h-56 w-full"> {/* Container for image */}
+//                 <Image
+//                   src={trainer.imgSrc}
+//                   alt={trainer.name}
+//                   layout="fill" // Fill the container
+//                   objectFit="cover" // Crop image to fit container
+//                   className="rounded-t-lg" // Only round top corners if needed, but objectFit might make this less obvious
+//                 />
+//               </div>
+//               <div className="p-4">
+//                 <h3 className="font-semibold">{trainer.name}</h3>
+//                 <p className="text-sm mt-1">{trainer.title}</p>
+//               </div>
+//             </div>
+//           ))}
+//         </div>
+//       </section>
+
+//       <section className="w-full max-w-6xl mx-auto py-12 px-4 mt-4">
+//         <h2 className="text-center text-3xl font-bold mb-8">
+//           RPA training program
+//         </h2>
+
+//         <div className="bg-gray-800 p-6 rounded-lg">
+//           <div className="relative overflow-hidden">
+//             <div
+//               className="flex transition-transform duration-500 ease-in-out"
+//               style={{ transform: `translateX(-${currentSlide * 25}%)` }}
+//             >
+//               {rpaPrograms.map((program, index) => (
+//                 <div key={`set1-${index}`} className="min-w-[25%] px-2">
+//                   <div className="bg-gray-500 p-4 rounded-lg flex flex-col items-center justify-center aspect-square">
+//                     <div className="flex items-center justify-center h-44 w-44 ">
+//                       <Image
+//                         src={program.imgSrc}
+//                         alt={program.title}
+//                         width={140}
+//                         height={140}
+//                       />
 //                     </div>
-//                     <div className="p-4">
-//                         <h3 className="font-semibold">{trainer.name}</h3>
-//                         <p className="text-sm mt-1">{trainer.title}</p>
-//                     </div>
+//                     <p className="text-center  font-medium">{program.title}</p>
+//                   </div>
 //                 </div>
-//             ))}
+//               ))}
+
+//               {rpaPrograms.map((program, index) => (
+//                 <div key={`set2-${index}`} className="min-w-[25%] px-2">
+//                   <div className="bg-gray-500 p-4 rounded-lg flex flex-col items-center justify-center aspect-square">
+//                     <div className="flex items-center justify-center h-44 w-44 ">
+//                       <Image
+//                         src={program.imgSrc}
+//                         alt={program.title}
+//                         width={140}
+//                         height={140}
+//                       />
+//                     </div>
+//                     <p className="text-center  font-medium">{program.title}</p>
+//                   </div>
+//                 </div>
+//               ))}
+//             </div>
+//           </div>
+
+//           <div className="flex justify-center mt-6">
+//             <div className="flex gap-2">
+//               {[0, 1, 2, 3].map((dot) => (
+//                 <span
+//                   key={dot}
+//                   className={`h-2 w-2 rounded-full ${currentSlide === dot ? 'bg-gray-100' : 'bg-gray-500'}`}
+//                 ></span>
+//               ))}
+//             </div>
+//           </div>
 //         </div>
 //       </section>
 
@@ -325,6 +400,7 @@ export default function ReskillingHub() {
   const [openDropdownKey, setOpenDropdownKey] = useState<string | null>(null);
   const [selectedValues, setSelectedValues] = useState<{ [key: string]: string }>({});
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [slidePosition, setSlidePosition] = useState(0);
 
   const courses = [
     { name: "Building automations with Python", info: "Details about Python automation." },
@@ -356,14 +432,37 @@ export default function ReskillingHub() {
     { title: "E-book", imgSrc: "/course1.png" }
   ];
 
-  // Carousel auto-slide effect
+  // Modified carousel logic for continuous scrolling
   useEffect(() => {
     const interval = setInterval(() => {
+      // Update the active dot
       setCurrentSlide((prevSlide) => (prevSlide + 1) % 4);
-    }, 3000); // Change slide every 3 seconds
+      
+      // Continuously move slides to the left
+      setSlidePosition(prevPos => prevPos + 25);
+      
+      // When we've gone through all slides once, reset position but maintain visual continuity
+      if (slidePosition >= 100) {
+        setTimeout(() => {
+          // Get the element and check if it exists first
+          const carouselTrack = document.getElementById('carousel-track');
+          
+          if (carouselTrack) {
+            // Only proceed if the element exists
+            carouselTrack.style.transition = 'none';
+            setSlidePosition(0);
+            
+            // Restore transition after a brief moment
+            setTimeout(() => {
+              carouselTrack.style.transition = 'transform 500ms ease-in-out';
+            }, 50);
+          }
+        }, 500);
+      }
+    }, 3000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [slidePosition]);
 
   const handleToggleDropdown = (key: string) => {
     setOpenDropdownKey(prevKey => (prevKey === key ? null : key));
@@ -608,6 +707,7 @@ export default function ReskillingHub() {
         </div>
       </section>
 
+      {/* Modified RPA Training Program Section */}
       <section className="w-full max-w-6xl mx-auto py-12 px-4 mt-4">
         <h2 className="text-center text-3xl font-bold mb-8">
           RPA training program
@@ -616,9 +716,11 @@ export default function ReskillingHub() {
         <div className="bg-gray-800 p-6 rounded-lg">
           <div className="relative overflow-hidden">
             <div
+              id="carousel-track"
               className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${currentSlide * 25}%)` }}
+              style={{ transform: `translateX(-${slidePosition}%)` }}
             >
+              {/* First set of slides */}
               {rpaPrograms.map((program, index) => (
                 <div key={`set1-${index}`} className="min-w-[25%] px-2">
                   <div className="bg-gray-500 p-4 rounded-lg flex flex-col items-center justify-center aspect-square">
@@ -630,11 +732,12 @@ export default function ReskillingHub() {
                         height={140}
                       />
                     </div>
-                    <p className="text-center  font-medium">{program.title}</p>
+                    <p className="text-center font-medium">{program.title}</p>
                   </div>
                 </div>
               ))}
 
+              {/* Second set of slides for continuous effect */}
               {rpaPrograms.map((program, index) => (
                 <div key={`set2-${index}`} className="min-w-[25%] px-2">
                   <div className="bg-gray-500 p-4 rounded-lg flex flex-col items-center justify-center aspect-square">
@@ -646,7 +749,24 @@ export default function ReskillingHub() {
                         height={140}
                       />
                     </div>
-                    <p className="text-center  font-medium">{program.title}</p>
+                    <p className="text-center font-medium">{program.title}</p>
+                  </div>
+                </div>
+              ))}
+              
+              {/* Third set to ensure continuous flow */}
+              {rpaPrograms.map((program, index) => (
+                <div key={`set3-${index}`} className="min-w-[25%] px-2">
+                  <div className="bg-gray-500 p-4 rounded-lg flex flex-col items-center justify-center aspect-square">
+                    <div className="flex items-center justify-center h-44 w-44 ">
+                      <Image
+                        src={program.imgSrc}
+                        alt={program.title}
+                        width={140}
+                        height={140}
+                      />
+                    </div>
+                    <p className="text-center font-medium">{program.title}</p>
                   </div>
                 </div>
               ))}

@@ -247,7 +247,7 @@ function NavbarClient() {
               </li>
               <li className="w-full">
                 <Link
-                  href="/support/integration-support"
+                  href="/support/integration-as-a-service"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
                   Integration Support
