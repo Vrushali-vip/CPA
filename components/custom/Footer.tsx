@@ -532,7 +532,7 @@ import Image from "next/image";
 import Link from "next/link";
 import NewsletterForm from "./NewsletterForm";
 import { Suspense } from "react";
-import { FacebookIcon, InstagramIcon, LinkedinIcon, TwitterIcon, YoutubeIcon } from "lucide-react";
+import { FacebookIcon, InstagramIcon, LinkedinIcon, YoutubeIcon,  } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -737,20 +737,22 @@ export default function Footer() {
             </Link>
           </div>
           <div className="flex gap-3 flex-wrap">
-            <Link
+            {/* <Link
               className="p-1 rounded-md hover:bg-primary-foreground hover:text-primary"
               target="_blank"
               href="https://www.facebook.com/AlphalakeAi/"
             >
               <FacebookIcon />
-            </Link>
+            </Link> */}
+            
             <Link
               className="p-1 rounded-md hover:bg-primary-foreground hover:text-primary"
               target="_blank"
-              href="https://twitter.com/AlphalakeAi"
+              href="https://www.instagram.com/alphalake_ai/"
             >
-              <TwitterIcon />
+              <Image src="/threads.png" alt="Facebook" width={24} height={24} />
             </Link>
+
             <Link
               className="p-1 rounded-md hover:bg-primary-foreground hover:text-primary"
               target="_blank"
