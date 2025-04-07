@@ -223,7 +223,7 @@ function NavbarClient() {
             <ul className="w-full">
               <li className="w-full">
                 <Link
-                  href="/support/premiun-support"
+                  href="/support/premium-support"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
                   {'Premium Support (24/7)'}

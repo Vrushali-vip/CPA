@@ -1,9 +1,7 @@
-
-
 // "use client";
 
 // import { useEffect, useState } from "react";
-// import { ResponsiveContainer, Line, XAxis, YAxis, CartesianGrid, ComposedChart } from "recharts";
+// import { ResponsiveContainer, Line, XAxis, YAxis, CartesianGrid, ComposedChart, Tooltip } from "recharts";
 // import pb from "@/lib/pocketbase";
 // import { Filters } from "./Filter";
 
@@ -238,7 +236,7 @@
 //         } else if (activePage === "Profile") {
 //             return "Profile";
 //         } else {
-//             return "Alphalake Services"; 
+//             return "Alphalake Services";
 //         }
 //     };
 
@@ -424,19 +422,25 @@
 //             </div>
 
 //             <div className="flex-1 p-6 ml-16">
-//                 <h1 className="text-xl font-bold mb-4">{getHeadingText()}</h1>
-
 //                 {activePage === "XPO Services Dashboard" && (
 //                     <div>
-//                       <Filters
-//                             selectedDateFilter={selectedDateFilter}
-//                             setSelectedDateFilter={setSelectedDateFilter}
-//                             selectedProcess={selectedProcess}
-//                             setSelectedProcess={setSelectedProcess}
-//                             logs={logs}
-//                         />
+//                         {/* Header with title and filters in a flex container */}
+//                         <div className="flex justify-between items-center mb-4">
+//                             <h1 className="text-2xl font-bold">{getHeadingText()}</h1>
+                            
+//                             {/* Filters positioned at the rightmost side */}
+//                             <div className="ml-auto">
+//                                 <Filters
+//                                     selectedDateFilter={selectedDateFilter}
+//                                     setSelectedDateFilter={setSelectedDateFilter}
+//                                     selectedProcess={selectedProcess}
+//                                     setSelectedProcess={setSelectedProcess}
+//                                     logs={logs}
+//                                 />
+//                             </div>
+//                         </div>
 
-//                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+//                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 mt-6">
 //                             <div className="bg-gray-800 p-4 rounded-lg shadow-lg">
 //                                 <h3 className="text-md font-semibold text-gray-400">Total Tasks</h3>
 //                                 <p className="text-2xl font-bold">{totalMetrics.totalTasks}</p>
@@ -451,14 +455,12 @@
 //                             </div>
 //                         </div>
 
-//                         {/* Graphs in One Row */}
 //                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-//                             {/* Process Runtime */}
 //                             <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
 //                                 <h2 className="text-lg font-semibold mb-4">Process Runtime</h2>
 //                                 <ResponsiveContainer width="100%" height={300}>
 //                                     <ComposedChart data={chartData} margin={{ top: 5, right: 20, left: 20, bottom: 5 }}>
-//                                         <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
+//                                         <CartesianGrid strokeDasharray="3 3" opacity={0.2} stroke="#ffffff" />
 //                                         <XAxis
 //                                             dataKey={
 //                                                 selectedDateFilter === "This Week"
@@ -474,8 +476,14 @@
 //                                                         ? (val) => val
 //                                                         : (val) => formatXAxis(val, selectedDateFilter)
 //                                             }
+//                                             stroke="#ffffff"
+//                                             tick={{ fill: "#ffffff" }}
+//                                             tickLine={{ stroke: "#ffffff" }}
 //                                         />
 //                                         <YAxis
+//                                             stroke="#ffffff"
+//                                             tick={{ fill: "#ffffff" }}
+//                                             tickLine={{ stroke: "#ffffff" }}
 //                                             label={{
 //                                                 value: 'Runtime (seconds)',
 //                                                 angle: -90,
@@ -483,20 +491,20 @@
 //                                                 style: { textAnchor: 'middle', fill: '#fff' }
 //                                             }}
 //                                         />
+//                                         <Tooltip wrapperStyle={{ backgroundColor: '#374151', color: '#059b9a', border: 'none', borderRadius: '0.5rem' }} />
 //                                         <Line type="monotone" dataKey="run_time" stroke="#059b9a" strokeWidth={2} dot={false} />
 //                                     </ComposedChart>
 //                                 </ResponsiveContainer>
-//                                 <div className="mt-2 text-center text-gray-400">
+//                                 <div className="mt-2 text-center">
 //                                     <p>Total Time Taken: {formatTime(totalMetrics.totalRuntime)}</p>
 //                                 </div>
 //                             </div>
 
-//                             {/* Human Hours Saved */}
 //                             <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
 //                                 <h2 className="text-lg font-semibold mb-4">Human Hours Saved</h2>
 //                                 <ResponsiveContainer width="100%" height={300}>
 //                                     <ComposedChart data={chartData} margin={{ top: 5, right: 20, left: 20, bottom: 5 }}>
-//                                         <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
+//                                         <CartesianGrid strokeDasharray="3 3" opacity={0.2} stroke="#ffffff" />
 //                                         <XAxis
 //                                             dataKey={
 //                                                 selectedDateFilter === "This Week"
@@ -512,8 +520,14 @@
 //                                                         ? (val) => val
 //                                                         : (val) => formatXAxis(val, selectedDateFilter)
 //                                             }
+//                                             stroke="#ffffff"
+//                                             tick={{ fill: "#ffffff" }}
+//                                             tickLine={{ stroke: "#ffffff" }}
 //                                         />
 //                                         <YAxis
+//                                             stroke="#ffffff"
+//                                             tick={{ fill: "#ffffff" }}
+//                                             tickLine={{ stroke: "#ffffff" }}
 //                                             label={{
 //                                                 value: 'Hours Saved',
 //                                                 angle: -90,
@@ -521,10 +535,11 @@
 //                                                 style: { textAnchor: 'middle', fill: '#fff' }
 //                                             }}
 //                                         />
-//                                         <Line type="monotone" dataKey="human_hours_saved" stroke="#FFAA00" strokeWidth={2} dot={false} />
+//                                         <Tooltip wrapperStyle={{ backgroundColor: '#374151', color: '#0096FF', border: 'none', borderRadius: '0.5rem' }} />
+//                                         <Line type="monotone" dataKey="human_hours_saved" stroke="#0096FF" strokeWidth={2} dot={false} />
 //                                     </ComposedChart>
 //                                 </ResponsiveContainer>
-//                                 <div className="mt-2 text-center text-gray-400">
+//                                 <div className="mt-2 text-center">
 //                                     <p>Time Saved: {formatTime(totalMetrics.totalTimeSaved)}</p>
 //                                 </div>
 //                             </div>
@@ -537,6 +552,7 @@
 // }
 
 // export default XpoDashboard;
+
 
 "use client";
 
@@ -592,6 +608,7 @@ interface MonthlyDataPoint {
     week: string;
     weekNum: number;
 }
+
 const formatXAxis = (created: string | number, filter: string) => {
     const date = new Date(created);
     if (isNaN(date.getTime())) return "";
@@ -905,7 +922,7 @@ function XpoDashboard({ client }: XpoDashboardProps) {
     }
 
     return (
-        <div className="relative flex h-screen text-white overflow-hidden">
+        <div className="relative flex min-h-screen text-white overflow-hidden">
             <div className="w-16 flex flex-col justify-start items-center bg-al-950 h-full fixed top-16 left-0 z-40">
                 <button
                     onClick={() => setMenuOpen(!menuOpen)}
@@ -961,122 +978,129 @@ function XpoDashboard({ client }: XpoDashboardProps) {
                 </ul>
             </div>
 
-            <div className="flex-1 p-6 ml-16">
-                <h1 className="text-xl font-bold mb-4">{getHeadingText()}</h1>
-
+            <div className="flex-1 p-3 sm:p-4 md:p-6 ml-16">
                 {activePage === "XPO Services Dashboard" && (
                     <div>
-                        <Filters
-                            selectedDateFilter={selectedDateFilter}
-                            setSelectedDateFilter={setSelectedDateFilter}
-                            selectedProcess={selectedProcess}
-                            setSelectedProcess={setSelectedProcess}
-                            logs={logs}
-                        />
+                        <h1 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-0">{getHeadingText()}</h1>
 
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                            <div className="bg-gray-800 p-4 rounded-lg shadow-lg">
-                                <h3 className="text-md font-semibold text-gray-400">Total Tasks</h3>
-                                <p className="text-2xl font-bold">{totalMetrics.totalTasks}</p>
-                            </div>
-                            <div className="bg-gray-800 p-4 rounded-lg shadow-lg">
-                                <h3 className="text-md font-semibold text-gray-400">Total Runtime</h3>
-                                <p className="text-2xl font-bold">{formatTime(totalMetrics.totalRuntime)}</p>
-                            </div>
-                            <div className="bg-gray-800 p-4 rounded-lg shadow-lg">
-                                <h3 className="text-md font-semibold text-gray-400">Total Time Saved</h3>
-                                <p className="text-2xl font-bold">{formatTime(totalMetrics.totalTimeSaved)}</p>
+                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
+                        <h1 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-0"></h1>
+                            
+                            <div className="w-full sm:w-auto">
+                                <Filters
+                                    selectedDateFilter={selectedDateFilter}
+                                    setSelectedDateFilter={setSelectedDateFilter}
+                                    selectedProcess={selectedProcess}
+                                    setSelectedProcess={setSelectedProcess}
+                                    logs={logs}
+                                />
                             </div>
                         </div>
 
-                        {/* Graphs in One Row */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            {/* Process Runtime */}
-                            <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
-                                <h2 className="text-lg font-semibold mb-4">Process Runtime</h2>
-                                <ResponsiveContainer width="100%" height={300}>
-                                    <ComposedChart data={chartData} margin={{ top: 5, right: 20, left: 20, bottom: 5 }}>
-                                        <CartesianGrid strokeDasharray="3 3" opacity={0.2} stroke="#ffffff" />
-                                        <XAxis
-                                            dataKey={
-                                                selectedDateFilter === "This Week"
-                                                    ? "day"
-                                                    : selectedDateFilter === "This Month"
-                                                        ? "week"
-                                                        : "created"
-                                            }
-                                            tickFormatter={
-                                                selectedDateFilter === "Today" || selectedDateFilter === "Yesterday"
-                                                    ? formatHourlyXAxis
-                                                    : selectedDateFilter === "This Week" || selectedDateFilter === "This Month"
-                                                        ? (val) => val
-                                                        : (val) => formatXAxis(val, selectedDateFilter)
-                                            }
-                                            stroke="#ffffff"
-                                            tick={{ fill: "#ffffff" }}
-                                            tickLine={{ stroke: "#ffffff" }}
-                                        />
-                                        <YAxis
-                                            stroke="#ffffff"
-                                            tick={{ fill: "#ffffff" }}
-                                            tickLine={{ stroke: "#ffffff" }}
-                                            label={{
-                                                value: 'Runtime (seconds)',
-                                                angle: -90,
-                                                position: 'insideLeft',
-                                                style: { textAnchor: 'middle', fill: '#fff' }
-                                            }}
-                                        />
-                                        <Tooltip wrapperStyle={{ backgroundColor: '#374151', color: '#059b9a', border: 'none', borderRadius: '0.5rem' }} />
-                                        <Line type="monotone" dataKey="run_time" stroke="#059b9a" strokeWidth={2} dot={false} />
-                                    </ComposedChart>
-                                </ResponsiveContainer>
-                                <div className="mt-2 text-center">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 mb-4 sm:mb-6 mt-4 sm:mt-6">
+                            <div className="bg-gray-800 p-3 sm:p-4 rounded-lg shadow-lg">
+                                <h3 className="text-sm sm:text-md font-semibold text-gray-400">Total Tasks</h3>
+                                <p className="text-xl sm:text-2xl font-bold">{totalMetrics.totalTasks}</p>
+                            </div>
+                            <div className="bg-gray-800 p-3 sm:p-4 rounded-lg shadow-lg">
+                                <h3 className="text-sm sm:text-md font-semibold text-gray-400">Total Runtime</h3>
+                                <p className="text-xl sm:text-2xl font-bold">{formatTime(totalMetrics.totalRuntime)}</p>
+                            </div>
+                            <div className="bg-gray-800 p-3 sm:p-4 rounded-lg shadow-lg">
+                                <h3 className="text-sm sm:text-md font-semibold text-gray-400">Total Time Saved</h3>
+                                <p className="text-xl sm:text-2xl font-bold">{formatTime(totalMetrics.totalTimeSaved)}</p>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8">
+                            <div className="bg-gray-800 p-3 sm:p-6 rounded-lg shadow-lg">
+                                <h2 className="text-base sm:text-lg font-semibold mb-2 sm:mb-4">Process Runtime</h2>
+                                <div className="h-64 sm:h-72 md:h-80 lg:h-64 xl:h-72 2xl:h-80">
+                                    <ResponsiveContainer width="100%" height="100%">
+                                        <ComposedChart data={chartData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
+                                            <CartesianGrid strokeDasharray="3 3" opacity={0.2} stroke="#ffffff" />
+                                            <XAxis
+                                                dataKey={
+                                                    selectedDateFilter === "This Week"
+                                                        ? "day"
+                                                        : selectedDateFilter === "This Month"
+                                                            ? "week"
+                                                            : "created"
+                                                }
+                                                tickFormatter={
+                                                    selectedDateFilter === "Today" || selectedDateFilter === "Yesterday"
+                                                        ? formatHourlyXAxis
+                                                        : selectedDateFilter === "This Week" || selectedDateFilter === "This Month"
+                                                            ? (val) => val
+                                                            : (val) => formatXAxis(val, selectedDateFilter)
+                                                }
+                                                stroke="#ffffff"
+                                                tick={{ fill: "#ffffff", fontSize: '14px' }}
+                                                tickLine={{ stroke: "#ffffff" }}
+                                            />
+                                            <YAxis
+                                                stroke="#ffffff"
+                                                tick={{ fill: "#ffffff", fontSize: '14px' }}
+                                                tickLine={{ stroke: "#ffffff" }}
+                                                label={{
+                                                    value: 'Runtime (second)',
+                                                    angle: -90,
+                                                    position: 'insideLeft',
+                                                    style: { textAnchor: 'middle', fill: '#fff', fontSize: '14px' }
+                                                }}
+                                            />
+                                            <Tooltip wrapperStyle={{ backgroundColor: '#374151', color: '#059b9a', border: 'none', borderRadius: '0.5rem' }} />
+                                            <Line type="monotone" dataKey="run_time" stroke="#059b9a" strokeWidth={2} dot={false} />
+                                        </ComposedChart>
+                                    </ResponsiveContainer>
+                                </div>
+                                <div className="mt-2 text-center text-sm sm:text-base">
                                     <p>Total Time Taken: {formatTime(totalMetrics.totalRuntime)}</p>
                                 </div>
                             </div>
 
-                            {/* Human Hours Saved */}
-                            <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
-                                <h2 className="text-lg font-semibold mb-4">Human Hours Saved</h2>
-                                <ResponsiveContainer width="100%" height={300}>
-                                    <ComposedChart data={chartData} margin={{ top: 5, right: 20, left: 20, bottom: 5 }}>
-                                        <CartesianGrid strokeDasharray="3 3" opacity={0.2} stroke="#ffffff" />
-                                        <XAxis
-                                            dataKey={
-                                                selectedDateFilter === "This Week"
-                                                    ? "day"
-                                                    : selectedDateFilter === "This Month"
-                                                        ? "week"
-                                                        : "created"
-                                            }
-                                            tickFormatter={
-                                                selectedDateFilter === "Today" || selectedDateFilter === "Yesterday"
-                                                    ? formatHourlyXAxis
-                                                    : selectedDateFilter === "This Week" || selectedDateFilter === "This Month"
-                                                        ? (val) => val
-                                                        : (val) => formatXAxis(val, selectedDateFilter)
-                                            }
-                                            stroke="#ffffff"
-                                            tick={{ fill: "#ffffff" }}
-                                            tickLine={{ stroke: "#ffffff" }}
-                                        />
-                                        <YAxis
-                                            stroke="#ffffff"
-                                            tick={{ fill: "#ffffff" }}
-                                            tickLine={{ stroke: "#ffffff" }}
-                                            label={{
-                                                value: 'Hours Saved',
-                                                angle: -90,
-                                                position: 'insideLeft',
-                                                style: { textAnchor: 'middle', fill: '#fff' }
-                                            }}
-                                        />
-                                        <Tooltip wrapperStyle={{ backgroundColor: '#374151', color: '#0096FF', border: 'none', borderRadius: '0.5rem' }} />
-                                        <Line type="monotone" dataKey="human_hours_saved" stroke="#0096FF" strokeWidth={2} dot={false} />
-                                    </ComposedChart>
-                                </ResponsiveContainer>
-                                <div className="mt-2 text-center">
+                            <div className="bg-gray-800 p-3 sm:p-6 rounded-lg shadow-lg">
+                                <h2 className="text-base sm:text-lg font-semibold mb-2 sm:mb-4">Human Hours Saved</h2>
+                                <div className="h-64 sm:h-72 md:h-80 lg:h-64 xl:h-72 2xl:h-80">
+                                    <ResponsiveContainer width="100%" height="100%">
+                                        <ComposedChart data={chartData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
+                                            <CartesianGrid strokeDasharray="3 3" opacity={0.2} stroke="#ffffff" />
+                                            <XAxis
+                                                dataKey={
+                                                    selectedDateFilter === "This Week"
+                                                        ? "day"
+                                                        : selectedDateFilter === "This Month"
+                                                            ? "week"
+                                                            : "created"
+                                                }
+                                                tickFormatter={
+                                                    selectedDateFilter === "Today" || selectedDateFilter === "Yesterday"
+                                                        ? formatHourlyXAxis
+                                                        : selectedDateFilter === "This Week" || selectedDateFilter === "This Month"
+                                                            ? (val) => val
+                                                            : (val) => formatXAxis(val, selectedDateFilter)
+                                                }
+                                                stroke="#ffffff"
+                                                tick={{ fill: "#ffffff", fontSize: '14px' }}
+                                                tickLine={{ stroke: "#ffffff" }}
+                                            />
+                                            <YAxis
+                                                stroke="#ffffff"
+                                                tick={{ fill: "#ffffff", fontSize: '14px' }}
+                                                tickLine={{ stroke: "#ffffff" }}
+                                                label={{
+                                                    value: 'Hours Saved',
+                                                    angle: -90,
+                                                    position: 'insideLeft',
+                                                    style: { textAnchor: 'middle', fill: '#fff', fontSize: '14px' }
+                                                }}
+                                            />
+                                            <Tooltip wrapperStyle={{ backgroundColor: '#374151', color: '#0096FF', border: 'none', borderRadius: '0.5rem' }} />
+                                            <Line type="monotone" dataKey="human_hours_saved" stroke="#0096FF" strokeWidth={2} dot={false} />
+                                        </ComposedChart>
+                                    </ResponsiveContainer>
+                                </div>
+                                <div className="mt-2 text-center text-sm sm:text-base">
                                     <p>Time Saved: {formatTime(totalMetrics.totalTimeSaved)}</p>
                                 </div>
                             </div>
