@@ -99,7 +99,6 @@ export type TicketListItemForSupport = {
     }
 }
 
-// types.ts
 export interface TeamMember {
     id: string;
     name: string;
