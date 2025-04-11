@@ -73,9 +73,9 @@ function NavbarClient() {
     });
   };
 
-  const isAdminOrSupport =
-    session?.data?.user?.role === "ADMIN" ||
-    session?.data?.user?.role === "SUPPORT";
+  // const isAdminOrSupport =
+  //   session?.data?.user?.role === "ADMIN" ||
+  //   session?.data?.user?.role === "SUPPORT";
 
   const getRegionSpecificMenu = () => {
     const isIndia = selectedCountry.code === "ind";
@@ -572,9 +572,17 @@ function NavbarClient() {
                           </button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
-                          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                          <DropdownMenuLabel>My Servicehub Account</DropdownMenuLabel>
                           <DropdownMenuSeparator />
-                          {!isAdminOrSupport && (
+                          {/* <DropdownMenuItem>
+                            <Link
+                              href="/dashboard"
+                              className="w-full cursor-pointer"
+                            >
+                              OpsInsight
+                            </Link>
+                          </DropdownMenuItem> */}
+                          {/* {!isAdminOrSupport && (
                             <DropdownMenuItem asChild>
                               <Link
                                 href="/servicehub"
@@ -583,7 +591,8 @@ function NavbarClient() {
                                 ServiceHub
                               </Link>
                             </DropdownMenuItem>
-                          )}
+                          )} */}
+                          
                           <DropdownMenuItem>
                             <Link
                               href="/profile"
@@ -592,14 +601,7 @@ function NavbarClient() {
                               Profile
                             </Link>
                           </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            <Link
-                              href="/dashboard"
-                              className="w-full cursor-pointer"
-                            >
-                              Dashboard
-                            </Link>
-                          </DropdownMenuItem>
+                          
                           <DropdownMenuItem asChild>
                             <button
                               className="w-full cursor-pointer"

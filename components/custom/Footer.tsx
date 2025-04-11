@@ -7,10 +7,10 @@
 // export default function Footer() {
 //   return (
 //     <footer>
-      
+
 //       {/* First div with max-w-6xl for logo and partners */}
 //       <div className="mx-auto max-w-6xl py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
-        
+
 //         <div className="text-center font-robo text-muted-foreground space-y-4 pt-4">
 //           <p>
 //             <span className="font-semibold">Alphalake Services</span> is the managed services arm of
@@ -71,8 +71,8 @@
 //               alt="Information Commissioner's Office Registered"
 //             />
 //           </div>
-          
-          
+
+
 //           <div
 //             className="bg-white border rounded-xl w-32 h-32 grid place-items-center p-2 overflow-hidden"
 //             title="ISO 9001 Certified"
@@ -125,7 +125,7 @@
 //           />
 //         </div>
 //       </div>
-      
+
 //       <div className="mx-auto max-w-6xl mb-12  overflow-hidden sm:px-6 lg:px-8">
 //       <div className="flex mb-6">
 //           <Image
@@ -247,7 +247,7 @@
 //             </Link>
 //           </div>
 //         </div>
-        
+
 //       </div>
 
 //     </footer>
@@ -274,7 +274,7 @@
 // export default function Footer() {
 //   return (
 //     <footer>
-      
+
 //       {/* First div with max-w-6xl for logo and partners */}
 //       <div className="mx-auto max-w-6xl py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
 //         <div className="flex justify-center">
@@ -532,13 +532,12 @@ import Image from "next/image";
 import Link from "next/link";
 import NewsletterForm from "./NewsletterForm";
 import { Suspense } from "react";
-import { FacebookIcon, InstagramIcon, LinkedinIcon, YoutubeIcon,  } from "lucide-react";
+import { InstagramIcon, LinkedinIcon, YoutubeIcon, } from "lucide-react";
 
 export default function Footer() {
   return (
     <footer>
-      
-      {/* First div with max-w-6xl for logo and partners */}
+
       <div className="mx-auto max-w-6xl py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
         <div className="flex justify-center">
           <Image
@@ -556,7 +555,7 @@ export default function Footer() {
             alt="Alphalake Services"
           />
         </div>
-        <div className="flex flex-wrap gap-8 mt-24"> {/* Removed justify-center */}
+        <div className="flex flex-wrap gap-8 mt-24"> 
           <div
             className="bg-white border rounded-xl w-32 h-32 grid place-items-center p-2 overflow-hidden"
             title="Crown Commercial Service Supplier"
@@ -656,10 +655,25 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="w-full">
+      {/* <div className="w-full">
         <div className="relative w-full">
           <Image
-            src="/11.webp"
+            // src="/11.webp"
+            src="/png.png"
+            alt="Progress Line"
+            layout="responsive"
+            width={1200}
+            height={100}
+            className="object-cover"
+            style={{ width: '100%', height: 'auto' }}
+          />
+        </div>
+      </div> */}
+
+      <div className="w-full px-2"> 
+        <div className="relative w-full">
+          <Image
+            src="/png.png"
             alt="Progress Line"
             layout="responsive"
             width={1200}
@@ -669,6 +683,7 @@ export default function Footer() {
           />
         </div>
       </div>
+
 
       <div className="mx-auto max-w-6xl py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
         <div className="grid max-w-7xl mx-auto justify-between grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
@@ -744,7 +759,7 @@ export default function Footer() {
             >
               <FacebookIcon />
             </Link> */}
-            
+
             <Link
               className="p-1 rounded-md hover:bg-primary-foreground hover:text-primary"
               target="_blank"
@@ -776,7 +791,7 @@ export default function Footer() {
             </Link>
           </div>
         </div>
-        <div className="text-center font-robo text-muted-foreground space-y-4 pt-4">
+        <div className="text-center text-muted-foreground space-y-4 pt-4">
           <p>
             <span className="font-semibold">Alphalake Services</span> is the managed services arm of
             <span className="font-semibold"> Alphalake Technologies Ltd </span> and

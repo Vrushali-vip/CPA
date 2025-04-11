@@ -159,7 +159,6 @@ export default function LoginForm() {
 
         if(res?.error) {
             toast({
-                variant: "destructive",
                 title: "Error",
                 description: res.error
             })
