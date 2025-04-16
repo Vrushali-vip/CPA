@@ -616,7 +616,7 @@ export default function AlphabotParkingCharge() {
                     </div>
                     <div className="mt-8 md:mt-0 flex-shrink-0">
                         <Image
-                            src="/Lewis_Urwin.jpeg"
+                            src="/lewis.png"
                             alt="PCN"
                             width={230}
                             height={230}

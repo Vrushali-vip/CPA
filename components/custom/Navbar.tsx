@@ -128,7 +128,7 @@ function NavbarClient() {
                   href={isIndia ? "/design/design-pricing-india" : "/design/managed-services"}
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  Design Pricing                
+                  Design Pricing
                 </Link>
               </li>
             </ul>
@@ -258,7 +258,7 @@ function NavbarClient() {
                   href="/support/solution-support"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                 Solution Support
+                  Solution Support
                 </Link>
               </li>
               <li className="w-full">
@@ -266,7 +266,7 @@ function NavbarClient() {
                   href="/support/support-pricing"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                 Support Pricing
+                  Support Pricing
                 </Link>
               </li>
             </ul>
@@ -315,7 +315,7 @@ function NavbarClient() {
                   {isIndia ? "" : "Training Pricing "}
                 </Link>
               </li>
-              
+
             </ul>
           </div>
         </div>
@@ -341,7 +341,7 @@ function NavbarClient() {
                 </li>
               ) : (
                 <>
-                <li className="w-full">
+                  <li className="w-full">
                     <Link
                       href="/alphabots/penalty-charge-notices"
                       className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
@@ -357,7 +357,7 @@ function NavbarClient() {
                       NHS Hospital Patient Admin
                     </Link>
                   </li>
-                  
+
                   <li className="w-full">
                     <Link
                       href="/alphabots/hmrc-import-lookup"
@@ -371,15 +371,7 @@ function NavbarClient() {
                       href="/alphabots/snow-to-sap-sync"
                       className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                     >
-                      SNow to SAP sync
-                    </Link>
-                  </li>
-                  <li className="w-full">
-                    <Link
-                      href="/alphabots/recipes"
-                      className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
-                    >
-                      Recipes
+                      ServiceNow to SAP automation
                     </Link>
                   </li>
                 </>
@@ -412,7 +404,7 @@ function NavbarClient() {
                   href="/alpha-apps/pharmacy-billing-portal"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  Pharmacy billing portal 
+                  Pharmacy billing portal
                 </Link>
               </li>
               <li className="w-full">
@@ -572,7 +564,7 @@ function NavbarClient() {
                           </button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
-                          <DropdownMenuLabel>My Servicehub Account</DropdownMenuLabel>
+                          <DropdownMenuLabel>My ServiceHub Account</DropdownMenuLabel>
                           <DropdownMenuSeparator />
                           {/* <DropdownMenuItem>
                             <Link
@@ -592,7 +584,7 @@ function NavbarClient() {
                               </Link>
                             </DropdownMenuItem>
                           )} */}
-                          
+
                           <DropdownMenuItem>
                             <Link
                               href="/profile"
@@ -601,7 +593,7 @@ function NavbarClient() {
                               Profile
                             </Link>
                           </DropdownMenuItem>
-                          
+
                           <DropdownMenuItem asChild>
                             <button
                               className="w-full cursor-pointer"
@@ -615,7 +607,7 @@ function NavbarClient() {
                     </div>
                   ) : (
                     <Link
-                      href="/servicehub"
+                      href="/login"
                       className="text-primary hover:cursor-pointer mr-3"
                     >
                       Log in

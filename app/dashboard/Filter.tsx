@@ -124,7 +124,6 @@ export function Filters({
                         <SelectItem value="Today">Today</SelectItem>
                         <SelectItem value="Yesterday">Yesterday</SelectItem>
                         <SelectItem value="This Week">This Week</SelectItem>
-                        {/* Added Last Week Option */}
                         <SelectItem value="Last Week">Last Week</SelectItem>
                         <SelectItem value="This Month">This Month</SelectItem>
                         <SelectItem value="All">All Time</SelectItem>
@@ -165,3 +164,4 @@ export function Filters({
         </div>
     );
 }
+

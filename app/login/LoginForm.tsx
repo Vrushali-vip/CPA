@@ -174,13 +174,22 @@ export default function LoginForm() {
         }
     }
     
+    // const session = useSession();
+    // useEffect(() => {
+    //     if(session.data?.user) {
+    //         console.log("logged in");
+            
+    //         const url = new URL(window.location.href);
+    //         router.push(url.searchParams.get("callbackUrl") || "/welcome");
+    //     }
+    // }, [session.data?.user, router]);
     const session = useSession();
     useEffect(() => {
         if(session.data?.user) {
             console.log("logged in");
             
             const url = new URL(window.location.href);
-            router.push(url.searchParams.get("callbackUrl") || "/servicehub");
+            router.push(url.searchParams.get("callbackUrl") || "/welcome");
         }
     }, [session.data?.user, router]);
 
