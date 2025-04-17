@@ -1991,7 +1991,7 @@ function GeneralDashboard({ }: GeneralDashboardProps) {
             }
         }
         fetchLogs();
-    }, []);
+    }, );
 
     useEffect(() => {
         let filteredData = logs;
