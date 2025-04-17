@@ -818,7 +818,6 @@ const LEVELS = [
   { name: "Advanced", duration: "(8 months)" }
 ];
 
-// Updated PRICES object to use the new level structure
 const PRICES = {
   [TABS[0]]: { // Online Self-learn Course Prices
     [LEVELS[0].name]: "£40 / month", // Beginner
@@ -1105,15 +1104,15 @@ export default function ReskillingHub() {
             <ul className="text-sm space-y-2">
               <li className="flex">
                 <span className="mr-2 font-bold">•</span>
-                <span>To earn a Beginner Certification, participants must complete five introductory courses.</span>
+                <span>Complete 5 introductory courses.</span>
               </li>
               <li className="flex">
                 <span className="mr-2 font-bold">•</span>
-                <span>This level provides foundational knowledge and skills, preparing learners for more advanced concepts.</span>
+                <span>Gain foundational knowledge and skills.</span>
               </li>
               <li className="flex">
                 <span className="mr-2 font-bold">•</span>
-                <span>Upon successful completion, participants receive a certification acknowledging their understanding of the fundamentals.</span>
+                <span>Receive certification upon completion.</span>
               </li>
             </ul>
           </div>
@@ -1124,15 +1123,15 @@ export default function ReskillingHub() {
             <ul className="text-sm space-y-2">
               <li className="flex">
                 <span className="mr-2 font-bold">•</span>
-                <span>To qualify for an Intermediate Certification, participants must complete four additional courses beyond the Beginner level.</span>
+                <span>Complete 4 additional courses after Beginner level.</span>
               </li>
               <li className="flex">
                 <span className="mr-2 font-bold">•</span>
-                <span>This level delves deeper into industry-specific skills and practical applications.</span>
+                <span>Learn industry-specific skills and practical applications.</span>
               </li>
               <li className="flex">
                 <span className="mr-2 font-bold">•</span>
-                <span>Earning this certification demonstrates proficiency in intermediate concepts and readiness for advanced training.</span>
+                <span>Demonstrate proficiency in intermediate concepts.</span>
               </li>
             </ul>
           </div>
@@ -1143,15 +1142,15 @@ export default function ReskillingHub() {
             <ul className="text-sm space-y-2">
               <li className="flex">
                 <span className="mr-2 font-bold">•</span>
-                <span>The Advanced Certification is awarded to participants who complete three additional courses after achieving the Intermediate level.</span>
+                <span>Complete 3 additional courses after Intermediate level.</span>
               </li>
               <li className="flex">
                 <span className="mr-2 font-bold">•</span>
-                <span>This level focuses on expert knowledge, strategic implementation, and high-level problem-solving.</span>
+                <span>Focus on expert knowledge and strategic implementation.</span>
               </li>
               <li className="flex">
                 <span className="mr-2 font-bold">•</span>
-                <span>Graduates with this certification showcase mastery in their field, making them highly qualified professionals.</span>
+                <span>Showcase mastery and high-level problem-solving skills.</span>
               </li>
             </ul>
           </div>
