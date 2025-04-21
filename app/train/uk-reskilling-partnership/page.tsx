@@ -1080,7 +1080,6 @@ export default function ReskillingHub() {
   </div>
 </div> */}
       <div className="max-w-5xl w-full text-left mt-16">
-        {/* Header section with text on left and image on right */}
         <div className="flex flex-col md:flex-row items-center md:items-start mb-8">
           <div className="flex-1 md:pr-8 justify-center">
             <h2 className="text-3xl font-bold mb-4 ">Get Certified</h2>

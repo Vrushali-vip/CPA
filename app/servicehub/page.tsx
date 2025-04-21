@@ -190,7 +190,7 @@ export default async function ServiceHub({
           <div className="flex justify-between items-center mb-6">
             <div className="flex items-center gap-4">
               <h1 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-0">
-                Service Hub for {session?.user.sub}
+                ServiceHub for {session?.user.sub}
               </h1>
             </div>
             {isXpoClient && (
