@@ -820,19 +820,19 @@ const LEVELS = [
 
 const PRICES = {
   [TABS[0]]: { // Online Self-learn Course Prices
-    [LEVELS[0].name]: "£40 / month", // Beginner
-    [LEVELS[1].name]: "£55 / month", // Intermediate
-    [LEVELS[2].name]: "£70 / month", // Advanced
+    [LEVELS[0].name]: "£40 / month", 
+    [LEVELS[1].name]: "£55 / month", 
+    [LEVELS[2].name]: "£70 / month", 
   },
   [TABS[1]]: {  // Online Trainer-led Classroom Prices
-    [LEVELS[0].name]: "£150 / month", // Beginner
-    [LEVELS[1].name]: "£180 / month", // Intermediate
-    [LEVELS[2].name]: "£220 / month", // Advanced
+    [LEVELS[0].name]: "£150 / month", 
+    [LEVELS[1].name]: "£180 / month", 
+    [LEVELS[2].name]: "£220 / month", 
   },
   [TABS[2]]: { // In-person Training Prices
-    [LEVELS[0].name]: "£350 / month", // Beginner
-    [LEVELS[1].name]: "£420 / month", // Intermediate
-    [LEVELS[2].name]: "£510 / month", // Advanced
+    [LEVELS[0].name]: "£350 / month", 
+    [LEVELS[1].name]: "£420 / month", 
+    [LEVELS[2].name]: "£510 / month", 
   },
 };
 
