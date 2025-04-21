@@ -180,8 +180,8 @@ export default async function ServiceHub({
   //   </main>
   // );
   return (
-    <div className="flex min-h-screen">
-      <div className="pl-2 mt-1">
+    <div className="flex min-h-screen mt-3">
+      <div className="pl-2">
         <HamburgerMenu />
       </div>
   
@@ -189,7 +189,7 @@ export default async function ServiceHub({
         <div className="w-full max-w-5xl p-4 lg:px-8">
           <div className="flex justify-between items-center mb-6">
             <div className="flex items-center gap-4">
-              <h1 className="text-xl font-bold">
+              <h1 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-0">
                 Service Hub for {session?.user.sub}
               </h1>
             </div>
