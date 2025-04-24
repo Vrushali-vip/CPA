@@ -1,4 +1,5 @@
 
+import HamburgerMenu from "@/components/custom/HamburgerMenu";
 import { Button } from "@/components/ui/button";
 import { Metadata } from "next";
 import Image from "next/image";
@@ -46,7 +47,11 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main >
+      <div className="pl-2 mt-3">
+                <HamburgerMenu />
+        </div>
       <section className="mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8 max-w-7xl min-h-screen ">
+        
         <div className="p-4 md:p-8 lg:p-12 xl:p-16 mx-auto my-auto gap-y-8 justify-between align-center flex flex-col-reverse lg:flex-row">
           <div className="w-full max-w-4xl pt-8">
             <h1 className="text-3xl xl:text-5xl font-extrabold mb-6">
