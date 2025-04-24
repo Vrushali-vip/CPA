@@ -59,22 +59,94 @@
 //   );
 // }
 
+// 'use client';
+
+// import { useState } from 'react';
+// import Link from 'next/link';
+// import { Menu, X } from 'lucide-react'; 
+
+
+// export default function HamburgerMenu() {
+//   const [isOpen, setIsOpen] = useState(false);
+
+//   const toggleMenu = () => setIsOpen(!isOpen);
+
+//   return (
+//     <>
+//       <button 
+//         onClick={toggleMenu} 
+//         className="text-3xl font-bold p-3 focus:outline-none z-30 relative bg-card                      "
+//         aria-label="Toggle Menu"
+//       >
+//         {isOpen ? <X size={28} /> : <Menu size={28} />}
+//       </button>
+
+//       <div
+//         className={`fixed top-0 left-0 h-full bg-card shadow-lg transform transition-transform duration-300 ease-in-out z-20 ${
+//           isOpen ? 'translate-x-0' : '-translate-x-full'
+//         }`}
+//         style={{ width: '250px' }}
+//       >
+//         <div className="p-4 border-b flex justify-between items-center ">
+//           <h2 className="text-lg font-bold">Menu</h2>
+//           <button
+//             onClick={toggleMenu}
+//             className="text-xl font-bold"
+//             aria-label="Close Menu"
+//           >
+//             ×
+//           </button>
+//         </div>
+//         <div className="py-2">
+//           <Link href="/dashboard" className="block py-2 hover:text-primary font-medium text-lg ml-16 mt-2 ">
+//           O'Sullivan's Pharmacy Group Ops
+//           </Link>
+//           <hr className="border-primary ml-16" />
+//           <Link href="/servicehub" className="block py-2 hover:text-primary  font-medium text-lg ml-16 mt-2">
+//           O'Sullivan's Pharmacy Group Support
+//           </Link>
+//           <hr className="border-primary ml-16" />
+//           <Link href="/project-documents" className="block py-2 hover:text-primary  font-medium text-lg ml-16 mt-2">
+//             My Project Documents
+//           </Link>
+//           <hr className="border-primary ml-16" />
+//         </div>
+//       </div>
+
+//       {/* Overlay */}
+//       {isOpen && (
+//         <div
+//           className="fixed inset-0 bg-black bg-opacity-30 z-10"
+//           onClick={toggleMenu}
+//         ></div>
+//       )}
+//     </>
+//   );
+// }
+
 'use client';
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Menu, X } from 'lucide-react'; // optional icon package
+import { Menu, X } from 'lucide-react';
+import { useSession } from 'next-auth/react'; 
 
 export default function HamburgerMenu() {
   const [isOpen, setIsOpen] = useState(false);
+  const { data: session } = useSession(); 
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
+ 
+  const sub = session?.user?.sub ?? "O'Sullivan's Pharmacy Group"; 
+
+
+
   return (
     <>
-      <button 
-        onClick={toggleMenu} 
-        className="text-3xl font-bold p-3 focus:outline-none z-30 relative bg-card                      "
+      <button
+        onClick={toggleMenu}
+        className="text-3xl font-bold p-3 focus:outline-none z-30 relative bg-card"
         aria-label="Toggle Menu"
       >
         {isOpen ? <X size={28} /> : <Menu size={28} />}
@@ -90,25 +162,28 @@ export default function HamburgerMenu() {
           <h2 className="text-lg font-bold">Menu</h2>
           <button
             onClick={toggleMenu}
-            className="text-xl font-bold"
+            className="text-xl font-bold p-1 -m-1" 
             aria-label="Close Menu"
           >
-            ×
+             <X size={24}/> 
           </button>
         </div>
         <div className="py-2">
           <Link href="/dashboard" className="block py-2 hover:text-primary font-medium text-lg ml-16 mt-2 ">
-            XPO Ops
+            {sub} Ops
           </Link>
-          <hr className="border-primary ml-16" />
-          <Link href="/servicehub" className="block py-2 hover:text-primary  font-medium text-lg ml-16 mt-2">
-            XPO Support
+          <hr className="border-primary ml-16 mr-7" />
+          <Link href="/servicehub" className="block py-2 hover:text-primary font-medium text-lg ml-16 mt-2">
+            {sub} Support
           </Link>
-          <hr className="border-primary ml-16" />
+          <hr className="border-primary ml-16 mr-7"  />
+          <Link href="/project-documents" className="block py-2 hover:text-primary font-medium text-lg ml-16 mt-2">
+            My Project Documents
+          </Link>
+          <hr className="border-primary ml-16 mr-7" />
         </div>
       </div>
 
-      {/* Overlay */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-30 z-10"

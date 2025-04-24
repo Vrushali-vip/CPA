@@ -64,6 +64,7 @@ declare module "next-auth" {
             email?: string;
             role: UserRole; 
             client: string;
+            company: string;
         };
     }
 }
@@ -109,4 +110,15 @@ export interface TeamMember {
     facebook_url?: string;
     description: string;
     eid: number;
+  }
+
+  export interface ProjectDocument {
+    id: string;
+    collectionId: string;
+    collectionName: string;
+    created: string; 
+    updated: string; 
+    name?: string; 
+    description?: string; 
+    file: string; 
   }
