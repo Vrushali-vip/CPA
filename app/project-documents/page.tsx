@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { Suspense } from "react";
 import Image from "next/image";
-import HamburgerMenu from "@/components/custom/HamburgerMenu";
 import authOptions from "../api/auth/[...nextauth]/authOptions";
 
 interface ProjectDocument {
@@ -51,20 +50,13 @@ async function getDocuments(clientSub: string) {
   const pb = new PocketBase('https://api.alphalake.services');
 
   try {
-    const encodedClientSub = encodeURIComponent(clientSub);
-    console.log("🔍 Encoded ClientSub being queried:", encodedClientSub);
-
-    const allDocuments = await pb.collection('project_documents').getList(1, 50);
-    console.log("📦 All documents in the collection:", allDocuments.items);
-
-    const clientMap: { [key: string]: string } = {
+     const clientMap: { [key: string]: string } = {
       "O'Sullivan's Pharmacy Group": 'ny1u0pic35bepny',  
     };
 
     const clientId = clientMap[clientSub];
 
     if (!clientId) {
-      console.log(`❌ No matching client ID for clientSub: ${clientSub}`);
       return { documents: [], error: "Client ID not found" };
     }
 
@@ -73,7 +65,6 @@ async function getDocuments(clientSub: string) {
       sort: '-created',  
     });
 
-    console.log("📦 Documents fetched from the server:", resultList.items);
 
     return { documents: resultList.items as ProjectDocument[], error: null };
   } catch (err) {
@@ -131,9 +122,6 @@ export default async function ProjectDocumentsPage() {
 
   return (
     <div className="flex min-h-screen mt-3">
-      <div className="pl-2">
-        <HamburgerMenu />
-      </div>
 
       <main className="flex-1 flex justify-center">
         <div className="w-full max-w-5xl p-4 lg:px-8">

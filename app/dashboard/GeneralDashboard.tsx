@@ -1743,7 +1743,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import HamburgerMenu from "@/components/custom/HamburgerMenu";
 
 interface GeneralDashboardProps {
     userType: string;
@@ -2098,10 +2097,7 @@ function GeneralDashboard({ }: GeneralDashboardProps) {
 
 
     return (
-        <div className="relative flex h-screen text-white overflow-hidden">
-            <div className="pl-2 mt-3">
-                    <HamburgerMenu />
-                  </div>
+        <div className="relative flex h-screen text-white overflow-hidden pl-14">
             <div className="flex-1 p-6">
                 <h1 className="text-xl font-bold mb-4">{getHeadingText()}</h1>
 

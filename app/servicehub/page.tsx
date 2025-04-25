@@ -129,7 +129,6 @@ export type Filters = {
   created?: string;
 };
 
-import HamburgerMenu from "@/components/custom/HamburgerMenu";
 
 export default async function ServiceHub({
   searchParams,
@@ -181,10 +180,6 @@ export default async function ServiceHub({
   // );
   return (
     <div className="flex min-h-screen mt-3">
-      <div className="pl-2">
-        <HamburgerMenu />
-      </div>
-  
       <main className="flex-1 flex justify-center">
         <div className="w-full max-w-5xl p-4 lg:px-8">
           <div className="flex justify-between items-center mb-6">

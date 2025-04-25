@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { ResponsiveContainer, Line, XAxis, YAxis, CartesianGrid, ComposedChart, Tooltip } from "recharts";
 import pb from "@/lib/pocketbase";
 import { Filters } from "./Filter";
-import HamburgerMenu from "@/components/custom/HamburgerMenu";
 
 interface XpoDashboardProps {
     client: string;
@@ -639,10 +638,7 @@ function XpoDashboard({ client }: XpoDashboardProps) {
     const showDashedLine = ["Today", "Yesterday", "This Week", "Last Week", "This Month"].includes(selectedDateFilter);
 
     return (
-        <div className="relative flex min-h-screen text-white overflow-hidden">
-            <div className="pl-2 mt-3">
-                <HamburgerMenu />
-            </div>
+        <div className="relative flex min-h-screen text-white overflow-hidden pl-14">  
             <div className="flex-1 p-3 sm:p-4 md:p-6"> 
                 <div>
                     <h1 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-0">{getHeadingText()}</h1>
