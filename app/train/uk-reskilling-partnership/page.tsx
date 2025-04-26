@@ -820,19 +820,19 @@ const LEVELS = [
 
 const PRICES = {
   [TABS[0]]: { // Online Self-learn Course Prices
-    [LEVELS[0].name]: "£40 / month", 
-    [LEVELS[1].name]: "£55 / month", 
-    [LEVELS[2].name]: "£70 / month", 
+    [LEVELS[0].name]: "£40 / month",
+    [LEVELS[1].name]: "£55 / month",
+    [LEVELS[2].name]: "£70 / month",
   },
   [TABS[1]]: {  // Online Trainer-led Classroom Prices
-    [LEVELS[0].name]: "£150 / month", 
-    [LEVELS[1].name]: "£180 / month", 
-    [LEVELS[2].name]: "£220 / month", 
+    [LEVELS[0].name]: "£150 / month",
+    [LEVELS[1].name]: "£180 / month",
+    [LEVELS[2].name]: "£220 / month",
   },
   [TABS[2]]: { // In-person Training Prices
-    [LEVELS[0].name]: "£350 / month", 
-    [LEVELS[1].name]: "£420 / month", 
-    [LEVELS[2].name]: "£510 / month", 
+    [LEVELS[0].name]: "£350 / month",
+    [LEVELS[1].name]: "£420 / month",
+    [LEVELS[2].name]: "£510 / month",
   },
 };
 
@@ -897,24 +897,24 @@ export default function ReskillingHub() {
       {/* --- Hero Section --- */}
       <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-6 p-6 rounded-lg text-white">
         {/* Content unchanged */}
-        <div className="p-6 rounded-lg flex flex-col justify-between bg-gray-800 shadow-md ">
+        <div className="rounded-lg flex flex-col justify-between">
           <div>
             <h1 className="text-3xl font-bold mb-4">Reskilling Hub</h1>
             <div className="flex items-center gap-3 mb-4">
               <Image
                 src="/olly.jpg"
                 alt="Olly Cogan"
-                width={40}
-                height={40}
+                width={60}
+                height={60}
                 className="rounded-full"
               />
-              <span className="font-semibold">Olly Cogan</span>
+              <span className="font-semibold text-xl">Olly Cogan</span>
             </div>
-            <p className="mb-4">
+            <p className="mb-4 tracking-wider">
               Our Founder and visionary leader <b>Olly Cogan</b> at <b>Alphalake Services</b> feels as artificial intelligence continues
               to transform industries, the demand for cutting-edge skills is greater than ever.
             </p>
-            <p className="mb-6">
+            <p className="mb-6 tracking-wider">
               At <b>Alphalake Services</b>, we are committed to empowering the people of Wales with the
               knowledge and expertise needed to thrive within an AI-driven world.
             </p>
@@ -924,7 +924,7 @@ export default function ReskillingHub() {
             <Button>Start Learning</Button>
           </div>
         </div>
-        <div className="p-6 rounded-lg flex items-center justify-center bg-gray-800 shadow-md">
+        <div className="rounded-lg flex items-center justify-center shadow-md">
           <Image
             src="/OL.jpg"
             alt="Olly Cogan with team"
@@ -953,18 +953,36 @@ export default function ReskillingHub() {
             <Image src="/student.png" alt="Online Training" width={50} height={50} />
             <h3 className="font-semibold mt-4">Online Training Program</h3>
             <ul className="text-sm mt-2 list-disc list-inside">
-              <li>Attend live video classes.</li>
-              <li>Access past lecture recordings.</li>
-              <li>Schedule live one-on-one mentorship sessions with trainers.</li>
+              <li className="flex">
+                <span className="mr-2 font-bold">•</span>
+                <span>Attend live video classes.</span>
+              </li>
+              <li className="flex">
+                <span className="mr-2 font-bold">•</span>
+                <span>Access past lecture recordings.</span>
+              </li>
+              <li className="flex">
+                <span className="mr-2 font-bold">•</span>
+                <span>Schedule live one-on-one mentorship sessions with trainers.</span>
+              </li>
             </ul>
           </div>
           <div className="bg-gray-800 text-white p-6 rounded-lg flex flex-col text-left">
             <Image src="/training.png" alt="In-Class Course" width={50} height={50} />
             <h3 className="font-semibold mt-4">In Class Course</h3>
             <ul className="text-sm mt-2 list-disc list-inside">
-              <li>Attend in-person classes with trainers.</li>
-              <li>Discuss doubts after class.</li>
-              <li>Schedule in-person mentorship sessions with trainers.</li>
+              <li className="flex">
+                <span className="mr-2 font-bold">•</span>
+                <span>Attend in-person classes with trainers</span>
+              </li>
+              <li className="flex">
+                <span className="mr-2 font-bold">•</span>
+                <span>Discuss doubts after class.</span>
+              </li>
+              <li className="flex">
+                <span className="mr-2 font-bold">•</span>
+                <span>Schedule in-person mentorship sessions with trainers.</span>
+              </li>
             </ul>
           </div>
         </div>
@@ -972,121 +990,13 @@ export default function ReskillingHub() {
           <Button>Start Learning</Button>
         </div>
       </div>
-
-      {/* --- Certification Section --- */}
-      {/* <div className="max-w-5xl w-full text-left mt-16">
-         <div className="float-right ml-6 mb-4 w-[400px]">
-           <Image
-             src="/certificate.png"
-             alt="Certificate"
-             width={400}
-             height={300}
-             className="rounded-lg block"
-           />
-         </div>
-         <div>
-           <h2 className="text-2xl font-bold mb-4">Get Certified</h2>
-           <h3 className="font-semibold">Advanced Certification</h3>
-           <ul className="text-sm mb-4 list-disc list-inside">
-             <li>The Advanced Certification is awarded to participants who complete three additional courses after achieving the Intermediate level.</li>
-             <li>This level focuses on expert knowledge, strategic implementation, and high-level problem-solving.</li>
-             <li>Graduates with this certification showcase mastery in their field, making them highly qualified professionals.</li>
-           </ul>
-           <h3 className="font-semibold">Beginner Certification</h3>
-           <ul className="text-sm mb-4 list-disc list-inside">
-             <li>To earn a Beginner Certification, participants must complete five introductory courses.</li>
-             <li>This level provides foundational knowledge and skills, preparing learners for more advanced concepts.</li>
-             <li>Upon successful completion, participants receive a certification acknowledging their understanding of the fundamentals.</li>
-           </ul>
-           <h3 className="font-semibold">Intermediate Certification</h3>
-           <ul className="text-sm list-disc list-inside">
-             <li>To qualify for an Intermediate Certification, participants must complete four additional courses beyond the Beginner level.</li>
-             <li>This level delves deeper into industry-specific skills and practical applications.</li>
-             <li>Earning this certification demonstrates proficiency in intermediate concepts and readiness for advanced training.</li>
-           </ul>
-         </div>
-         <div className="clear-both"></div>
-      </div> */}
-
-      {/* <div className="max-w-5xl w-full text-left mt-16">
-  <div className="mb-6">
-    <h2 className="text-3xl font-bold">Get Certified</h2>
-  </div>
-  
-  <div className="mb-8 flex justify-center">
-    <Image
-      src="/certificate.png"
-      alt="Certificate"
-      width={400}
-      height={300}
-      className="rounded-lg"
-    />
-  </div>
-  
-  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-    <div className="bg-gray-800 p-4 rounded-lg">
-      <h3 className="font-semibold text-center mb-3">Beginner Certification</h3>
-      <ul className="text-sm space-y-2">
-        <li className="flex">
-          <span className="mr-2">•</span>
-          <span>To earn a Beginner Certification, participants must complete five introductory courses.</span>
-        </li>
-        <li className="flex">
-          <span className="mr-2">•</span>
-          <span>This level provides foundational knowledge and skills, preparing learners for more advanced concepts.</span>
-        </li>
-        <li className="flex">
-          <span className="mr-2">•</span>
-          <span>Upon successful completion, participants receive a certification acknowledging their understanding of the fundamentals.</span>
-        </li>
-      </ul>
-    </div>
-    
-    <div className="bg-gray-800 p-4 rounded-lg">
-      <h3 className="font-semibold text-center mb-3">Intermediate Certification</h3>
-      <ul className="text-sm space-y-2">
-        <li className="flex">
-          <span className="mr-2">•</span>
-          <span>To qualify for an Intermediate Certification, participants must complete four additional courses beyond the Beginner level.</span>
-        </li>
-        <li className="flex">
-          <span className="mr-2">•</span>
-          <span>This level delves deeper into industry-specific skills and practical applications.</span>
-        </li>
-        <li className="flex">
-          <span className="mr-2">•</span>
-          <span>Earning this certification demonstrates proficiency in intermediate concepts and readiness for advanced training.</span>
-        </li>
-      </ul>
-    </div>
-    
-    <div className="bg-gray-800 p-4 rounded-lg">
-      <h3 className="font-semibold text-center mb-3">Advanced Certification</h3>
-      <ul className="text-sm space-y-2">
-        <li className="flex">
-          <span className="mr-2">•</span>
-          <span>The Advanced Certification is awarded to participants who complete three additional courses after achieving the Intermediate level.</span>
-        </li>
-        <li className="flex">
-          <span className="mr-2">•</span>
-          <span>This level focuses on expert knowledge, strategic implementation, and high-level problem-solving.</span>
-        </li>
-        <li className="flex">
-          <span className="mr-2">•</span>
-          <span>Graduates with this certification showcase mastery in their field, making them highly qualified professionals.</span>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div> */}
       <div className="max-w-5xl w-full text-left mt-16">
-        <div className="flex flex-col md:flex-row items-center md:items-start mb-8">
-          <div className="flex-1 md:pr-8 justify-center">
-            <h2 className="text-3xl font-bold mb-4 ">Get Certified</h2>
-          </div>
-          <div className="mt-4 md:mt-0">
+        <h2 className="text-3xl font-bold mb-6 justify-center text-center">Get Certified</h2>
+
+        <div className="flex justify-center items-center mb-8">
+          <div>
             <Image
-              src="/certificate.png"
+              src="/certi.png"
               alt="Certificate"
               width={400}
               height={300}
@@ -1094,6 +1004,7 @@ export default function ReskillingHub() {
             />
           </div>
         </div>
+
 
         {/* 3-column grid layout */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -1155,9 +1066,9 @@ export default function ReskillingHub() {
           </div>
         </div>
       </div>
-      <section className="w-full py-12 px-4 mt-16">
+      <section className="w-full py-12 px-4 mt-12">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-center text-3xl font-bold mb-8">
+          <h2 className="text-center text-3xl font-bold mb-16">
             Customized for you
           </h2>
 

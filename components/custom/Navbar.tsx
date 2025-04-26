@@ -396,7 +396,7 @@ function NavbarClient() {
                   href="/alpha-appa/employee-onboarding"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  Employee onboarding
+                  HR onboarding (enterprise)
                 </Link>
               </li>
               <li className="w-full">
@@ -404,7 +404,7 @@ function NavbarClient() {
                   href="/alpha-apps/pharmacy-billing-portal"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  Pharmacy billing portal
+                  Billing portal (pharmacy)
                 </Link>
               </li>
               <li className="w-full">
@@ -420,7 +420,7 @@ function NavbarClient() {
                   href="/alpha-apps/rate-my-shift-healthcare"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  RateMyShift (healthcare)
+                  RateMyShift (nursing)
                 </Link>
               </li>
             </ul>

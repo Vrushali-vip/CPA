@@ -533,6 +533,8 @@ import Link from "next/link";
 import NewsletterForm from "./NewsletterForm";
 import { Suspense } from "react";
 import { InstagramIcon, LinkedinIcon, YoutubeIcon, } from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faThreads } from "@fortawesome/free-brands-svg-icons";
 
 export default function Footer() {
   return (
@@ -555,7 +557,7 @@ export default function Footer() {
             alt="Alphalake Services"
           />
         </div>
-        <div className="flex flex-wrap gap-8 mt-24"> 
+        <div className="flex flex-wrap gap-8 mt-24">
           <div
             className="bg-white border rounded-xl w-32 h-32 grid place-items-center p-2 overflow-hidden"
             title="Crown Commercial Service Supplier"
@@ -670,7 +672,7 @@ export default function Footer() {
         </div>
       </div> */}
 
-      <div className="w-full px-2"> 
+      <div className="w-full px-2">
         <div className="relative w-full">
           <Image
             src="/png.png"
@@ -752,29 +754,7 @@ export default function Footer() {
             </Link>
           </div>
           <div className="flex gap-3 flex-wrap">
-            {/* <Link
-              className="p-1 rounded-md hover:bg-primary-foreground hover:text-primary"
-              target="_blank"
-              href="https://www.facebook.com/AlphalakeAi/"
-            >
-              <FacebookIcon />
-            </Link> */}
 
-            <Link
-              className="p-1 rounded-md hover:bg-primary-foreground hover:text-primary"
-              target="_blank"
-              href="https://www.instagram.com/alphalake_ai/"
-            >
-              <Image src="/threads.png" alt="Facebook" width={24} height={24} />
-            </Link>
-
-            <Link
-              className="p-1 rounded-md hover:bg-primary-foreground hover:text-primary"
-              target="_blank"
-              href="https://www.instagram.com/alphalake_ai/"
-            >
-              <InstagramIcon />
-            </Link>
             <Link
               className="p-1 rounded-md hover:bg-primary-foreground hover:text-primary"
               target="_blank"
@@ -789,6 +769,25 @@ export default function Footer() {
             >
               <YoutubeIcon />
             </Link>
+            <Link
+              className="p-1 rounded-md hover:bg-primary-foreground hover:text-primary transition-colors duration-300"
+              target="_blank"
+              href="https://www.instagram.com/alphalake_ai/"
+            >
+              <FontAwesomeIcon
+                icon={faThreads}
+                className="w-6 h-6 text-inherit"
+              />
+            </Link>
+            <Link
+              className="p-1 rounded-md hover:bg-primary-foreground hover:text-primary"
+              target="_blank"
+              href="https://www.instagram.com/alphalake_ai/"
+            >
+              <InstagramIcon />
+            </Link>
+
+
           </div>
         </div>
         <div className="text-center text-muted-foreground space-y-4 pt-4">
