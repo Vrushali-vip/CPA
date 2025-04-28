@@ -2,7 +2,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, ChevronDown, ChevronUp } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronUp, User } from "lucide-react";
 import { Suspense } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
@@ -538,7 +538,7 @@ function NavbarClient() {
                     >
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          {/* <button className="flex items-center gap-2 p-1 rounded-full bg-primary transition">
+                          <button className="flex items-center gap-2 p-1 rounded-full bg-primary transition">
                             {session?.data?.user?.image ? (
                               <Image
                                 width={50}
@@ -549,7 +549,7 @@ function NavbarClient() {
                               />
                             ) : (
                               <div className="w-7 h-7 rounded-full bg-secondary flex items-center justify-center">
-                                <User className="w-5 h-5 text-primary" />
+                                <User className="w-5 h-5" />
                               </div>
                             )}
                             {isDropdownOpen ? (
@@ -560,30 +560,6 @@ function NavbarClient() {
                               <ChevronDown
                                 size={16}
                               />
-                            )}
-                          </button> */}
-                          <button className="flex items-center gap-2 p-1 rounded-full bg-primary transition">
-                            {session?.data?.user?.image && session.data.user.image !== "N/A" ? (
-                              <Image
-                                width={50}
-                                height={50}
-                                src={session.data.user.image}
-                                className="w-7 h-7 rounded-full object-cover"
-                                alt="User avatar"
-                              />
-                            ) : (
-                              <Image
-                                width={50}
-                                height={50}
-                                src="/userimage.png"
-                                className="w-7 h-7 rounded-full "
-                                alt="Default user avatar"
-                              />
-                            )}
-                            {isDropdownOpen ? (
-                              <ChevronUp size={16} />
-                            ) : (
-                              <ChevronDown size={16} />
                             )}
                           </button>
 

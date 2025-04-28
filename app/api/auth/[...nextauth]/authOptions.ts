@@ -22,7 +22,7 @@ const authOptions: NextAuthOptions = {
                 sub: authData.record.sub,
                 image: authData.record.avatar
         ? getImageUrl("users", authData.record.id, authData.record.avatar)
-        : "/img.jpg",           }
+        : null,           }
         } catch (error) {
             console.log(error);
             
