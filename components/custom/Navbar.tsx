@@ -96,7 +96,7 @@ function NavbarClient() {
                   href={isIndia ? "/design/process-design-workshop-india" : "design/process-design-workshop"}
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  Process design workshop
+                  Processes and workflows
                 </Link>
               </li>
               <li className="w-full">
@@ -104,31 +104,7 @@ function NavbarClient() {
                   href={isIndia ? "/design/user-design-workshop-india" : "/design/user-design-workshop"}
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  User design workshop
-                </Link>
-              </li>
-              <li className="w-full">
-                <Link
-                  href={isIndia ? "/design/product-definition-workshop-india" : "/design/product-definition-workshop"}
-                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
-                >
-                  Product definition workshop
-                </Link>
-              </li>
-              <li className="w-full">
-                <Link
-                  href={isIndia ? "/design/design-as-a-service-india" : "/design/design-as-a-service"}
-                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
-                >
-                  Design-as-a-Service
-                </Link>
-              </li>
-              <li className="w-full">
-                <Link
-                  href={isIndia ? "/design/design-pricing-india" : "/design/managed-services"}
-                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
-                >
-                  Design Pricing
+                  User Interfaces and Experience
                 </Link>
               </li>
             </ul>
@@ -149,7 +125,7 @@ function NavbarClient() {
                   href="/build/connect-ai-to-your-data"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  {'Connect AI to your data'}
+                  {'AI agents (on your data)'}
                 </Link>
               </li>
               <li className="w-full">
@@ -157,7 +133,7 @@ function NavbarClient() {
                   href="/build/your-custom-automation"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  Your custom Automation
+                  Process Automation
                 </Link>
               </li>
               <li className="w-full">
@@ -165,7 +141,7 @@ function NavbarClient() {
                   href="/build/your-custom-integration"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  Your custom Integration
+                  App Integration
                 </Link>
               </li>
               <li className="w-full">
@@ -173,7 +149,7 @@ function NavbarClient() {
                   href="/build/your-market-facing-api"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  Your market-facing API
+                  User Interfaces / Apps
                 </Link>
               </li>
               <li className="w-full">
@@ -181,7 +157,7 @@ function NavbarClient() {
                   href="/build/your-no-code-connector"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  Your no-code Connector
+                  No code Connector
                 </Link>
               </li>
               <li className="w-full">
@@ -189,23 +165,7 @@ function NavbarClient() {
                   href="/build/your-custom-app"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  Your custom App
-                </Link>
-              </li>
-              <li className="w-full">
-                <Link
-                  href="/build/build-as-a-service"
-                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
-                >
-                  Build-as-a-Service
-                </Link>
-              </li>
-              <li className="w-full">
-                <Link
-                  href="/build/build-pricing"
-                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
-                >
-                  Build Pricing
+                  API&apos;s
                 </Link>
               </li>
             </ul>
@@ -231,14 +191,6 @@ function NavbarClient() {
               </li>
               <li className="w-full">
                 <Link
-                  href="/servicehub"
-                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
-                >
-                  Alphalake Services Hub
-                </Link>
-              </li>
-              <li className="w-full">
-                <Link
                   href="/support/process-support"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
@@ -250,7 +202,7 @@ function NavbarClient() {
                   href="/support/integration-as-a-service"
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
-                  Integration Support
+                  Integration as a Service
                 </Link>
               </li>
               <li className="w-full">
@@ -259,14 +211,6 @@ function NavbarClient() {
                   className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                 >
                   Solution Support
-                </Link>
-              </li>
-              <li className="w-full">
-                <Link
-                  href="/support/support-pricing"
-                  className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
-                >
-                  Support Pricing
                 </Link>
               </li>
             </ul>
