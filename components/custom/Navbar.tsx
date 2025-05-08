@@ -566,7 +566,7 @@ function NavbarClient() {
                   >
                     Book A Demo
                   </Button> */}
-                  <a
+                  {/* <a
                     href="https://calendar.google.com/calendar/u/0/appointments/AcZssZ052PXkGX-2pK1ppfAwtHu0_QYEZWL2Wu99D4M="
                     target="_blank"
                     rel="noopener noreferrer"
@@ -578,8 +578,16 @@ function NavbarClient() {
                     >
                       Book A Demo
                     </Button>
-                  </a>
-
+                  </a> */}
+                  <Link href="/bookings" passHref>
+                    <Button
+                      variant="default"
+                      className="ml-2 lg:ml-auto rounded-full px-4"
+                      size="sm"
+                    >
+                      Book A Demo
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>
