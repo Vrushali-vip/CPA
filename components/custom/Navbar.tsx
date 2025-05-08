@@ -7,7 +7,6 @@ import { Suspense } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
 import React, { useState, useRef, useEffect } from "react";
-import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,6 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
+import BookingDropdown from "../BookingDropdown";
 
 interface Country {
   code: string;
@@ -290,7 +290,7 @@ function NavbarClient() {
                       href="/alphabots/penalty-charge-notices"
                       className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                     >
-                      Penalty Charge Notices
+                      Pay/Appeal Penalty Charges (enterprise)
                     </Link>
                   </li>
                   <li className="w-full">
@@ -298,7 +298,7 @@ function NavbarClient() {
                       href="/alphabots/nhs-hospital-patient-admin"
                       className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                     >
-                      NHS Hospital Patient Admin
+                      Patient onboarding / NHS PAS (hospital)
                     </Link>
                   </li>
 
@@ -307,7 +307,7 @@ function NavbarClient() {
                       href="/alphabots/hmrc-import-lookup"
                       className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                     >
-                      HMRC Import Lookup
+                      HMRC Import Tariff (enterprise)
                     </Link>
                   </li>
                   <li className="w-full">
@@ -315,7 +315,15 @@ function NavbarClient() {
                       href="/alphabots/snow-to-sap-sync"
                       className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
                     >
-                      ServiceNow to SAP automation
+                      ServiceNow x SAP (enterprise)
+                    </Link>
+                  </li>
+                  <li className="w-full">
+                    <Link
+                      href="/alphabots/snow-to-sap-sync"
+                      className="px-2 py-1 text-nowrap block text-sm hover:text-primary"
+                    >
+                      Prescription invoicing (pharmacy)
                     </Link>
                   </li>
                 </>
@@ -579,7 +587,7 @@ function NavbarClient() {
                       Book A Demo
                     </Button>
                   </a> */}
-                  <Link href="/bookings" passHref>
+                  {/* <Link href="/bookings" passHref>
                     <Button
                       variant="default"
                       className="ml-2 lg:ml-auto rounded-full px-4"
@@ -587,7 +595,8 @@ function NavbarClient() {
                     >
                       Book A Demo
                     </Button>
-                  </Link>
+                  </Link> */}
+                  <BookingDropdown />
                 </div>
               </div>
             </div>
