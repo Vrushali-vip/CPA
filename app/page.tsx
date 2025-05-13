@@ -1,0 +1,36 @@
+// import { MapPlaceholder } from "@/components/MapPlaceholder";
+// import InsuranceForm from "@/components/insurance-form/InsuranceForm";
+// import { NewsFeed } from "@/components/NewsFeed";
+
+// export default function Home() {
+//   return (
+// <main className="space-y-12 p-6 overflow-x-hidden max-w-full">
+// <MapPlaceholder />
+//       <InsuranceForm />
+//       <NewsFeed />
+//     </main>
+//   );
+// }
+
+
+"use client";
+
+import { useRef } from "react";
+import { MapPlaceholder } from "@/components/MapPlaceholder";
+import InsuranceForm from "@/components/insurance-form/InsuranceForm";
+import { NewsFeed } from "@/components/NewsFeed";
+
+export default function Home() {
+  const newsRef = useRef<HTMLDivElement>(null);
+
+  return (
+    <main className="space-y-12 p-6 overflow-x-hidden max-w-full">
+      <MapPlaceholder />
+      <InsuranceForm />
+      {/* Attach the ref here */}
+      <div ref={newsRef}>
+        <NewsFeed />
+      </div>
+    </main>
+  );
+}
