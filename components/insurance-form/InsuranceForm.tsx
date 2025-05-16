@@ -1506,7 +1506,7 @@ export default function InsuranceForm() {
               )}
               {step === steps.length - 1 && (
                 <Button type="submit" className="w-full sm:w-auto px-8 py-3 text-base bg-green-600 hover:bg-green-700 text-white" disabled={formState.isSubmitting}>
-                  {formState.isSubmitting ? "Processing..." : "Confirm & Purchase"}
+                  {formState.isSubmitting ? "Processing" : "Confirm & Purchase"}
                 </Button>
               )}
             </div>
