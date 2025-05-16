@@ -4390,10 +4390,414 @@
 //   );
 // }
 
+// "use client";
+
+// import { useState } from "react";
+// import { useForm, useFieldArray, Controller, FieldError, FieldErrors } from "react-hook-form";
+// import { joiResolver } from "@hookform/resolvers/joi";
+// import { Checkbox } from "@/components/ui/checkbox";
+// import { Label } from "@/components/ui/label";
+// import { Button } from "@/components/ui/button";
+// import {
+//     purchaseWithoutLoginSchema,
+//     type InsuranceFormValues,
+//     steps,
+//     tripPurposes,
+//     zoneTypes,
+//     fieldsByStep
+// } from "@/lib/insuranceFormSchema";
+// import {
+//     InputWithLabel,
+//     TextareaWithLabel,
+//     ControlledTextareaArray,
+//     SelectWithLabel
+// } from "./FormFields"; // Assuming FormFields is in the same directory
+
+// export default function InsuranceForm() {
+//   const [step, setStep] = useState(0);
+
+//   const form = useForm<InsuranceFormValues>({
+//     resolver: joiResolver(purchaseWithoutLoginSchema, {
+//       abortEarly: false,
+//     }),
+//     defaultValues: {
+//       c_name: "",
+//       c_email: "",
+//       c_phone: "",
+//       c_whats_app: "",
+//       c_birthdate: "",
+//       c_address: "",
+//       c_country: "",
+//       c_nationality: "",
+//       c_organization: "",
+//       trip_start_date: "",
+//       trip_end_date: "",
+//       stay_name: "",
+//       is_company_arranged: false,
+//       company_name: "",
+//       trip_countries: [],
+//       trip_cities: [{ name: "", stay_name: "", zoneType: "GREEN" }],
+//       trip_purpose: "",
+//       emergency_contact_name: "",
+//       emergency_contact_phone: "",
+//       emergency_contact_relation: "",
+//       consent: undefined,
+//       travellers: [{ name: "", birthdate: "" }],
+//       medical_conditions: [],
+//       current_medications: [],
+//       allergies: [],
+//       blood_type: "",
+//       special_assistance: "",
+//       green_zone_days: 0,
+//       amber_zone_days: 0,
+//       red_zone_days: 0,
+//       black_zone_days: 0,
+//     },
+//   });
+
+//   const { fields: travellerFields, append: appendTraveller, remove: removeTraveller } = useFieldArray({
+//     control: form.control,
+//     name: "travellers",
+//   });
+
+//   const { fields: cityFields, append: appendCity, remove: removeCity } = useFieldArray({
+//     control: form.control,
+//     name: "trip_cities",
+//   });
+
+//   const onSubmit = (data: InsuranceFormValues) => {
+//     const parsedData = {
+//         ...data,
+//         green_zone_days: Number(data.green_zone_days),
+//         amber_zone_days: Number(data.amber_zone_days),
+//         red_zone_days: Number(data.red_zone_days),
+//         black_zone_days: data.black_zone_days ? Number(data.black_zone_days) : 0,
+//         medical_conditions: data.medical_conditions?.filter(item => item && item.trim() !== ""),
+//         current_medications: data.current_medications?.filter(item => item && item.trim() !== ""),
+//         allergies: data.allergies?.filter(item => item && item.trim() !== ""),
+//     };
+//     console.log("Form Data Submitted:", parsedData);
+//   };
+
+//   const nextStep = async () => {
+//     const currentStepFields = fieldsByStep[step];
+//     const result = await form.trigger(currentStepFields as Array<keyof InsuranceFormValues>);
+
+//     if (!result) {
+//         const firstErrorField = currentStepFields.find(fieldName => {
+//             const keys = fieldName.split('.');
+//             let error: FieldErrors | FieldError | undefined = form.formState.errors;
+//             for (const key of keys) {
+//                 if (error && typeof error === 'object' && key in error) {
+//                   error = (error as FieldErrors)[key];
+//                 } else if (error && Array.isArray(error) && !isNaN(Number(key)) && Number(key) < error.length) {
+//                      error = error[Number(key)];
+//                 }
+//                 else {
+//                     error = undefined;
+//                     break;
+//                 }
+//             }
+//             return !!error;
+//         });
+
+//         if (firstErrorField) {
+//             const element = document.querySelector(`[name='${firstErrorField}']`) || document.getElementById(firstErrorField);
+//             element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+//         }
+//       return;
+//     }
+
+//     if (step < steps.length - 1) {
+//        setStep((prev) => prev + 1);
+//     }
+//   };
+
+//   const prevStep = () => setStep((prev) => Math.max(prev - 1, 0));
+
+//   const getError = (fieldName: string): FieldError | undefined => {
+//     const keys = fieldName.split('.');
+//     let error: FieldErrors | FieldError | undefined = form.formState.errors;
+//     try {
+//         for (const key of keys) {
+//             if (error && typeof error === 'object' && key in error) {
+//               error = (error as FieldErrors)[key];
+//               } else if (error && Array.isArray(error) && !isNaN(Number(key)) && Number(key) < error.length) {
+//                  error = error[Number(key)];
+//             }
+//             else {
+//                 return undefined;
+//             }
+//         }
+//         return (error && typeof error === 'object' && 'message' in error) ? error as FieldError : undefined;
+//     } catch (e) {
+//         console.warn(`Error accessing field error for ${fieldName}:`, e);
+//         return undefined;
+//     }
+// };
+
+
+//   return (
+//     <div className="flex justify-center px-4 py-10 bg-gray-100">
+//       <div className="w-full max-w-4xl">
+//         <div className="mb-8 space-y-4">
+//           <div className="flex items-center justify-between">
+//             {steps.map((label, index) => (
+//               <div key={index} className="flex-1 text-center text-sm">
+//                 <div
+//                   className={`w-8 h-8 mx-auto rounded-full flex items-center justify-center ${index <= step
+//                     ? "bg-[#1A2C50] text-white"
+//                     : "bg-[#00BBD3] text-white"
+//                     }`}
+//                 >
+//                   {index + 1}
+//                 </div>
+//                 <div className="mt-1">{label}</div>
+//               </div>
+//             ))}
+//           </div>
+//           <div className="h-2 bg-[#00BBD3] rounded-full">
+//             <div
+//               className="h-2 bg-[#1A2C50] rounded-full transition-all duration-300"
+//               style={{ width: `${((step + 1) / steps.length) * 100}%` }}
+//             />
+//           </div>
+//         </div>
+
+//         <div className="grid grid-cols-1 md:grid-cols-[70%_30%] gap-8">
+//           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+//             {step === 0 && (
+//               <>
+//                 <h2 className="text-xl font-semibold mb-4">Personal Information</h2>
+//                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+//                   <InputWithLabel label="Full Name" name="c_name" register={form.register} error={getError("c_name")} />
+//                   <InputWithLabel label="Email" name="c_email" register={form.register} type="email" error={getError("c_email")} />
+//                   <InputWithLabel label="Phone" name="c_phone" register={form.register} error={getError("c_phone")} />
+//                   <InputWithLabel label="WhatsApp" name="c_whats_app" register={form.register} error={getError("c_whats_app")} />
+//                   <InputWithLabel label="Birthdate" name="c_birthdate" register={form.register} type="date" error={getError("c_birthdate")} />
+//                   <InputWithLabel label="Address" name="c_address" register={form.register} error={getError("c_address")} />
+//                   <InputWithLabel label="Residence Country" name="c_country" register={form.register} error={getError("c_country")} />
+//                   <InputWithLabel label="Nationality" name="c_nationality" register={form.register} error={getError("c_nationality")} />
+//                   <InputWithLabel label="Organization (Optional)" name="c_organization" register={form.register} error={getError("c_organization")} />
+//                 </div>
+
+//                 <h2 className="text-xl font-semibold my-4 pt-4 border-t">Travellers</h2>
+//                 {travellerFields.map((field, index) => (
+//                   <div key={field.id} className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end border p-4 mb-2">
+//                     <InputWithLabel label={`Traveller ${index + 1} Name`} name={`travellers.${index}.name`} register={form.register} error={getError(`travellers.${index}.name`)} />
+//                     <InputWithLabel label="Birthdate" name={`travellers.${index}.birthdate`} register={form.register} type="date" error={getError(`travellers.${index}.birthdate`)} />
+//                     {travellerFields.length > 1 && (
+//                       <Button type="button" variant="destructive" onClick={() => removeTraveller(index)} className="h-10">Remove</Button>
+//                     )}
+//                   </div>
+//                 ))}
+//                  <Button type="button" variant="outline" onClick={() => appendTraveller({ name: "", birthdate: "" })}>Add Traveller</Button>
+//                  {getError("travellers") && <p className="text-red-500 text-sm">{getError("travellers")?.message || getError("travellers.root")?.message}</p>}
+//               </>
+//             )}
+
+//             {step === 1 && (
+//               <>
+//                 <h2 className="text-xl font-semibold mb-4">Trip Details</h2>
+//                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+//                   <InputWithLabel label="Trip Start Date" name="trip_start_date" register={form.register} type="date" error={getError("trip_start_date")} />
+//                   <InputWithLabel label="Trip End Date" name="trip_end_date" register={form.register} type="date" error={getError("trip_end_date")} />
+//                   <InputWithLabel label="Primary Destination Country" name="trip_countries.0" register={form.register} error={getError("trip_countries.0") || getError("trip_countries") || getError("trip_countries.root")} />
+//                   <SelectWithLabel
+//                     control={form.control}
+//                     name="trip_purpose"
+//                     label="Trip Purpose"
+//                     options={tripPurposes.map(p => ({ value: p, label: p.charAt(0) + p.slice(1).toLowerCase().replace(/_/g, " ") }))}
+//                     error={getError("trip_purpose")}
+//                     placeholder="Select trip purpose"
+//                   />
+//                   <InputWithLabel label="Stay Name (Optional)" name="stay_name" register={form.register} error={getError("stay_name")} />
+//                   <div className="col-span-1 md:col-span-2 flex items-center space-x-2">
+//                      <Checkbox
+//                         id="is_company_arranged"
+//                         {...form.register("is_company_arranged")}
+//                         checked={form.watch("is_company_arranged")}
+//                         onCheckedChange={(checked) => form.setValue("is_company_arranged", !!checked)}
+//                       />
+//                     <Label htmlFor="is_company_arranged">This trip is company arranged</Label>
+//                   </div>
+//                   {form.watch("is_company_arranged") && (
+//                     <InputWithLabel label="Company Name" name="company_name" register={form.register} error={getError("company_name")} />
+//                   )}
+//                 </div>
+
+//                 <h2 className="text-xl font-semibold my-4 pt-4 border-t">Trip Cities / Stops</h2>
+//                 {cityFields.map((field, index) => (
+//                   <div key={field.id} className="space-y-4 border p-4 mb-2">
+//                     <h3 className="font-medium">City / Stop {index + 1}</h3>
+//                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+//                         <InputWithLabel label="City Name" name={`trip_cities.${index}.name`} register={form.register} error={getError(`trip_cities.${index}.name`)} />
+//                         <InputWithLabel label="Stay Name (Optional)" name={`trip_cities.${index}.stay_name`} register={form.register} error={getError(`trip_cities.${index}.stay_name`)} />
+//                          <SelectWithLabel
+//                             control={form.control}
+//                             name={`trip_cities.${index}.zoneType`}
+//                             label="Zone Type"
+//                             options={zoneTypes.map(z => ({ value: z, label: z }))}
+//                             error={getError(`trip_cities.${index}.zoneType`)}
+//                             placeholder="Select zone type"
+//                         />
+//                     </div>
+//                     {cityFields.length > 1 && (
+//                       <Button type="button" variant="destructive" size="sm" onClick={() => removeCity(index)}>Remove City</Button>
+//                     )}
+//                   </div>
+//                 ))}
+//                 <Button type="button" variant="outline" onClick={() => appendCity({ name: "", stay_name: "", zoneType: "GREEN" })}>Add City/Stop</Button>
+//                 {getError("trip_cities") && <p className="text-red-500 text-sm">{getError("trip_cities")?.message || getError("trip_cities.root")?.message}</p>}
+//               </>
+//             )}
+
+//             {step === 2 && (
+//               <>
+//                 <h2 className="text-xl font-semibold mb-4">Emergency Contact</h2>
+//                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+//                   <InputWithLabel label="Emergency Contact Name" name="emergency_contact_name" register={form.register} error={getError("emergency_contact_name")} />
+//                   <InputWithLabel label="Emergency Phone" name="emergency_contact_phone" register={form.register} error={getError("emergency_contact_phone")} />
+//                   <InputWithLabel label="Relation" name="emergency_contact_relation" register={form.register} error={getError("emergency_contact_relation")} />
+//                 </div>
+//               </>
+//             )}
+
+//             {step === 3 && (
+//               <>
+//                 <h2 className="text-xl font-semibold mb-4">Medical Information</h2>
+//                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+//                   <ControlledTextareaArray
+//                     control={form.control}
+//                     name="medical_conditions"
+//                     label="Medical Conditions (comma-separated)"
+//                     error={getError("medical_conditions")}
+//                   />
+//                   <ControlledTextareaArray
+//                     control={form.control}
+//                     name="current_medications"
+//                     label="Current Medications (comma-separated)"
+//                     error={getError("current_medications")}
+//                   />
+//                   <ControlledTextareaArray
+//                     control={form.control}
+//                     name="allergies"
+//                     label="Allergies (comma-separated)"
+//                     error={getError("allergies")}
+//                   />
+//                   <TextareaWithLabel label="Special Assistance (Optional)" name="special_assistance" register={form.register} error={getError("special_assistance")} />
+//                   <InputWithLabel label="Blood Type (Optional)" name="blood_type" register={form.register} error={getError("blood_type")} />
+//                 </div>
+//               </>
+//             )}
+
+//             {step === 4 && (
+//               <>
+//                 <h2 className="text-xl font-semibold mb-4">Risk Zone Exposure (Days)</h2>
+//                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+//                   <InputWithLabel label="Green Zone Days" name="green_zone_days" register={form.register} type="number" error={getError("green_zone_days")} />
+//                   <InputWithLabel label="Amber Zone Days" name="amber_zone_days" register={form.register} type="number" error={getError("amber_zone_days")} />
+//                   <InputWithLabel label="Red Zone Days" name="red_zone_days" register={form.register} type="number" error={getError("red_zone_days")} />
+//                   <InputWithLabel label="Black Zone Days (Optional)" name="black_zone_days" register={form.register} type="number" error={getError("black_zone_days")} />
+//                 </div>
+
+//                 <div className="flex items-start space-x-2 pt-4">
+//                    <Controller
+//                         name="consent"
+//                         control={form.control}
+//                         render={({ field }) => (
+//                            <Checkbox
+//                                 id="consent"
+//                                 checked={field.value === true}
+//                                 onCheckedChange={(checked) => field.onChange(checked === true ? true : undefined)}
+//                                 onBlur={field.onBlur} // Important for touched state
+//                            />
+//                         )}
+//                     />
+//                   <div className="grid gap-1.5 leading-none">
+//                     <Label htmlFor="consent" className="font-medium">
+//                       I consent to the use of my medical information in an emergency.
+//                     </Label>
+//                     <p className="text-sm text-muted-foreground">
+//                       You must agree to this to proceed.
+//                     </p>
+//                   </div>
+//                 </div>
+//                 {getError("consent") && (
+//                   <p className="text-red-500 text-sm">{getError("consent")?.message}</p>
+//                 )}
+//               </>
+//             )}
+
+//             <div className="flex justify-between pt-6">
+//               {step > 0 && (
+//                 <Button type="button" variant="outline" onClick={prevStep} className="w-76 px-6">
+//                   Back
+//                 </Button>
+//               )}
+//               {step === 0 && <div />}
+//               {step < steps.length - 1 ? (
+//                 <Button type="button" onClick={nextStep} className="w-76 px-6">
+//                   Next
+//                 </Button>
+//               ) : (
+//                 <Button type="submit" className="w-76 px-6" disabled={form.formState.isSubmitting}>
+//                   {form.formState.isSubmitting ? "Submitting..." : "Submit"}
+//                 </Button>
+//               )}
+//             </div>
+//           </form>
+
+//           <div className="hidden md:block mt-6">
+//             <div className="bg-white border border-input p-6 min-h-[400px] flex flex-col rounded-md shadow-sm">
+//               <h3 className="text-2xl font-semibold mb-6 text-[#1A2C50]">Quote Summary</h3>
+//               <div className="grid grid-cols-2 gap-4 text-sm">
+//                 <div>
+//                   <p className="font-semibold">Traveling To</p>
+//                   <p className="text-gray-500">{form.watch("trip_countries.0") || "N/A"}</p>
+//                 </div>
+//                 <div>
+//                   <p className="font-semibold">Travelers</p>
+//                   <p className="text-gray-500">{form.watch("travellers")?.length || 1}</p>
+//                 </div>
+//                 <div className="col-span-2 mt-4">
+//                   <p className="font-semibold">Travel Dates</p>
+//                   <p className="text-gray-500">
+//                     {form.watch("trip_start_date") || "N/A"} - {form.watch("trip_end_date") || "N/A"}
+//                   </p>
+//                 </div>
+//                 <div className="col-span-2 mt-4">
+//                   <p className="font-semibold">Applicant Age</p>
+//                   <p className="text-gray-500">
+//                     {form.watch("c_birthdate") && !isNaN(new Date(form.watch("c_birthdate")).getFullYear())
+//                       ? new Date().getFullYear() - new Date(form.watch("c_birthdate")).getFullYear()
+//                       : "N/A"}
+//                   </p>
+//                 </div>
+//               </div>
+//               <hr className="my-6 border-t-2 border-[#00BBD3]" />
+//               <div className="text-sm space-y-2">
+//                 <p className="font-semibold">Base Price</p>
+//                 <p className="text-gray-500">$100</p>
+//               </div>
+//               <hr className="my-6 border-t-2 border-[#00BBD3]" />
+//               <div className="text-sm space-y-2">
+//                 <p className="font-semibold">Total Price</p>
+//                 <p className="text-lg font-bold text-[#1A2C50]">$200</p>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+
 "use client";
 
-import { useState } from "react";
-import { useForm, useFieldArray, Controller, FieldError, FieldErrors } from "react-hook-form";
+import { useState, useEffect } from "react";
+import { useForm, Controller, FieldError, FieldErrors, Path } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
@@ -4401,17 +4805,20 @@ import { Button } from "@/components/ui/button";
 import {
     purchaseWithoutLoginSchema,
     type InsuranceFormValues,
-    steps,
+    steps, // Updated step names
     tripPurposes,
-    zoneTypes,
-    fieldsByStep
+    // zoneTypes, // Not directly used in UI inputs now for selection
+    fieldsByStep, // Updated field mapping
+    कवरेजस्तरOptions, // coverageLevelOptions
+    nationalityOptions,
+    countryOptions,
 } from "@/lib/insuranceFormSchema";
 import {
     InputWithLabel,
     TextareaWithLabel,
     ControlledTextareaArray,
     SelectWithLabel
-} from "./FormFields"; // Assuming FormFields is in the same directory
+} from "./FormFields";
 
 export default function InsuranceForm() {
   const [step, setStep] = useState(0);
@@ -4421,88 +4828,97 @@ export default function InsuranceForm() {
       abortEarly: false,
     }),
     defaultValues: {
-      c_name: "",
-      c_email: "",
-      c_phone: "",
-      c_whats_app: "",
-      c_birthdate: "",
-      c_address: "",
-      c_country: "",
-      c_nationality: "",
-      c_organization: "",
+      // Page 1
       trip_start_date: "",
       trip_end_date: "",
-      stay_name: "",
-      is_company_arranged: false,
-      company_name: "",
-      trip_countries: [],
-      trip_cities: [{ name: "", stay_name: "", zoneType: "GREEN" }],
-      trip_purpose: "",
-      emergency_contact_name: "",
-      emergency_contact_phone: "",
-      emergency_contact_relation: "",
-      consent: undefined,
-      travellers: [{ name: "", birthdate: "" }],
-      medical_conditions: [],
-      current_medications: [],
-      allergies: [],
-      blood_type: "",
-      special_assistance: "",
       green_zone_days: 0,
       amber_zone_days: 0,
       red_zone_days: 0,
-      black_zone_days: 0,
+      black_zone_days: 0, // For reference
+      coverage_level: "",
+      add_transit_coverage: false,
+      add_personal_accident_coverage: false,
+      // Page 2
+      c_name: "",
+      c_birthdate: "",
+      c_phone: "",
+      c_whats_app: "",
+      c_email: "",
+      c_nationality: "",
+      city_of_residence: "",
+      trip_countries: [], // Will hold one country
+      // Page 3
+      arrival_in_ukraine: "",
+      departure_from_ukraine: "",
+      primary_cities_regions_ukraine: "",
+      trip_purpose: "",
+      stay_name: "",
+      company_name: "",
+      // Page 4
+      emergency_contact_name: "",
+      emergency_contact_phone: "",
+      emergency_contact_relation: "",
+      has_medical_conditions: false,
+      has_allergies: false,
+      has_current_medications: false,
+      medical_conditions: [],
+      allergies: [],
+      current_medications: [],
+      blood_type: "",
+      special_assistance: "",
+      // Page 5
+      affiliate_code: "",
+      consent: undefined,
+      // Legacy/Internal (some defaults set in schema)
+      c_organization: "",
+      travellers: [{ name: "", birthdate: ""}], // Will be populated by c_name, c_birthdate
+      is_company_arranged: false,
+      trip_cities: [], // Not directly part of new UI input flow
     },
   });
 
-  const { fields: travellerFields, append: appendTraveller, remove: removeTraveller } = useFieldArray({
-    control: form.control,
-    name: "travellers",
-  });
+  // Update traveller name and birthdate when c_name or c_birthdate changes
+  // This assumes a single traveller based on the new UI ("Your Details")
+  const cNameValue = form.watch("c_name");
+  const cBirthdateValue = form.watch("c_birthdate");
 
-  const { fields: cityFields, append: appendCity, remove: removeCity } = useFieldArray({
-    control: form.control,
-    name: "trip_cities",
-  });
+  useEffect(() => {
+    if (form.getValues("travellers").length > 0) {
+        form.setValue("travellers.0.name", cNameValue || "", { shouldValidate: step === 1 }); // Validate if on relevant step
+        form.setValue("travellers.0.birthdate", cBirthdateValue || "", { shouldValidate: step === 1 });
+    } else if (cNameValue || cBirthdateValue) { // Initialize if empty and values exist
+        form.setValue("travellers", [{ name: cNameValue || "", birthdate: cBirthdateValue || ""}]);
+    }
+  }, [cNameValue, cBirthdateValue, form, step]);
+
 
   const onSubmit = (data: InsuranceFormValues) => {
-    const parsedData = {
+    // Ensure the single traveller data is correctly set from c_name and c_birthdate
+    const finalData = {
         ...data,
+        travellers: [{ name: data.c_name, birthdate: data.c_birthdate }],
         green_zone_days: Number(data.green_zone_days),
         amber_zone_days: Number(data.amber_zone_days),
         red_zone_days: Number(data.red_zone_days),
         black_zone_days: data.black_zone_days ? Number(data.black_zone_days) : 0,
-        medical_conditions: data.medical_conditions?.filter(item => item && item.trim() !== ""),
-        current_medications: data.current_medications?.filter(item => item && item.trim() !== ""),
-        allergies: data.allergies?.filter(item => item && item.trim() !== ""),
+        medical_conditions: data.has_medical_conditions ? data.medical_conditions?.filter(item => item && item.trim() !== "") : [],
+        allergies: data.has_allergies ? data.allergies?.filter(item => item && item.trim() !== "") : [],
+        current_medications: data.has_current_medications ? data.current_medications?.filter(item => item && item.trim() !== "") : [],
     };
-    console.log("Form Data Submitted:", parsedData);
+    console.log("Form Data Submitted:", finalData);
+    alert("Form submitted! Check console.");
   };
 
   const nextStep = async () => {
-    const currentStepFields = fieldsByStep[step];
-    const result = await form.trigger(currentStepFields as Array<keyof InsuranceFormValues>);
+    const currentStepFields = fieldsByStep[step] as Array<Path<InsuranceFormValues>>;
+    const result = await form.trigger(currentStepFields);
 
     if (!result) {
-        const firstErrorField = currentStepFields.find(fieldName => {
-            const keys = fieldName.split('.');
-            let error: FieldErrors | FieldError | undefined = form.formState.errors;
-            for (const key of keys) {
-                if (error && typeof error === 'object' && key in error) {
-                  error = (error as FieldErrors)[key];
-                } else if (error && Array.isArray(error) && !isNaN(Number(key)) && Number(key) < error.length) {
-                     error = error[Number(key)];
-                }
-                else {
-                    error = undefined;
-                    break;
-                }
-            }
-            return !!error;
-        });
-
-        if (firstErrorField) {
-            const element = document.querySelector(`[name='${firstErrorField}']`) || document.getElementById(firstErrorField);
+        const firstErrorKey = currentStepFields.find(
+            (fieldName) => getError(fieldName as string)
+        );
+        if (firstErrorKey) {
+            const element = document.querySelector(`[name='${firstErrorKey}']`) || document.getElementById(firstErrorKey as string);
             element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       return;
@@ -4515,31 +4931,100 @@ export default function InsuranceForm() {
 
   const prevStep = () => setStep((prev) => Math.max(prev - 1, 0));
 
+  // const getError = (fieldName: string): FieldError | undefined => {
+  //   const keys = fieldName.split('.');
+  //   let error: FieldErrors | FieldError | undefined = form.formState.errors;
+  //   try {
+  //       for (const key of keys) {
+  //            const k = key.match(/^\d+$/) ? parseInt(key, 10) : key; // Handle array indices
+  //           if (error && typeof error === 'object' && k in error) {
+  //               error = (error as any)[k];
+  //           } else {
+  //               return undefined;
+  //           }
+  //       }
+  //       return (error && typeof error === 'object' && 'message' in error) ? error as FieldError : undefined;
+  //   } catch (e) {
+  //       console.warn(`Error accessing field error for ${fieldName}:`, e);
+  //       return undefined;
+  //   }
+  // };
   const getError = (fieldName: string): FieldError | undefined => {
     const keys = fieldName.split('.');
     let error: FieldErrors | FieldError | undefined = form.formState.errors;
+  
     try {
-        for (const key of keys) {
-            if (error && typeof error === 'object' && key in error) {
-              error = (error as FieldErrors)[key];
-              } else if (error && Array.isArray(error) && !isNaN(Number(key)) && Number(key) < error.length) {
-                 error = error[Number(key)];
-            }
-            else {
-                return undefined;
-            }
+      for (const key of keys) {
+        const k = key.match(/^\d+$/) ? parseInt(key, 10) : key;
+  
+        if (error && typeof error === 'object' && error !== null) {
+          const typedError = error as Record<string | number, unknown>;
+          if (k in typedError) {
+            error = typedError[k] as FieldErrors | FieldError;
+          } else {
+            return undefined;
+          }
+        } else {
+          return undefined;
         }
-        return (error && typeof error === 'object' && 'message' in error) ? error as FieldError : undefined;
+      }
+  
+      return (error && typeof error === 'object' && 'message' in error)
+        ? error as FieldError
+        : undefined;
     } catch (e) {
-        console.warn(`Error accessing field error for ${fieldName}:`, e);
-        return undefined;
+      console.warn(`Error accessing field error for ${fieldName}:`, e);
+      return undefined;
     }
-};
+  };
+  
+  const calculateAge = (birthdate: string) => {
+    if (!birthdate) return "";
+    const birthDate = new Date(birthdate);
+    if (isNaN(birthDate.getTime())) return "";
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age >= 0 ? age.toString() : "";
+  };
+
+  // Watched values for summaries
+  const watchedTripStartDate = form.watch("trip_start_date");
+  const watchedTripEndDate = form.watch("trip_end_date");
+  const watchedGreenDays = form.watch("green_zone_days");
+  const watchedAmberDays = form.watch("amber_zone_days");
+  const watchedRedDays = form.watch("red_zone_days");
+  const watchedCoverageLevel = form.watch("coverage_level");
+  const watchedTransit = form.watch("add_transit_coverage");
+  const watchedPA = form.watch("add_personal_accident_coverage");
+  const watchedFullName = form.watch("c_name");
+  const watchedBirthdate = form.watch("c_birthdate");
+  const watchedNationality = form.watch("c_nationality");
+  const watchedTripPurpose = form.watch("trip_purpose");
+  const watchedPrimaryCitiesRegions = form.watch("primary_cities_regions_ukraine");
+  const watchedEmergencyName = form.watch("emergency_contact_name");
+  const watchedEmergencyPhone = form.watch("emergency_contact_phone");
+
+
+  const getCoverageLabel = (value: string) => {
+    return कवरेजस्तरOptions.find(opt => opt.value === value)?.label || value;
+  };
+  const getTripPurposeLabel = (value: string) => {
+    const purpose = tripPurposes.map(p => ({ value: p, label: p.charAt(0) + p.slice(1).toLowerCase().replace(/_/g, " ") })).find(opt => opt.value === value);
+    return purpose?.label || value;
+  };
+   const getNationalityLabel = (value: string) => {
+    return nationalityOptions.find(opt => opt.value === value)?.label || value;
+  };
 
 
   return (
     <div className="flex justify-center px-4 py-10 bg-gray-100">
       <div className="w-full max-w-4xl">
+        {/* Stepper */}
         <div className="mb-8 space-y-4">
           <div className="flex items-center justify-between">
             {steps.map((label, index) => (
@@ -4564,144 +5049,202 @@ export default function InsuranceForm() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-[70%_30%] gap-8">
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        {/* Form Content Area */}
+        <div className="bg-white p-6 md:p-8 shadow-lg rounded-md">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            {/* Page 1: Trip & Coverage */}
             {step === 0 && (
               <>
-                <h2 className="text-xl font-semibold mb-4">Personal Information</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <InputWithLabel label="Full Name" name="c_name" register={form.register} error={getError("c_name")} />
-                  <InputWithLabel label="Email" name="c_email" register={form.register} type="email" error={getError("c_email")} />
-                  <InputWithLabel label="Phone" name="c_phone" register={form.register} error={getError("c_phone")} />
-                  <InputWithLabel label="WhatsApp" name="c_whats_app" register={form.register} error={getError("c_whats_app")} />
-                  <InputWithLabel label="Birthdate" name="c_birthdate" register={form.register} type="date" error={getError("c_birthdate")} />
-                  <InputWithLabel label="Address" name="c_address" register={form.register} error={getError("c_address")} />
-                  <InputWithLabel label="Residence Country" name="c_country" register={form.register} error={getError("c_country")} />
-                  <InputWithLabel label="Nationality" name="c_nationality" register={form.register} error={getError("c_nationality")} />
-                  <InputWithLabel label="Organization (Optional)" name="c_organization" register={form.register} error={getError("c_organization")} />
+                <h2 className="text-2xl font-semibold mb-6 text-[#1A2C50]">Where and When Are You Travelling?</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <InputWithLabel label="Travel Start Date" name="trip_start_date" type="date" register={form.register} error={getError("trip_start_date")} />
+                  <InputWithLabel label="Travel End Date" name="trip_end_date" type="date" register={form.register} error={getError("trip_end_date")} />
                 </div>
 
-                <h2 className="text-xl font-semibold my-4 pt-4 border-t">Travellers</h2>
-                {travellerFields.map((field, index) => (
-                  <div key={field.id} className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end border p-4 mb-2">
-                    <InputWithLabel label={`Traveller ${index + 1} Name`} name={`travellers.${index}.name`} register={form.register} error={getError(`travellers.${index}.name`)} />
-                    <InputWithLabel label="Birthdate" name={`travellers.${index}.birthdate`} register={form.register} type="date" error={getError(`travellers.${index}.birthdate`)} />
-                    {travellerFields.length > 1 && (
-                      <Button type="button" variant="destructive" onClick={() => removeTraveller(index)} className="h-10">Remove</Button>
-                    )}
+                <h3 className="text-xl font-semibold mb-4 text-[#1A2C50]">Risk Zone Days:</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                  <InputWithLabel label="Green Zone Days" name="green_zone_days" type="number" register={form.register} error={getError("green_zone_days")} />
+                  <InputWithLabel label="Amber Zone Days" name="amber_zone_days" type="number" register={form.register} error={getError("amber_zone_days")} />
+                  <InputWithLabel label="Red Zone Days" name="red_zone_days" type="number" register={form.register} error={getError("red_zone_days")} />
+                </div>
+                <p className="text-sm text-gray-500 mb-6">Note: Black Zone not selectable – for reference only (Value: {form.watch("black_zone_days") || 0})</p>
+
+                <h3 className="text-xl font-semibold mb-4 text-[#1A2C50]">Coverage Options:</h3>
+                <div className="space-y-4 mb-6">
+                  <SelectWithLabel
+                    label="Coverage Level"
+                    name="coverage_level"
+                    control={form.control}
+                    options={कवरेजस्तरOptions}
+                    placeholder="Select Coverage Amount"
+                    error={getError("coverage_level")}
+                  />
+                  <div className="flex items-center space-x-2">
+                    <Controller name="add_transit_coverage" control={form.control} render={({ field }) => <Checkbox id="add_transit_coverage" checked={field.value} onCheckedChange={field.onChange} />} />
+                    <Label htmlFor="add_transit_coverage">Add Transit Coverage (10-day Europe)</Label>
                   </div>
-                ))}
-                 <Button type="button" variant="outline" onClick={() => appendTraveller({ name: "", birthdate: "" })}>Add Traveller</Button>
-                 {getError("travellers") && <p className="text-red-500 text-sm">{getError("travellers")?.message || getError("travellers.root")?.message}</p>}
+                  <div className="flex items-center space-x-2">
+                    <Controller name="add_personal_accident_coverage" control={form.control} render={({ field }) => <Checkbox id="add_personal_accident_coverage" checked={field.value} onCheckedChange={field.onChange} />} />
+                    <Label htmlFor="add_personal_accident_coverage">Add Personal Accident Coverage (PA)</Label>
+                  </div>
+                </div>
+
+                <div className="mt-8 p-6 bg-gray-50 rounded-md border">
+                  <h3 className="text-xl font-semibold text-[#1A2C50] mb-2">Quote Summary:</h3>
+                  <p className="text-2xl font-bold text-[#00BBD3]">$[Calculated Price Placeholder]</p>
+                </div>
               </>
             )}
 
+            {/* Page 2: Your Details */}
             {step === 1 && (
               <>
-                <h2 className="text-xl font-semibold mb-4">Trip Details</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <InputWithLabel label="Trip Start Date" name="trip_start_date" register={form.register} type="date" error={getError("trip_start_date")} />
-                  <InputWithLabel label="Trip End Date" name="trip_end_date" register={form.register} type="date" error={getError("trip_end_date")} />
-                  <InputWithLabel label="Primary Destination Country" name="trip_countries.0" register={form.register} error={getError("trip_countries.0") || getError("trip_countries") || getError("trip_countries.root")} />
+                <h2 className="text-2xl font-semibold mb-6 text-[#1A2C50]">Your Details</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <InputWithLabel label="Full Name" name="c_name" register={form.register} error={getError("c_name")} />
+                  <InputWithLabel label="Date of Birth" name="c_birthdate" type="date" register={form.register} error={getError("c_birthdate")} />
+                  <InputWithLabel label="Phone Number" name="c_phone" type="tel" register={form.register} error={getError("c_phone")} />
+                  <InputWithLabel label="WhatsApp (optional)" name="c_whats_app" type="tel" register={form.register} error={getError("c_whats_app")} />
+                  <InputWithLabel label="Email Address" name="c_email" type="email" register={form.register} error={getError("c_email")} />
                   <SelectWithLabel
+                    label="Nationality"
+                    name="c_nationality"
                     control={form.control}
-                    name="trip_purpose"
-                    label="Trip Purpose"
-                    options={tripPurposes.map(p => ({ value: p, label: p.charAt(0) + p.slice(1).toLowerCase().replace(/_/g, " ") }))}
-                    error={getError("trip_purpose")}
-                    placeholder="Select trip purpose"
+                    options={nationalityOptions} // Replace with your actual options
+                    placeholder="Select Nationality"
+                    error={getError("c_nationality")}
                   />
-                  <InputWithLabel label="Stay Name (Optional)" name="stay_name" register={form.register} error={getError("stay_name")} />
-                  <div className="col-span-1 md:col-span-2 flex items-center space-x-2">
-                     <Checkbox
-                        id="is_company_arranged"
-                        {...form.register("is_company_arranged")}
-                        checked={form.watch("is_company_arranged")}
-                        onCheckedChange={(checked) => form.setValue("is_company_arranged", !!checked)}
-                      />
-                    <Label htmlFor="is_company_arranged">This trip is company arranged</Label>
-                  </div>
-                  {form.watch("is_company_arranged") && (
-                    <InputWithLabel label="Company Name" name="company_name" register={form.register} error={getError("company_name")} />
-                  )}
+                   <InputWithLabel label="City of Residence" name="city_of_residence" register={form.register} error={getError("city_of_residence")} />
+                   <SelectWithLabel
+                    label="Country Travelling To"
+                    name="trip_countries.0" // Targets the first element of the array
+                    control={form.control}
+                    options={countryOptions} // Replace with your actual country options
+                    placeholder="Select Country"
+                    error={getError("trip_countries.0") || getError("trip_countries")}
+                  />
                 </div>
-
-                <h2 className="text-xl font-semibold my-4 pt-4 border-t">Trip Cities / Stops</h2>
-                {cityFields.map((field, index) => (
-                  <div key={field.id} className="space-y-4 border p-4 mb-2">
-                    <h3 className="font-medium">City / Stop {index + 1}</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <InputWithLabel label="City Name" name={`trip_cities.${index}.name`} register={form.register} error={getError(`trip_cities.${index}.name`)} />
-                        <InputWithLabel label="Stay Name (Optional)" name={`trip_cities.${index}.stay_name`} register={form.register} error={getError(`trip_cities.${index}.stay_name`)} />
-                         <SelectWithLabel
-                            control={form.control}
-                            name={`trip_cities.${index}.zoneType`}
-                            label="Zone Type"
-                            options={zoneTypes.map(z => ({ value: z, label: z }))}
-                            error={getError(`trip_cities.${index}.zoneType`)}
-                            placeholder="Select zone type"
-                        />
-                    </div>
-                    {cityFields.length > 1 && (
-                      <Button type="button" variant="destructive" size="sm" onClick={() => removeCity(index)}>Remove City</Button>
-                    )}
-                  </div>
-                ))}
-                <Button type="button" variant="outline" onClick={() => appendCity({ name: "", stay_name: "", zoneType: "GREEN" })}>Add City/Stop</Button>
-                {getError("trip_cities") && <p className="text-red-500 text-sm">{getError("trip_cities")?.message || getError("trip_cities.root")?.message}</p>}
               </>
             )}
 
+            {/* Page 3: Trip Information */}
             {step === 2 && (
               <>
-                <h2 className="text-xl font-semibold mb-4">Emergency Contact</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <InputWithLabel label="Emergency Contact Name" name="emergency_contact_name" register={form.register} error={getError("emergency_contact_name")} />
-                  <InputWithLabel label="Emergency Phone" name="emergency_contact_phone" register={form.register} error={getError("emergency_contact_phone")} />
-                  <InputWithLabel label="Relation" name="emergency_contact_relation" register={form.register} error={getError("emergency_contact_relation")} />
+                <h2 className="text-2xl font-semibold mb-6 text-[#1A2C50]">Tell Us About Your Trip</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <InputWithLabel label="Arrival in Ukraine" name="arrival_in_ukraine" type="date" register={form.register} error={getError("arrival_in_ukraine")} />
+                  <InputWithLabel label="Departure from Ukraine" name="departure_from_ukraine" type="date" register={form.register} error={getError("departure_from_ukraine")} />
                 </div>
+                <div className="mt-6">
+                  <InputWithLabel label="Primary Cities/Regions (in Ukraine)" name="primary_cities_regions_ukraine" register={form.register} error={getError("primary_cities_regions_ukraine")} />
+                </div>
+                <div className="mt-6">
+                  <SelectWithLabel
+                    label="Purpose of Travel"
+                    name="trip_purpose"
+                    control={form.control}
+                    options={tripPurposes.map(p => ({ value: p, label: p.charAt(0) + p.slice(1).toLowerCase().replace(/_/g, " ") }))}
+                    placeholder="Select Purpose"
+                    error={getError("trip_purpose")}
+                  />
+                </div>
+                <div className="mt-6">
+                  <InputWithLabel label="Hotel/Accommodation Name (Optional)" name="stay_name" register={form.register} error={getError("stay_name")} />
+                </div>
+                <div className="mt-6">
+                  <InputWithLabel label="Company Arranging Travel (Optional)" name="company_name" register={form.register} error={getError("company_name")} />
+                </div>
+                <p className="mt-6 text-sm text-orange-600"><span className="font-bold">⚠ Ensure your zone-day breakdown matches Page 1</span></p>
               </>
             )}
 
+            {/* Page 4: Medical & Emergency Contact */}
             {step === 3 && (
               <>
-                <h2 className="text-xl font-semibold mb-4">Medical Information</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <ControlledTextareaArray
-                    control={form.control}
-                    name="medical_conditions"
-                    label="Medical Conditions (comma-separated)"
-                    error={getError("medical_conditions")}
-                  />
-                  <ControlledTextareaArray
-                    control={form.control}
-                    name="current_medications"
-                    label="Current Medications (comma-separated)"
-                    error={getError("current_medications")}
-                  />
-                  <ControlledTextareaArray
-                    control={form.control}
-                    name="allergies"
-                    label="Allergies (comma-separated)"
-                    error={getError("allergies")}
-                  />
-                  <TextareaWithLabel label="Special Assistance (Optional)" name="special_assistance" register={form.register} error={getError("special_assistance")} />
+                <h2 className="text-2xl font-semibold mb-6 text-[#1A2C50]">Emergency Contact Information</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <InputWithLabel label="Contact Name" name="emergency_contact_name" register={form.register} error={getError("emergency_contact_name")} />
+                  <InputWithLabel label="Contact Number" name="emergency_contact_phone" type="tel" register={form.register} error={getError("emergency_contact_phone")} />
+                  <InputWithLabel label="Relationship" name="emergency_contact_relation" register={form.register} error={getError("emergency_contact_relation")} />
+                </div>
+
+                <h3 className="text-xl font-semibold mt-8 mb-4 text-[#1A2C50]">Optional Medical Info (Confidential):</h3>
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-2">
+                    <Controller name="has_medical_conditions" control={form.control} render={({ field }) => <Checkbox id="has_medical_conditions" checked={field.value} onCheckedChange={field.onChange} />} />
+                    <Label htmlFor="has_medical_conditions">Pre-existing Medical Conditions</Label>
+                  </div>
+                  {form.watch("has_medical_conditions") && (
+                    <ControlledTextareaArray name="medical_conditions" control={form.control} label="List Conditions" error={getError("medical_conditions")} />
+                  )}
+                  <div className="flex items-center space-x-2">
+                     <Controller name="has_allergies" control={form.control} render={({ field }) => <Checkbox id="has_allergies" checked={field.value} onCheckedChange={field.onChange} />} />
+                    <Label htmlFor="has_allergies">Allergies</Label>
+                  </div>
+                  {form.watch("has_allergies") && (
+                    <ControlledTextareaArray name="allergies" control={form.control} label="List Allergies" error={getError("allergies")} />
+                  )}
+                  <div className="flex items-center space-x-2">
+                    <Controller name="has_current_medications" control={form.control} render={({ field }) => <Checkbox id="has_current_medications" checked={field.value} onCheckedChange={field.onChange} />} />
+                    <Label htmlFor="has_current_medications">Current Medications</Label>
+                  </div>
+                  {form.watch("has_current_medications") && (
+                    <ControlledTextareaArray name="current_medications" control={form.control} label="List Medications" error={getError("current_medications")} />
+                  )}
                   <InputWithLabel label="Blood Type (Optional)" name="blood_type" register={form.register} error={getError("blood_type")} />
+                  <TextareaWithLabel label="Special Assistance Requirements (Optional)" name="special_assistance" register={form.register} error={getError("special_assistance")} />
                 </div>
               </>
             )}
 
+            {/* Page 5: Final Summary + Purchase */}
             {step === 4 && (
               <>
-                <h2 className="text-xl font-semibold mb-4">Risk Zone Exposure (Days)</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <InputWithLabel label="Green Zone Days" name="green_zone_days" register={form.register} type="number" error={getError("green_zone_days")} />
-                  <InputWithLabel label="Amber Zone Days" name="amber_zone_days" register={form.register} type="number" error={getError("amber_zone_days")} />
-                  <InputWithLabel label="Red Zone Days" name="red_zone_days" register={form.register} type="number" error={getError("red_zone_days")} />
-                  <InputWithLabel label="Black Zone Days (Optional)" name="black_zone_days" register={form.register} type="number" error={getError("black_zone_days")} />
+                <h2 className="text-2xl font-semibold mb-6 text-[#1A2C50]">Summary of Coverage</h2>
+                <div className="space-y-4 p-6 bg-gray-50 rounded-md border">
+                    <div><strong>Travel Dates:</strong> {watchedTripStartDate || "N/A"} to {watchedTripEndDate || "N/A"}</div>
+                    <div><strong>Risk Zone Breakdown:</strong></div>
+                    <ul className="list-disc list-inside pl-4">
+                        <li>Green: {watchedGreenDays || 0} days</li>
+                        <li>Amber: {watchedAmberDays || 0} days</li>
+                        <li>Red: {watchedRedDays || 0} days</li>
+                    </ul>
+                    <div><strong>Coverage Selected:</strong></div>
+                    <ul className="list-disc list-inside pl-4">
+                        <li>Medical: {getCoverageLabel(watchedCoverageLevel) || "N/A"}</li>
+                        <li>PA: ${watchedPA ? "Amount_PA" : "0"} (Example)</li>
+                        <li>Transit: {watchedTransit ? "Yes" : "No"}</li>
+                    </ul>
+                    <div className="mt-4">
+                        <strong className="text-xl">Total Quote:</strong>
+                        <span className="text-xl font-bold text-[#00BBD3] ml-2">$[Calculated Price Placeholder]</span>
+                    </div>
                 </div>
 
-                <div className="flex items-start space-x-2 pt-4">
+                <h3 className="text-xl font-semibold mt-8 mb-4 text-[#1A2C50]">Insured Details:</h3>
+                <div className="space-y-2 p-6 bg-gray-50 rounded-md border">
+                    <div><strong>Name:</strong> {watchedFullName || "N/A"}</div>
+                    <div><strong>Age:</strong> {calculateAge(watchedBirthdate) || "N/A"}</div>
+                    <div><strong>Nationality:</strong> {getNationalityLabel(watchedNationality) || "N/A"}</div>
+                </div>
+
+                <h3 className="text-xl font-semibold mt-8 mb-4 text-[#1A2C50]">Trip Information:</h3>
+                 <div className="space-y-2 p-6 bg-gray-50 rounded-md border">
+                    <div><strong>Purpose:</strong> {getTripPurposeLabel(watchedTripPurpose) || "N/A"}</div>
+                    <div><strong>Primary Regions:</strong> {watchedPrimaryCitiesRegions || "N/A"}</div>
+                 </div>
+
+                <h3 className="text-xl font-semibold mt-8 mb-4 text-[#1A2C50]">Emergency Contact:</h3>
+                 <div className="space-y-2 p-6 bg-gray-50 rounded-md border">
+                    <div><strong>Name:</strong> {watchedEmergencyName || "N/A"}</div>
+                    <div><strong>Number:</strong> {watchedEmergencyPhone || "N/A"}</div>
+                 </div>
+
+                <div className="mt-8">
+                    <InputWithLabel label="Affiliate Code (Optional)" name="affiliate_code" register={form.register} error={getError("affiliate_code")} />
+                </div>
+
+                <div className="mt-8 flex items-start space-x-3">
                    <Controller
                         name="consent"
                         control={form.control}
@@ -4710,84 +5253,44 @@ export default function InsuranceForm() {
                                 id="consent"
                                 checked={field.value === true}
                                 onCheckedChange={(checked) => field.onChange(checked === true ? true : undefined)}
-                                onBlur={field.onBlur} // Important for touched state
+                                onBlur={field.onBlur}
                            />
                         )}
                     />
                   <div className="grid gap-1.5 leading-none">
-                    <Label htmlFor="consent" className="font-medium">
-                      I consent to the use of my medical information in an emergency.
+                    <Label htmlFor="consent" className="font-medium leading-snug">
+                      I consent to sharing medical info in an emergency
                     </Label>
-                    <p className="text-sm text-muted-foreground">
-                      You must agree to this to proceed.
-                    </p>
+                    {getError("consent") && <p className="text-sm text-red-500">{getError("consent")?.message}</p>}
                   </div>
                 </div>
-                {getError("consent") && (
-                  <p className="text-red-500 text-sm">{getError("consent")?.message}</p>
-                )}
               </>
             )}
 
-            <div className="flex justify-between pt-6">
+            {/* Navigation Buttons */}
+            <div className="flex justify-between pt-8 mt-8 border-t">
               {step > 0 && (
-                <Button type="button" variant="outline" onClick={prevStep} className="w-76 px-6">
+                <Button type="button" variant="outline" onClick={prevStep} className="px-8 py-3 text-base">
                   Back
                 </Button>
               )}
-              {step === 0 && <div />}
+              {step === 0 && ( // "Modify Choices" on Page 1 - acts like "Back" from a conceptual next step
+                 <Button type="button" variant="outline" onClick={() => console.log("Modify Choices clicked - implement action")} className="px-8 py-3 text-base">
+                  Modify Choices
+                </Button>
+              )}
               {step < steps.length - 1 ? (
-                <Button type="button" onClick={nextStep} className="w-76 px-6">
-                  Next
+                <Button type="button" onClick={nextStep} className="px-8 py-3 text-base bg-[#1A2C50] hover:bg-[#2c3e6b] text-white">
+                  Continue
                 </Button>
               ) : (
-                <Button type="submit" className="w-76 px-6" disabled={form.formState.isSubmitting}>
-                  {form.formState.isSubmitting ? "Submitting..." : "Submit"}
+                <Button type="submit" className="px-8 py-3 text-base bg-green-600 hover:bg-green-700 text-white" disabled={form.formState.isSubmitting}>
+                  {form.formState.isSubmitting ? "Processing..." : "Confirm & Purchase"}
                 </Button>
               )}
             </div>
           </form>
-
-          <div className="hidden md:block mt-6">
-            <div className="bg-white border border-input p-6 min-h-[400px] flex flex-col rounded-md shadow-sm">
-              <h3 className="text-2xl font-semibold mb-6 text-[#1A2C50]">Quote Summary</h3>
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="font-semibold">Traveling To</p>
-                  <p className="text-gray-500">{form.watch("trip_countries.0") || "N/A"}</p>
-                </div>
-                <div>
-                  <p className="font-semibold">Travelers</p>
-                  <p className="text-gray-500">{form.watch("travellers")?.length || 1}</p>
-                </div>
-                <div className="col-span-2 mt-4">
-                  <p className="font-semibold">Travel Dates</p>
-                  <p className="text-gray-500">
-                    {form.watch("trip_start_date") || "N/A"} - {form.watch("trip_end_date") || "N/A"}
-                  </p>
-                </div>
-                <div className="col-span-2 mt-4">
-                  <p className="font-semibold">Applicant Age</p>
-                  <p className="text-gray-500">
-                    {form.watch("c_birthdate") && !isNaN(new Date(form.watch("c_birthdate")).getFullYear())
-                      ? new Date().getFullYear() - new Date(form.watch("c_birthdate")).getFullYear()
-                      : "N/A"}
-                  </p>
-                </div>
-              </div>
-              <hr className="my-6 border-t-2 border-[#00BBD3]" />
-              <div className="text-sm space-y-2">
-                <p className="font-semibold">Base Price</p>
-                <p className="text-gray-500">$100</p>
-              </div>
-              <hr className="my-6 border-t-2 border-[#00BBD3]" />
-              <div className="text-sm space-y-2">
-                <p className="font-semibold">Total Price</p>
-                <p className="text-lg font-bold text-[#1A2C50]">$200</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        </div> {/* End of white content bg */}
       </div>
     </div>
   );
