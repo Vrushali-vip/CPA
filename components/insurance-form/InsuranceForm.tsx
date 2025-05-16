@@ -1486,7 +1486,6 @@ export default function InsuranceForm() {
               </>
             )}
 
-            {/* Navigation Buttons */}
             <div className="flex flex-col sm:flex-row justify-between pt-8 mt-8 border-t gap-4">
               {step > 0 && (
                 <Button type="button" variant="outline" onClick={handlePrevStep} className="w-full sm:w-auto px-8 py-3 text-base">
@@ -1506,7 +1505,7 @@ export default function InsuranceForm() {
               )}
               {step === steps.length - 1 && (
                 <Button type="submit" className="w-full sm:w-auto px-8 py-3 text-base bg-green-600 hover:bg-green-700 text-white" disabled={formState.isSubmitting}>
-                  {formState.isSubmitting ? "Processing" : "Confirm & Purchase"}
+                  {formState.isSubmitting ? "Processing..." : "Confirm & Purchase"}
                 </Button>
               )}
             </div>
