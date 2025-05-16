@@ -4794,6 +4794,1451 @@
 // }
 
 
+// "use client";
+
+// import { useState, useEffect } from "react";
+// import { useForm, Controller, FieldError, FieldErrors, Path } from "react-hook-form";
+// import { joiResolver } from "@hookform/resolvers/joi";
+// import { Checkbox } from "@/components/ui/checkbox";
+// import { Label } from "@/components/ui/label";
+// import { Button } from "@/components/ui/button";
+// import {
+//     purchaseWithoutLoginSchema,
+//     type InsuranceFormValues,
+//     steps, // Updated step names
+//     tripPurposes,
+//     // zoneTypes, // Not directly used in UI inputs now for selection
+//     fieldsByStep, // Updated field mapping
+//     कवरेजस्तरOptions, // coverageLevelOptions
+//     nationalityOptions,
+//     countryOptions,
+// } from "@/lib/insuranceFormSchema";
+// import {
+//     InputWithLabel,
+//     TextareaWithLabel,
+//     ControlledTextareaArray,
+//     SelectWithLabel
+// } from "./FormFields";
+
+// export default function InsuranceForm() {
+//   const [step, setStep] = useState(0);
+
+//   const form = useForm<InsuranceFormValues>({
+//     resolver: joiResolver(purchaseWithoutLoginSchema, {
+//       abortEarly: false,
+//     }),
+//     defaultValues: {
+//       // Page 1
+//       trip_start_date: "",
+//       trip_end_date: "",
+//       green_zone_days: 0,
+//       amber_zone_days: 0,
+//       red_zone_days: 0,
+//       black_zone_days: 0, // For reference
+//       coverage_level: "",
+//       add_transit_coverage: false,
+//       add_personal_accident_coverage: false,
+//       // Page 2
+//       c_name: "",
+//       c_birthdate: "",
+//       c_phone: "",
+//       c_whats_app: "",
+//       c_email: "",
+//       c_nationality: "",
+//       city_of_residence: "",
+//       trip_countries: [], // Will hold one country
+//       // Page 3
+//       arrival_in_ukraine: "",
+//       departure_from_ukraine: "",
+//       primary_cities_regions_ukraine: "",
+//       trip_purpose: "",
+//       stay_name: "",
+//       company_name: "",
+//       // Page 4
+//       emergency_contact_name: "",
+//       emergency_contact_phone: "",
+//       emergency_contact_relation: "",
+//       has_medical_conditions: false,
+//       has_allergies: false,
+//       has_current_medications: false,
+//       medical_conditions: [],
+//       allergies: [],
+//       current_medications: [],
+//       blood_type: "",
+//       special_assistance: "",
+//       // Page 5
+//       affiliate_code: "",
+//       consent: undefined,
+//       // Legacy/Internal (some defaults set in schema)
+//       c_organization: "",
+//       travellers: [{ name: "", birthdate: ""}], // Will be populated by c_name, c_birthdate
+//       is_company_arranged: false,
+//       trip_cities: [], // Not directly part of new UI input flow
+//     },
+//   });
+
+//   // Update traveller name and birthdate when c_name or c_birthdate changes
+//   // This assumes a single traveller based on the new UI ("Your Details")
+//   const cNameValue = form.watch("c_name");
+//   const cBirthdateValue = form.watch("c_birthdate");
+
+//   useEffect(() => {
+//     if (form.getValues("travellers").length > 0) {
+//         form.setValue("travellers.0.name", cNameValue || "", { shouldValidate: step === 1 }); // Validate if on relevant step
+//         form.setValue("travellers.0.birthdate", cBirthdateValue || "", { shouldValidate: step === 1 });
+//     } else if (cNameValue || cBirthdateValue) { // Initialize if empty and values exist
+//         form.setValue("travellers", [{ name: cNameValue || "", birthdate: cBirthdateValue || ""}]);
+//     }
+//   }, [cNameValue, cBirthdateValue, form, step]);
+
+
+//   const onSubmit = (data: InsuranceFormValues) => {
+//     // Ensure the single traveller data is correctly set from c_name and c_birthdate
+//     const finalData = {
+//         ...data,
+//         travellers: [{ name: data.c_name, birthdate: data.c_birthdate }],
+//         green_zone_days: Number(data.green_zone_days),
+//         amber_zone_days: Number(data.amber_zone_days),
+//         red_zone_days: Number(data.red_zone_days),
+//         black_zone_days: data.black_zone_days ? Number(data.black_zone_days) : 0,
+//         medical_conditions: data.has_medical_conditions ? data.medical_conditions?.filter(item => item && item.trim() !== "") : [],
+//         allergies: data.has_allergies ? data.allergies?.filter(item => item && item.trim() !== "") : [],
+//         current_medications: data.has_current_medications ? data.current_medications?.filter(item => item && item.trim() !== "") : [],
+//     };
+//     console.log("Form Data Submitted:", finalData);
+//     alert("Form submitted! Check console.");
+//   };
+
+//   const nextStep = async () => {
+//     const currentStepFields = fieldsByStep[step] as Array<Path<InsuranceFormValues>>;
+//     const result = await form.trigger(currentStepFields);
+
+//     if (!result) {
+//         const firstErrorKey = currentStepFields.find(
+//             (fieldName) => getError(fieldName as string)
+//         );
+//         if (firstErrorKey) {
+//             const element = document.querySelector(`[name='${firstErrorKey}']`) || document.getElementById(firstErrorKey as string);
+//             element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+//         }
+//       return;
+//     }
+
+//     if (step < steps.length - 1) {
+//        setStep((prev) => prev + 1);
+//     }
+//   };
+
+//   const prevStep = () => setStep((prev) => Math.max(prev - 1, 0));
+
+//   // const getError = (fieldName: string): FieldError | undefined => {
+//   //   const keys = fieldName.split('.');
+//   //   let error: FieldErrors | FieldError | undefined = form.formState.errors;
+//   //   try {
+//   //       for (const key of keys) {
+//   //            const k = key.match(/^\d+$/) ? parseInt(key, 10) : key; // Handle array indices
+//   //           if (error && typeof error === 'object' && k in error) {
+//   //               error = (error as any)[k];
+//   //           } else {
+//   //               return undefined;
+//   //           }
+//   //       }
+//   //       return (error && typeof error === 'object' && 'message' in error) ? error as FieldError : undefined;
+//   //   } catch (e) {
+//   //       console.warn(`Error accessing field error for ${fieldName}:`, e);
+//   //       return undefined;
+//   //   }
+//   // };
+//   const getError = (fieldName: string): FieldError | undefined => {
+//     const keys = fieldName.split('.');
+//     let error: FieldErrors | FieldError | undefined = form.formState.errors;
+  
+//     try {
+//       for (const key of keys) {
+//         const k = key.match(/^\d+$/) ? parseInt(key, 10) : key;
+  
+//         if (error && typeof error === 'object' && error !== null) {
+//           const typedError = error as Record<string | number, unknown>;
+//           if (k in typedError) {
+//             error = typedError[k] as FieldErrors | FieldError;
+//           } else {
+//             return undefined;
+//           }
+//         } else {
+//           return undefined;
+//         }
+//       }
+  
+//       return (error && typeof error === 'object' && 'message' in error)
+//         ? error as FieldError
+//         : undefined;
+//     } catch (e) {
+//       console.warn(`Error accessing field error for ${fieldName}:`, e);
+//       return undefined;
+//     }
+//   };
+  
+//   const calculateAge = (birthdate: string) => {
+//     if (!birthdate) return "";
+//     const birthDate = new Date(birthdate);
+//     if (isNaN(birthDate.getTime())) return "";
+//     const today = new Date();
+//     let age = today.getFullYear() - birthDate.getFullYear();
+//     const m = today.getMonth() - birthDate.getMonth();
+//     if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+//         age--;
+//     }
+//     return age >= 0 ? age.toString() : "";
+//   };
+
+//   const watchedTripStartDate = form.watch("trip_start_date");
+//   const watchedTripEndDate = form.watch("trip_end_date");
+//   const watchedGreenDays = form.watch("green_zone_days");
+//   const watchedAmberDays = form.watch("amber_zone_days");
+//   const watchedRedDays = form.watch("red_zone_days");
+//   const watchedCoverageLevel = form.watch("coverage_level");
+//   const watchedTransit = form.watch("add_transit_coverage");
+//   const watchedPA = form.watch("add_personal_accident_coverage");
+//   const watchedFullName = form.watch("c_name");
+//   const watchedBirthdate = form.watch("c_birthdate");
+//   const watchedNationality = form.watch("c_nationality");
+//   const watchedTripPurpose = form.watch("trip_purpose");
+//   const watchedPrimaryCitiesRegions = form.watch("primary_cities_regions_ukraine");
+//   const watchedEmergencyName = form.watch("emergency_contact_name");
+//   const watchedEmergencyPhone = form.watch("emergency_contact_phone");
+
+
+//   const getCoverageLabel = (value: string) => {
+//     return कवरेजस्तरOptions.find(opt => opt.value === value)?.label || value;
+//   };
+//   const getTripPurposeLabel = (value: string) => {
+//     const purpose = tripPurposes.map(p => ({ value: p, label: p.charAt(0) + p.slice(1).toLowerCase().replace(/_/g, " ") })).find(opt => opt.value === value);
+//     return purpose?.label || value;
+//   };
+//    const getNationalityLabel = (value: string) => {
+//     return nationalityOptions.find(opt => opt.value === value)?.label || value;
+//   };
+
+
+//   return (
+//     <div className="flex justify-center px-4 py-10 bg-gray-100">
+//       <div className="w-full max-w-4xl">
+//         {/* Stepper */}
+//         <div className="mb-8 space-y-4">
+//           <div className="flex items-center justify-between">
+//             {steps.map((label, index) => (
+//               <div key={index} className="flex-1 text-center text-sm">
+//                 <div
+//                   className={`w-8 h-8 mx-auto rounded-full flex items-center justify-center ${index <= step
+//                     ? "bg-[#1A2C50] text-white"
+//                     : "bg-[#00BBD3] text-white"
+//                     }`}
+//                 >
+//                   {index + 1}
+//                 </div>
+//                 <div className="mt-1">{label}</div>
+//               </div>
+//             ))}
+//           </div>
+//           <div className="h-2 bg-[#00BBD3] rounded-full">
+//             <div
+//               className="h-2 bg-[#1A2C50] rounded-full transition-all duration-300"
+//               style={{ width: `${((step + 1) / steps.length) * 100}%` }}
+//             />
+//           </div>
+//         </div>
+
+//         {/* Form Content Area */}
+//         <div className="bg-white p-6 md:p-8 shadow-lg rounded-md">
+//           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+//             {/* Page 1: Trip & Coverage */}
+//             {step === 0 && (
+//               <>
+//                 <h2 className="text-2xl font-semibold mb-6 text-[#1A2C50]">Where and When Are You Travelling?</h2>
+//                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+//                   <InputWithLabel label="Travel Start Date" name="trip_start_date" type="date" register={form.register} error={getError("trip_start_date")} />
+//                   <InputWithLabel label="Travel End Date" name="trip_end_date" type="date" register={form.register} error={getError("trip_end_date")} />
+//                 </div>
+
+//                 <h3 className="text-xl font-semibold mb-4 text-[#1A2C50]">Risk Zone Days:</h3>
+//                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+//                   <InputWithLabel label="Green Zone Days" name="green_zone_days" type="number" register={form.register} error={getError("green_zone_days")} />
+//                   <InputWithLabel label="Amber Zone Days" name="amber_zone_days" type="number" register={form.register} error={getError("amber_zone_days")} />
+//                   <InputWithLabel label="Red Zone Days" name="red_zone_days" type="number" register={form.register} error={getError("red_zone_days")} />
+//                 </div>
+//                 <p className="text-sm text-gray-500 mb-6">Note: Black Zone not selectable – for reference only (Value: {form.watch("black_zone_days") || 0})</p>
+
+//                 <h3 className="text-xl font-semibold mb-4 text-[#1A2C50]">Coverage Options:</h3>
+//                 <div className="space-y-4 mb-6">
+//                   <SelectWithLabel
+//                     label="Coverage Level"
+//                     name="coverage_level"
+//                     control={form.control}
+//                     options={कवरेजस्तरOptions}
+//                     placeholder="Select Coverage Amount"
+//                     error={getError("coverage_level")}
+//                   />
+//                   <div className="flex items-center space-x-2">
+//                     <Controller name="add_transit_coverage" control={form.control} render={({ field }) => <Checkbox id="add_transit_coverage" checked={field.value} onCheckedChange={field.onChange} />} />
+//                     <Label htmlFor="add_transit_coverage">Add Transit Coverage (10-day Europe)</Label>
+//                   </div>
+//                   <div className="flex items-center space-x-2">
+//                     <Controller name="add_personal_accident_coverage" control={form.control} render={({ field }) => <Checkbox id="add_personal_accident_coverage" checked={field.value} onCheckedChange={field.onChange} />} />
+//                     <Label htmlFor="add_personal_accident_coverage">Add Personal Accident Coverage (PA)</Label>
+//                   </div>
+//                 </div>
+
+//                 <div className="mt-8 p-6 bg-gray-50 rounded-md border">
+//                   <h3 className="text-xl font-semibold text-[#1A2C50] mb-2">Quote Summary:</h3>
+//                   <p className="text-2xl font-bold text-[#00BBD3]">$[Calculated Price Placeholder]</p>
+//                 </div>
+//               </>
+//             )}
+
+//             {/* Page 2: Your Details */}
+//             {step === 1 && (
+//               <>
+//                 <h2 className="text-2xl font-semibold mb-6 text-[#1A2C50]">Your Details</h2>
+//                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+//                   <InputWithLabel label="Full Name" name="c_name" register={form.register} error={getError("c_name")} />
+//                   <InputWithLabel label="Date of Birth" name="c_birthdate" type="date" register={form.register} error={getError("c_birthdate")} />
+//                   <InputWithLabel label="Phone Number" name="c_phone" type="tel" register={form.register} error={getError("c_phone")} />
+//                   <InputWithLabel label="WhatsApp (optional)" name="c_whats_app" type="tel" register={form.register} error={getError("c_whats_app")} />
+//                   <InputWithLabel label="Email Address" name="c_email" type="email" register={form.register} error={getError("c_email")} />
+//                   <SelectWithLabel
+//                     label="Nationality"
+//                     name="c_nationality"
+//                     control={form.control}
+//                     options={nationalityOptions} // Replace with your actual options
+//                     placeholder="Select Nationality"
+//                     error={getError("c_nationality")}
+//                   />
+//                    <InputWithLabel label="City of Residence" name="city_of_residence" register={form.register} error={getError("city_of_residence")} />
+//                    <SelectWithLabel
+//                     label="Country Travelling To"
+//                     name="trip_countries.0" // Targets the first element of the array
+//                     control={form.control}
+//                     options={countryOptions} // Replace with your actual country options
+//                     placeholder="Select Country"
+//                     error={getError("trip_countries.0") || getError("trip_countries")}
+//                   />
+//                 </div>
+//               </>
+//             )}
+
+//             {/* Page 3: Trip Information */}
+//             {step === 2 && (
+//               <>
+//                 <h2 className="text-2xl font-semibold mb-6 text-[#1A2C50]">Tell Us About Your Trip</h2>
+//                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+//                   <InputWithLabel label="Arrival in Ukraine" name="arrival_in_ukraine" type="date" register={form.register} error={getError("arrival_in_ukraine")} />
+//                   <InputWithLabel label="Departure from Ukraine" name="departure_from_ukraine" type="date" register={form.register} error={getError("departure_from_ukraine")} />
+//                 </div>
+//                 <div className="mt-6">
+//                   <InputWithLabel label="Primary Cities/Regions (in Ukraine)" name="primary_cities_regions_ukraine" register={form.register} error={getError("primary_cities_regions_ukraine")} />
+//                 </div>
+//                 <div className="mt-6">
+//                   <SelectWithLabel
+//                     label="Purpose of Travel"
+//                     name="trip_purpose"
+//                     control={form.control}
+//                     options={tripPurposes.map(p => ({ value: p, label: p.charAt(0) + p.slice(1).toLowerCase().replace(/_/g, " ") }))}
+//                     placeholder="Select Purpose"
+//                     error={getError("trip_purpose")}
+//                   />
+//                 </div>
+//                 <div className="mt-6">
+//                   <InputWithLabel label="Hotel/Accommodation Name (Optional)" name="stay_name" register={form.register} error={getError("stay_name")} />
+//                 </div>
+//                 <div className="mt-6">
+//                   <InputWithLabel label="Company Arranging Travel (Optional)" name="company_name" register={form.register} error={getError("company_name")} />
+//                 </div>
+//                 <p className="mt-6 text-sm text-orange-600"><span className="font-bold">⚠ Ensure your zone-day breakdown matches Page 1</span></p>
+//               </>
+//             )}
+
+//             {/* Page 4: Medical & Emergency Contact */}
+//             {step === 3 && (
+//               <>
+//                 <h2 className="text-2xl font-semibold mb-6 text-[#1A2C50]">Emergency Contact Information</h2>
+//                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+//                   <InputWithLabel label="Contact Name" name="emergency_contact_name" register={form.register} error={getError("emergency_contact_name")} />
+//                   <InputWithLabel label="Contact Number" name="emergency_contact_phone" type="tel" register={form.register} error={getError("emergency_contact_phone")} />
+//                   <InputWithLabel label="Relationship" name="emergency_contact_relation" register={form.register} error={getError("emergency_contact_relation")} />
+//                 </div>
+
+//                 <h3 className="text-xl font-semibold mt-8 mb-4 text-[#1A2C50]">Optional Medical Info (Confidential):</h3>
+//                 <div className="space-y-4">
+//                   <div className="flex items-center space-x-2">
+//                     <Controller name="has_medical_conditions" control={form.control} render={({ field }) => <Checkbox id="has_medical_conditions" checked={field.value} onCheckedChange={field.onChange} />} />
+//                     <Label htmlFor="has_medical_conditions">Pre-existing Medical Conditions</Label>
+//                   </div>
+//                   {form.watch("has_medical_conditions") && (
+//                     <ControlledTextareaArray name="medical_conditions" control={form.control} label="List Conditions" error={getError("medical_conditions")} />
+//                   )}
+//                   <div className="flex items-center space-x-2">
+//                      <Controller name="has_allergies" control={form.control} render={({ field }) => <Checkbox id="has_allergies" checked={field.value} onCheckedChange={field.onChange} />} />
+//                     <Label htmlFor="has_allergies">Allergies</Label>
+//                   </div>
+//                   {form.watch("has_allergies") && (
+//                     <ControlledTextareaArray name="allergies" control={form.control} label="List Allergies" error={getError("allergies")} />
+//                   )}
+//                   <div className="flex items-center space-x-2">
+//                     <Controller name="has_current_medications" control={form.control} render={({ field }) => <Checkbox id="has_current_medications" checked={field.value} onCheckedChange={field.onChange} />} />
+//                     <Label htmlFor="has_current_medications">Current Medications</Label>
+//                   </div>
+//                   {form.watch("has_current_medications") && (
+//                     <ControlledTextareaArray name="current_medications" control={form.control} label="List Medications" error={getError("current_medications")} />
+//                   )}
+//                   <InputWithLabel label="Blood Type (Optional)" name="blood_type" register={form.register} error={getError("blood_type")} />
+//                   <TextareaWithLabel label="Special Assistance Requirements (Optional)" name="special_assistance" register={form.register} error={getError("special_assistance")} />
+//                 </div>
+//               </>
+//             )}
+
+//             {/* Page 5: Final Summary + Purchase */}
+//             {step === 4 && (
+//               <>
+//                 <h2 className="text-2xl font-semibold mb-6 text-[#1A2C50]">Summary of Coverage</h2>
+//                 <div className="space-y-4 p-6 bg-gray-50 rounded-md border">
+//                     <div><strong>Travel Dates:</strong> {watchedTripStartDate || "N/A"} to {watchedTripEndDate || "N/A"}</div>
+//                     <div><strong>Risk Zone Breakdown:</strong></div>
+//                     <ul className="list-disc list-inside pl-4">
+//                         <li>Green: {watchedGreenDays || 0} days</li>
+//                         <li>Amber: {watchedAmberDays || 0} days</li>
+//                         <li>Red: {watchedRedDays || 0} days</li>
+//                     </ul>
+//                     <div><strong>Coverage Selected:</strong></div>
+//                     <ul className="list-disc list-inside pl-4">
+//                         <li>Medical: {getCoverageLabel(watchedCoverageLevel) || "N/A"}</li>
+//                         <li>PA: ${watchedPA ? "Amount_PA" : "0"} (Example)</li>
+//                         <li>Transit: {watchedTransit ? "Yes" : "No"}</li>
+//                     </ul>
+//                     <div className="mt-4">
+//                         <strong className="text-xl">Total Quote:</strong>
+//                         <span className="text-xl font-bold text-[#00BBD3] ml-2">$[Calculated Price Placeholder]</span>
+//                     </div>
+//                 </div>
+
+//                 <h3 className="text-xl font-semibold mt-8 mb-4 text-[#1A2C50]">Insured Details:</h3>
+//                 <div className="space-y-2 p-6 bg-gray-50 rounded-md border">
+//                     <div><strong>Name:</strong> {watchedFullName || "N/A"}</div>
+//                     <div><strong>Age:</strong> {calculateAge(watchedBirthdate) || "N/A"}</div>
+//                     <div><strong>Nationality:</strong> {getNationalityLabel(watchedNationality) || "N/A"}</div>
+//                 </div>
+
+//                 <h3 className="text-xl font-semibold mt-8 mb-4 text-[#1A2C50]">Trip Information:</h3>
+//                  <div className="space-y-2 p-6 bg-gray-50 rounded-md border">
+//                     <div><strong>Purpose:</strong> {getTripPurposeLabel(watchedTripPurpose) || "N/A"}</div>
+//                     <div><strong>Primary Regions:</strong> {watchedPrimaryCitiesRegions || "N/A"}</div>
+//                  </div>
+
+//                 <h3 className="text-xl font-semibold mt-8 mb-4 text-[#1A2C50]">Emergency Contact:</h3>
+//                  <div className="space-y-2 p-6 bg-gray-50 rounded-md border">
+//                     <div><strong>Name:</strong> {watchedEmergencyName || "N/A"}</div>
+//                     <div><strong>Number:</strong> {watchedEmergencyPhone || "N/A"}</div>
+//                  </div>
+
+//                 <div className="mt-8">
+//                     <InputWithLabel label="Affiliate Code (Optional)" name="affiliate_code" register={form.register} error={getError("affiliate_code")} />
+//                 </div>
+
+//                 <div className="mt-8 flex items-start space-x-3">
+//                    <Controller
+//                         name="consent"
+//                         control={form.control}
+//                         render={({ field }) => (
+//                            <Checkbox
+//                                 id="consent"
+//                                 checked={field.value === true}
+//                                 onCheckedChange={(checked) => field.onChange(checked === true ? true : undefined)}
+//                                 onBlur={field.onBlur}
+//                            />
+//                         )}
+//                     />
+//                   <div className="grid gap-1.5 leading-none">
+//                     <Label htmlFor="consent" className="font-medium leading-snug">
+//                       I consent to sharing medical info in an emergency
+//                     </Label>
+//                     {getError("consent") && <p className="text-sm text-red-500">{getError("consent")?.message}</p>}
+//                   </div>
+//                 </div>
+//               </>
+//             )}
+
+//             {/* Navigation Buttons */}
+//             <div className="flex justify-between pt-8 mt-8 border-t">
+//               {step > 0 && (
+//                 <Button type="button" variant="outline" onClick={prevStep} className="px-8 py-3 text-base">
+//                   Back
+//                 </Button>
+//               )}
+//               {step === 0 && ( // "Modify Choices" on Page 1 - acts like "Back" from a conceptual next step
+//                  <Button type="button" variant="outline" onClick={() => console.log("Modify Choices clicked - implement action")} className="px-8 py-3 text-base">
+//                   Modify Choices
+//                 </Button>
+//               )}
+//               {step < steps.length - 1 ? (
+//                 <Button type="button" onClick={nextStep} className="px-8 py-3 text-base bg-[#1A2C50] hover:bg-[#2c3e6b] text-white">
+//                   Continue
+//                 </Button>
+//               ) : (
+//                 <Button type="submit" className="px-8 py-3 text-base bg-green-600 hover:bg-green-700 text-white" disabled={form.formState.isSubmitting}>
+//                   {form.formState.isSubmitting ? "Processing..." : "Confirm & Purchase"}
+//                 </Button>
+//               )}
+//             </div>
+//           </form>
+//         </div> {/* End of white content bg */}
+//       </div>
+//     </div>
+//   );
+// }
+
+// "use client";
+
+// import { useState, useEffect, useCallback } from "react";
+// import { useForm, Controller, FieldError, FieldErrors, Path } from "react-hook-form";
+// import { joiResolver } from "@hookform/resolvers/joi";
+// import { Checkbox } from "@/components/ui/checkbox";
+// import { Label } from "@/components/ui/label";
+// import { Button } from "@/components/ui/button";
+// import {
+//     purchaseWithoutLoginSchema,
+//     type InsuranceFormValues,
+//     steps,
+//     tripPurposes,
+//     fieldsByStep,
+//     emergencyMedicalCoverageOptions,
+//     personalAccidentCoverageOptions,
+//     nationalityOptions,
+//     countryOptions,
+// } from "@/lib/insuranceFormSchema";
+// import {
+//     InputWithLabel,
+//     TextareaWithLabel,
+//     ControlledTextareaArray,
+//     SelectWithLabel
+// } from "./FormFields";
+
+// export default function InsuranceForm() {
+//   const [step, setStep] = useState(0);
+//   const [totalRiskZoneDays, setTotalRiskZoneDays] = useState<number | null>(null);
+
+//   const form = useForm<InsuranceFormValues>({
+//     resolver: joiResolver(purchaseWithoutLoginSchema, {
+//       abortEarly: false,
+//     }),
+//     defaultValues: {
+//       trip_start_date: "",
+//       trip_end_date: "",
+//       green_zone_days: 0,
+//       amber_zone_days: 0,
+//       red_zone_days: 0,
+//       black_zone_days: 0,
+//       emergency_medical_coverage: "",
+//       personal_accident_coverage_level: "0", // Default to "No PA Coverage"
+//       add_transit_coverage: false,
+//       c_name: "",
+//       c_birthdate: "",
+//       c_phone: "",
+//       c_whats_app: "",
+//       c_email: "",
+//       c_nationality: "",
+//       city_of_residence: "",
+//       trip_countries: [],
+//       arrival_in_ukraine: "",
+//       departure_from_ukraine: "",
+//       primary_cities_regions_ukraine: "",
+//       trip_purpose: "",
+//       stay_name: "",
+//       company_name: "",
+//       emergency_contact_name: "",
+//       emergency_contact_phone: "",
+//       emergency_contact_relation: "",
+//       has_medical_conditions: false,
+//       has_allergies: false,
+//       has_current_medications: false,
+//       medical_conditions: [],
+//       allergies: [],
+//       current_medications: [],
+//       blood_type: "",
+//       special_assistance: "",
+//       affiliate_code: "",
+//       consent: undefined,
+//       c_organization: "",
+//       travellers: [{ name: "", birthdate: ""}],
+//       is_company_arranged: false,
+//       trip_cities: [],
+//     },
+//     mode: "onChange", // Important for immediate feedback on zone day changes
+//   });
+
+//   const { watch, setValue, getValues, trigger } = form;
+
+//   // Watch relevant fields for dynamic calculations
+//   const watchedStartDate = watch("trip_start_date");
+//   const watchedEndDate = watch("trip_end_date");
+//   const watchedAmberDays = watch("amber_zone_days");
+//   const watchedRedDays = watch("red_zone_days");
+
+//   // Calculate Total Risk Zone Days
+//   useEffect(() => {
+//     if (watchedStartDate && watchedEndDate) {
+//       const start = new Date(watchedStartDate);
+//       const end = new Date(watchedEndDate);
+//       if (end >= start) {
+//         const diffTime = Math.abs(end.getTime() - start.getTime());
+//         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // Inclusive of start and end day
+//         setTotalRiskZoneDays(diffDays);
+//         setValue("green_zone_days", diffDays, { shouldValidate: true, shouldDirty: true });
+//         setValue("amber_zone_days", 0, { shouldValidate: true, shouldDirty: true });
+//         setValue("red_zone_days", 0, { shouldValidate: true, shouldDirty: true });
+//       } else {
+//         setTotalRiskZoneDays(null);
+//         setValue("green_zone_days", 0); // Reset if dates are invalid
+//       }
+//     } else {
+//       setTotalRiskZoneDays(null);
+//       setValue("green_zone_days", 0);
+//     }
+//   }, [watchedStartDate, watchedEndDate, setValue]);
+
+//   // Auto-adjust Green Zone Days
+//   useEffect(() => {
+//     if (totalRiskZoneDays !== null) {
+//       const amber = Number(getValues("amber_zone_days") || 0);
+//       const red = Number(getValues("red_zone_days") || 0);
+//       const newGreenDays = totalRiskZoneDays - amber - red;
+//       setValue("green_zone_days", Math.max(0, newGreenDays), { shouldValidate: true, shouldDirty: true });
+//     }
+//   }, [watchedAmberDays, watchedRedDays, totalRiskZoneDays, setValue, getValues]);
+
+
+//   const cNameValue = watch("c_name");
+//   const cBirthdateValue = watch("c_birthdate");
+
+//   useEffect(() => {
+//     if (getValues("travellers")?.length > 0) {
+//         setValue("travellers.0.name", cNameValue || "", { shouldValidate: step === 1 && form.formState.dirtyFields.c_name });
+//         setValue("travellers.0.birthdate", cBirthdateValue || "", { shouldValidate: step === 1 && form.formState.dirtyFields.c_birthdate });
+//     } else if (cNameValue || cBirthdateValue) {
+//         setValue("travellers", [{ name: cNameValue || "", birthdate: cBirthdateValue || ""}]);
+//     }
+//   }, [cNameValue, cBirthdateValue, setValue, getValues, step, form.formState.dirtyFields]);
+
+
+//   const onSubmit = (data: InsuranceFormValues) => {
+//     const finalData = {
+//         ...data,
+//         travellers: [{ name: data.c_name, birthdate: data.c_birthdate }],
+//         green_zone_days: Number(data.green_zone_days),
+//         amber_zone_days: Number(data.amber_zone_days),
+//         red_zone_days: Number(data.red_zone_days),
+//         black_zone_days: data.black_zone_days ? Number(data.black_zone_days) : 0,
+//         medical_conditions: data.has_medical_conditions ? data.medical_conditions?.filter(item => item && item.trim() !== "") : [],
+//         allergies: data.has_allergies ? data.allergies?.filter(item => item && item.trim() !== "") : [],
+//         current_medications: data.has_current_medications ? data.current_medications?.filter(item => item && item.trim() !== "") : [],
+//     };
+//     console.log("Form Data Submitted:", finalData);
+//     alert("Form submitted! Check console.");
+//   };
+
+//   const nextStep = async () => {
+//     const currentStepFields = fieldsByStep[step] as Array<Path<InsuranceFormValues>>;
+//     // Manually add the overall schema validation for zone days sum on step 0 if moving next
+//     if (step === 0) {
+//         const overallResult = await trigger(); // This will trigger the .custom validation for sum
+//         if (!overallResult) {
+//              const error = form.formState.errors.root?.message || "Please correct errors before proceeding.";
+//              // Display this error. For simplicity, an alert.
+//              alert(error);
+//              const firstErrorKey = currentStepFields.find((fieldName) => getError(fieldName as string));
+//              if (firstErrorKey) {
+//                 const element = document.querySelector(`[name='${firstErrorKey}']`) || document.getElementById(firstErrorKey as string);
+//                 element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+//              }
+//             return;
+//         }
+//     } else {
+//         const result = await trigger(currentStepFields);
+//         if (!result) {
+//             const firstErrorKey = currentStepFields.find((fieldName) => getError(fieldName as string));
+//             if (firstErrorKey) {
+//                 const element = document.querySelector(`[name='${firstErrorKey}']`) || document.getElementById(firstErrorKey as string);
+//                 element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+//             }
+//             return;
+//         }
+//     }
+
+
+//     if (step < steps.length - 1) {
+//        setStep((prev) => prev + 1);
+//     }
+//   };
+
+//   const prevStep = () => setStep((prev) => Math.max(prev - 1, 0));
+
+//   const getError = (fieldName: string): FieldError | undefined => {
+//     const keys = fieldName.split('.');
+//     let error: FieldErrors | FieldError | undefined = form.formState.errors;
+//     try {
+//         for (const key of keys) {
+//              const k = key.match(/^\d+$/) ? parseInt(key, 10) : key;
+//             if (error && typeof error === 'object' && k in error) {
+//                 error = (error as any)[k];
+//             } else {
+//                 return undefined;
+//             }
+//         }
+//         return (error && typeof error === 'object' && 'message' in error) ? error as FieldError : undefined;
+//     } catch (e) {
+//         return undefined;
+//     }
+//   };
+
+//   const calculateAge = (birthdate: string) => {
+//     if (!birthdate) return "";
+//     const birthDate = new Date(birthdate);
+//     if (isNaN(birthDate.getTime())) return "";
+//     const today = new Date();
+//     let age = today.getFullYear() - birthDate.getFullYear();
+//     const m = today.getMonth() - birthDate.getMonth();
+//     if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+//         age--;
+//     }
+//     return age >= 0 ? age.toString() : "";
+//   };
+
+//   const watchedEmergencyMedical = watch("emergency_medical_coverage");
+//   const watchedPACoverage = watch("personal_accident_coverage_level");
+//   const watchedFullName = watch("c_name");
+//   const watchedBirthdateForAge = watch("c_birthdate");
+//   const watchedNationalityForDisplay = watch("c_nationality");
+//   const watchedTripPurposeForDisplay = watch("trip_purpose");
+//   const watchedPrimaryCitiesRegionsForDisplay = watch("primary_cities_regions_ukraine");
+//   const watchedEmergencyNameForDisplay = watch("emergency_contact_name");
+//   const watchedEmergencyPhoneForDisplay = watch("emergency_contact_phone");
+
+
+//   const getEmergencyMedicalLabel = (value: string) => emergencyMedicalCoverageOptions.find(opt => opt.value === value)?.label || value;
+//   const getPALabel = (value: string) => personalAccidentCoverageOptions.find(opt => opt.value === value)?.label || value;
+//   const getTripPurposeLabel = (value: string) => tripPurposes.map(p => ({ value: p, label: p.charAt(0) + p.slice(1).toLowerCase().replace(/_/g, " ") })).find(opt => opt.value === value)?.label || value;
+//   const getNationalityLabel = (value: string) => nationalityOptions.find(opt => opt.value === value)?.label || value;
+
+//   return (
+//     <div className="flex justify-center px-4 py-10 bg-gray-100">
+//       <div className="w-full max-w-4xl">
+//         <div className="mb-8 space-y-4">
+//           <div className="flex items-center justify-between">
+//             {steps.map((label, index) => (
+//               <div key={index} className="flex-1 text-center text-sm">
+//                 <div
+//                   className={`w-8 h-8 mx-auto rounded-full flex items-center justify-center ${index <= step
+//                     ? "bg-[#1A2C50] text-white"
+//                     : "bg-[#00BBD3] text-white"
+//                     }`}
+//                 >
+//                   {index + 1}
+//                 </div>
+//                 <div className="mt-1">{label}</div>
+//               </div>
+//             ))}
+//           </div>
+//           <div className="h-2 bg-[#00BBD3] rounded-full">
+//             <div
+//               className="h-2 bg-[#1A2C50] rounded-full transition-all duration-300"
+//               style={{ width: `${((step + 1) / steps.length) * 100}%` }}
+//             />
+//           </div>
+//         </div>
+
+//         <div className="bg-white p-6 md:p-8 shadow-lg rounded-md">
+//           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+//             {step === 0 && (
+//               <>
+//                 <h2 className="text-2xl font-semibold mb-6 text-[#1A2C50]">Where and When Are You Travelling?</h2>
+//                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+//                   <InputWithLabel label="Travel Start Date" name="trip_start_date" type="date" register={form.register} error={getError("trip_start_date")} />
+//                   <InputWithLabel label="Travel End Date" name="trip_end_date" type="date" register={form.register} error={getError("trip_end_date")} />
+//                 </div>
+
+//                 <h3 className="text-xl font-semibold mb-1 text-[#1A2C50]">Risk Zone Days:</h3>
+//                 <div className="mb-4 p-4 border rounded-md bg-slate-50">
+//                     <div className="font-medium">Total Risk Zone Days:
+//                         <span className="ml-2 font-bold text-lg text-blue-600">{totalRiskZoneDays !== null ? totalRiskZoneDays : "Select dates"}</span>
+//                     </div>
+//                 </div>
+//                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+//                   <InputWithLabel label="Green Zone Days" name="green_zone_days" type="number" register={form.register} error={getError("green_zone_days")} />
+//                   <InputWithLabel label="Amber Zone Days" name="amber_zone_days" type="number" register={form.register} error={getError("amber_zone_days")} />
+//                   <InputWithLabel label="Red Zone Days" name="red_zone_days" type="number" register={form.register} error={getError("red_zone_days")} />
+//                 </div>
+//                 {form.formState.errors.root && <p className="text-sm text-red-500 mb-4">{form.formState.errors.root.message}</p>}
+//                 <p className="text-sm text-gray-500 mb-6">Note: Black Zone not selectable – for reference only (Value: {watch("black_zone_days") || 0})</p>
+
+//                 <h3 className="text-xl font-semibold mb-4 text-[#1A2C50]">Coverage Options:</h3>
+//                 <div className="space-y-4 mb-6">
+//                   <SelectWithLabel
+//                     label="Emergency Medical"
+//                     name="emergency_medical_coverage"
+//                     control={form.control}
+//                     options={emergencyMedicalCoverageOptions}
+//                     placeholder="Select Medical Coverage"
+//                     error={getError("emergency_medical_coverage")}
+//                   />
+//                   <SelectWithLabel
+//                     label="PA (Personal Accident)"
+//                     name="personal_accident_coverage_level"
+//                     control={form.control}
+//                     options={personalAccidentCoverageOptions}
+//                     placeholder="Select PA Coverage"
+//                     error={getError("personal_accident_coverage_level")}
+//                   />
+//                   <div className="flex items-center space-x-2">
+//                     <Controller name="add_transit_coverage" control={form.control} render={({ field }) => <Checkbox id="add_transit_coverage" checked={field.value} onCheckedChange={field.onChange} />} />
+//                     <Label htmlFor="add_transit_coverage">Add on transit cover 250k</Label>
+//                   </div>
+//                 </div>
+
+//                 <div className="mt-8 p-6 bg-gray-50 rounded-md border">
+//                   <h3 className="text-xl font-semibold text-[#1A2C50] mb-2">Quote Summary:</h3>
+//                   <p className="text-2xl font-bold text-[#00BBD3]">$[Calculated Price Placeholder]</p>
+//                   {/* Display selected coverages for clarity */}
+//                   <div className="text-sm mt-2">
+//                     <p>Medical: {getEmergencyMedicalLabel(watch("emergency_medical_coverage"))}</p>
+//                     <p>PA: {getPALabel(watch("personal_accident_coverage_level"))}</p>
+//                     <p>Transit: {watch("add_transit_coverage") ? "Yes (250k)" : "No"}</p>
+//                   </div>
+//                 </div>
+//               </>
+//             )}
+
+//             {step === 1 && (
+//               <>
+//                 <h2 className="text-2xl font-semibold mb-6 text-[#1A2C50]">Your Details</h2>
+//                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+//                   <InputWithLabel label="Full Name" name="c_name" register={form.register} error={getError("c_name")} />
+//                   <div>
+//                     <InputWithLabel label="Date of Birth" name="c_birthdate" type="date" register={form.register} error={getError("c_birthdate")} />
+//                     {watch("c_birthdate") && <p className="text-sm text-gray-600 mt-1">Age: {calculateAge(watch("c_birthdate"))}</p>}
+//                   </div>
+//                   <InputWithLabel label="Phone Number" name="c_phone" type="tel" register={form.register} error={getError("c_phone")} />
+//                   <InputWithLabel label="WhatsApp (optional)" name="c_whats_app" type="tel" register={form.register} error={getError("c_whats_app")} />
+//                   <InputWithLabel label="Email Address" name="c_email" type="email" register={form.register} error={getError("c_email")} />
+//                   <SelectWithLabel label="Nationality" name="c_nationality" control={form.control} options={nationalityOptions} placeholder="Select Nationality" error={getError("c_nationality")} />
+//                   <InputWithLabel label="City of Residence" name="city_of_residence" register={form.register} error={getError("city_of_residence")} />
+//                   <SelectWithLabel label="Country Travelling To" name="trip_countries.0" control={form.control} options={countryOptions} placeholder="Select Country" error={getError("trip_countries.0") || getError("trip_countries")} />
+//                 </div>
+//               </>
+//             )}
+
+//             {step === 2 && (
+//               <>
+//                 <h2 className="text-2xl font-semibold mb-6 text-[#1A2C50]">Tell Us About Your Trip</h2>
+//                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+//                   <InputWithLabel label="Arrival in Ukraine (Optional)" name="arrival_in_ukraine" type="date" register={form.register} error={getError("arrival_in_ukraine")} />
+//                   <InputWithLabel label="Departure from Ukraine (Optional)" name="departure_from_ukraine" type="date" register={form.register} error={getError("departure_from_ukraine")} />
+//                 </div>
+//                 <div className="mt-6"><InputWithLabel label="Primary Cities/Regions (in Ukraine, Optional)" name="primary_cities_regions_ukraine" register={form.register} error={getError("primary_cities_regions_ukraine")} /></div>
+//                 <div className="mt-6"><SelectWithLabel label="Purpose of Travel" name="trip_purpose" control={form.control} options={tripPurposes.map(p => ({ value: p, label: p.charAt(0) + p.slice(1).toLowerCase().replace(/_/g, " ") }))} placeholder="Select Purpose" error={getError("trip_purpose")} /></div>
+//                 <div className="mt-6"><InputWithLabel label="Hotel/Accommodation Name (Optional)" name="stay_name" register={form.register} error={getError("stay_name")} /></div>
+//                 <div className="mt-6"><InputWithLabel label="Company Arranging Travel (Optional)" name="company_name" register={form.register} error={getError("company_name")} /></div>
+//                 <p className="mt-6 text-sm text-orange-600"><span className="font-bold">⚠ Ensure your zone-day breakdown matches Page 1</span></p>
+//               </>
+//             )}
+
+//             {step === 3 && (
+//               <>
+//                 <h2 className="text-2xl font-semibold mb-6 text-[#1A2C50]">Emergency Contact Information</h2>
+//                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+//                   <InputWithLabel label="Contact Name" name="emergency_contact_name" register={form.register} error={getError("emergency_contact_name")} />
+//                   <InputWithLabel label="Contact Number" name="emergency_contact_phone" type="tel" register={form.register} error={getError("emergency_contact_phone")} />
+//                   <InputWithLabel label="Relationship" name="emergency_contact_relation" register={form.register} error={getError("emergency_contact_relation")} />
+//                 </div>
+//                 <h3 className="text-xl font-semibold mt-8 mb-4 text-[#1A2C50]">Optional Medical Info (Confidential):</h3>
+//                 <div className="space-y-4">
+//                   <div className="flex items-center space-x-2"><Controller name="has_medical_conditions" control={form.control} render={({ field }) => <Checkbox id="has_medical_conditions" checked={field.value} onCheckedChange={field.onChange} />} /><Label htmlFor="has_medical_conditions">Pre-existing Medical Conditions</Label></div>
+//                   {watch("has_medical_conditions") && (<ControlledTextareaArray name="medical_conditions" control={form.control} label="List Conditions" error={getError("medical_conditions")} />)}
+//                   <div className="flex items-center space-x-2"><Controller name="has_allergies" control={form.control} render={({ field }) => <Checkbox id="has_allergies" checked={field.value} onCheckedChange={field.onChange} />} /><Label htmlFor="has_allergies">Allergies</Label></div>
+//                   {watch("has_allergies") && (<ControlledTextareaArray name="allergies" control={form.control} label="List Allergies" error={getError("allergies")} />)}
+//                   <div className="flex items-center space-x-2"><Controller name="has_current_medications" control={form.control} render={({ field }) => <Checkbox id="has_current_medications" checked={field.value} onCheckedChange={field.onChange} />} /><Label htmlFor="has_current_medications">Current Medications</Label></div>
+//                   {watch("has_current_medications") && (<ControlledTextareaArray name="current_medications" control={form.control} label="List Medications" error={getError("current_medications")} />)}
+//                   <InputWithLabel label="Blood Type (Optional)" name="blood_type" register={form.register} error={getError("blood_type")} />
+//                   <TextareaWithLabel label="Special Assistance Requirements (Optional)" name="special_assistance" register={form.register} error={getError("special_assistance")} />
+//                 </div>
+//               </>
+//             )}
+
+//             {step === 4 && (
+//                <>
+//                 <h2 className="text-2xl font-semibold mb-6 text-[#1A2C50]">Summary of Coverage</h2>
+//                 <div className="space-y-3 p-6 bg-gray-50 rounded-md border mb-6">
+//                     <div><strong>Travel Dates:</strong> {watch("trip_start_date") || "N/A"} to {watch("trip_end_date") || "N/A"}</div>
+//                     <div><strong>Total Risk Zone Days:</strong> {totalRiskZoneDays ?? "N/A"}</div>
+//                     <div><strong>Risk Zone Breakdown:</strong></div>
+//                     <ul className="list-disc list-inside pl-4">
+//                         <li>Green: {watch("green_zone_days") || 0} days</li>
+//                         <li>Amber: {watch("amber_zone_days") || 0} days</li>
+//                         <li>Red: {watch("red_zone_days") || 0} days</li>
+//                     </ul>
+//                     <div><strong>Coverage Selected:</strong></div>
+//                     <ul className="list-disc list-inside pl-4">
+//                         <li>Medical: {getEmergencyMedicalLabel(watchedEmergencyMedical) || "N/A"}</li>
+//                         <li>PA: {getPALabel(watchedPACoverage) || "N/A"}</li>
+//                         <li>Transit: {watch("add_transit_coverage") ? "Yes (250k Add-on)" : "No"}</li>
+//                     </ul>
+//                     <div className="mt-4 pt-3 border-t">
+//                         <strong className="text-xl">Total Quote:</strong>
+//                         <span className="text-xl font-bold text-[#00BBD3] ml-2">$[Calculated Price Placeholder]</span>
+//                     </div>
+//                 </div>
+
+//                 <h3 className="text-xl font-semibold text-[#1A2C50] mb-3">Insured Details:</h3>
+//                 <div className="space-y-1 p-4 bg-gray-50 rounded-md border mb-6">
+//                     <div><strong>Name:</strong> {watchedFullName || "N/A"}</div>
+//                     <div><strong>Age:</strong> {calculateAge(watchedBirthdateForAge) || "N/A"}</div>
+//                     <div><strong>Nationality:</strong> {getNationalityLabel(watchedNationalityForDisplay) || "N/A"}</div>
+//                 </div>
+
+//                 <h3 className="text-xl font-semibold text-[#1A2C50] mb-3">Trip Information:</h3>
+//                  <div className="space-y-1 p-4 bg-gray-50 rounded-md border mb-6">
+//                     <div><strong>Purpose:</strong> {getTripPurposeLabel(watchedTripPurposeForDisplay) || "N/A"}</div>
+//                     <div><strong>Primary Regions:</strong> {watchedPrimaryCitiesRegionsForDisplay || "N/A"}</div>
+//                  </div>
+
+//                 <h3 className="text-xl font-semibold text-[#1A2C50] mb-3">Emergency Contact:</h3>
+//                  <div className="space-y-1 p-4 bg-gray-50 rounded-md border mb-6">
+//                     <div><strong>Name:</strong> {watchedEmergencyNameForDisplay || "N/A"}</div>
+//                     <div><strong>Number:</strong> {watchedEmergencyPhoneForDisplay || "N/A"}</div>
+//                  </div>
+
+//                 <div className="mb-6"><InputWithLabel label="Affiliate Code (Optional)" name="affiliate_code" register={form.register} error={getError("affiliate_code")} /></div>
+
+//                 <div className="flex items-start space-x-3">
+//                    <Controller name="consent" control={form.control} render={({ field }) => (<Checkbox id="consent" checked={field.value === true} onCheckedChange={(checked) => field.onChange(checked === true ? true : undefined)} onBlur={field.onBlur} /> )} />
+//                   <div className="grid gap-1.5 leading-none">
+//                     <Label htmlFor="consent" className="font-medium leading-snug">I consent to sharing medical info in an emergency</Label>
+//                     {getError("consent") && <p className="text-sm text-red-500">{getError("consent")?.message}</p>}
+//                   </div>
+//                 </div>
+//               </>
+//             )}
+
+//             <div className="flex flex-col sm:flex-row justify-between pt-8 mt-8 border-t gap-4">
+//               {step > 0 && (
+//                 <Button type="button" variant="outline" onClick={prevStep} className="w-full sm:w-auto px-8 py-3 text-base">
+//                   Back
+//                 </Button>
+//               )}
+//               {step === 0 && (
+//                  <Button type="button" variant="outline" onClick={() => alert("Modify Choices: Implement logic to go back or reset specific fields.")} className="w-full sm:w-auto px-8 py-3 text-base">
+//                   Modify Choices
+//                 </Button>
+//               )}
+//               {step < steps.length - 1 ? (
+//                 <Button type="button" onClick={nextStep} className="w-full sm:w-auto px-8 py-3 text-base bg-[#1A2C50] hover:bg-[#2c3e6b] text-white">
+//                   Continue
+//                 </Button>
+//               ) : (
+//                 <Button type="submit" className="w-full sm:w-auto px-8 py-3 text-base bg-green-600 hover:bg-green-700 text-white" disabled={form.formState.isSubmitting}>
+//                   {form.formState.isSubmitting ? "Processing..." : "Confirm & Purchase"}
+//                 </Button>
+//               )}
+//             </div>
+//           </form>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+// src/components/insurance-form/InsuranceForm.tsx
+
+// "use client";
+
+// import { useState, useEffect } from "react";
+// import { useForm, Controller, FieldError, FieldErrors, Path } from "react-hook-form";
+// import { joiResolver } from "@hookform/resolvers/joi";
+// import { Checkbox } from "@/components/ui/checkbox";
+// import { Label } from "@/components/ui/label";
+// import { Button } from "@/components/ui/button";
+// import {
+//     purchaseWithoutLoginSchema,
+//     type InsuranceFormValues,
+//     steps,
+//     tripPurposes,
+//     fieldsByStep,
+//     emergencyMedicalCoverageOptions,
+//     personalAccidentCoverageOptions,
+//     nationalityOptions,
+//     countryOptions,
+// } from "@/lib/insuranceFormSchema"; // Ensure this path is correct
+// import {
+//     InputWithLabel,
+//     TextareaWithLabel,
+//     ControlledTextareaArray,
+//     SelectWithLabel
+// } from "./FormFields"; // Ensure this path is correct
+
+// export default function InsuranceForm() {
+//   const [step, setStep] = useState(0);
+//   const [totalRiskZoneDays, setTotalRiskZoneDays] = useState<number | null>(null);
+
+//   const form = useForm<InsuranceFormValues>({
+//     resolver: joiResolver(purchaseWithoutLoginSchema, {
+//       abortEarly: false,
+//     }),
+//     defaultValues: {
+//       trip_start_date: "",
+//       trip_end_date: "",
+//       green_zone_days: 0,
+//       amber_zone_days: 0,
+//       red_zone_days: 0,
+//       black_zone_days: 0,
+//       emergency_medical_coverage: "",
+//       personal_accident_coverage_level: "0",
+//       add_transit_coverage: false,
+//       c_name: "",
+//       c_birthdate: "",
+//       c_phone: "",
+//       c_whats_app: "",
+//       c_email: "",
+//       c_nationality: "",
+//       city_of_residence: "",
+//       trip_countries: [],
+//       arrival_in_ukraine: "",
+//       departure_from_ukraine: "",
+//       primary_cities_regions_ukraine: "",
+//       trip_purpose: "",
+//       stay_name: "",
+//       company_name: "",
+//       emergency_contact_name: "",
+//       emergency_contact_phone: "",
+//       emergency_contact_relation: "",
+//       has_medical_conditions: false,
+//       has_allergies: false,
+//       has_current_medications: false,
+//       medical_conditions: [],
+//       allergies: [],
+//       current_medications: [],
+//       blood_type: "",
+//       special_assistance: "",
+//       affiliate_code: "",
+//       consent: undefined,
+//       c_organization: "",
+//       travellers: [{ name: "", birthdate: ""}],
+//       is_company_arranged: false,
+//       trip_cities: [],
+//     },
+//     mode: "onChange",
+//   });
+
+//   const { watch, setValue, getValues, trigger, formState } = form;
+
+//   const watchedStartDate = watch("trip_start_date");
+//   const watchedEndDate = watch("trip_end_date");
+//   // No need to watch amber_zone_days and red_zone_days here for the effect,
+//   // as the effect itself will use getValues which is reactive enough within the effect.
+
+//   useEffect(() => {
+//     if (watchedStartDate && watchedEndDate) {
+//       const start = new Date(watchedStartDate);
+//       const end = new Date(watchedEndDate);
+//       if (!isNaN(start.getTime()) && !isNaN(end.getTime()) && end >= start) {
+//         const diffTime = end.getTime() - start.getTime(); // Difference in milliseconds
+//         const diffDays = Math.ceil(diffTime / (1000 * 3600 * 24)) + 1;
+//         setTotalRiskZoneDays(diffDays);
+//         // Set green_zone_days to total, and reset amber/red.
+//         // Let the next useEffect handle green_zone_days adjustment based on amber/red.
+//         setValue("green_zone_days", diffDays, { shouldValidate: true, shouldDirty: true });
+//         if (getValues("amber_zone_days") !== 0) setValue("amber_zone_days", 0, { shouldValidate: true, shouldDirty: true });
+//         if (getValues("red_zone_days") !== 0) setValue("red_zone_days", 0, { shouldValidate: true, shouldDirty: true });
+//       } else {
+//         setTotalRiskZoneDays(null);
+//         if (getValues("green_zone_days") !== 0) setValue("green_zone_days", 0, { shouldValidate: true, shouldDirty: true });
+//       }
+//     } else {
+//       setTotalRiskZoneDays(null);
+//       if (getValues("green_zone_days") !== 0) setValue("green_zone_days", 0, { shouldValidate: true, shouldDirty: true });
+//     }
+//   }, [watchedStartDate, watchedEndDate, setValue, getValues]);
+
+//   useEffect(() => {
+//     // This effect runs when totalRiskZoneDays, amber_zone_days, or red_zone_days changes.
+//     // We use a callback from watch to get the latest values when one of them changes.
+//     const subscription = watch((value, { name, type }) => {
+//       if (
+//         (name === "amber_zone_days" || name === "red_zone_days") &&
+//         type === "change" &&
+//         totalRiskZoneDays !== null
+//       ) {
+//         const amber = Number(value.amber_zone_days || 0);
+//         const red = Number(value.red_zone_days || 0);
+//         const newGreenDays = totalRiskZoneDays - amber - red;
+//         if (getValues("green_zone_days") !== Math.max(0, newGreenDays)) {
+//             setValue("green_zone_days", Math.max(0, newGreenDays), { shouldValidate: true, shouldDirty: true });
+//         }
+//       }
+//     });
+//     return () => subscription.unsubscribe();
+//   }, [watch, setValue, getValues, totalRiskZoneDays]);
+
+
+//   const cNameValue = watch("c_name");
+//   const cBirthdateValue = watch("c_birthdate");
+
+//   useEffect(() => {
+//     if (getValues("travellers")?.length > 0) {
+//         if (getValues("travellers.0.name") !== cNameValue) setValue("travellers.0.name", cNameValue || "", { shouldValidate: step === 1 && formState.dirtyFields.c_name });
+//         if (getValues("travellers.0.birthdate") !== cBirthdateValue) setValue("travellers.0.birthdate", cBirthdateValue || "", { shouldValidate: step === 1 && formState.dirtyFields.c_birthdate });
+//     } else if (cNameValue || cBirthdateValue) {
+//         setValue("travellers", [{ name: cNameValue || "", birthdate: cBirthdateValue || ""}]);
+//     }
+//   }, [cNameValue, cBirthdateValue, setValue, getValues, step, formState.dirtyFields]);
+
+
+//   const onSubmit = (data: InsuranceFormValues) => {
+//     const finalData = {
+//         ...data,
+//         travellers: [{ name: data.c_name, birthdate: data.c_birthdate }],
+//         green_zone_days: Number(data.green_zone_days),
+//         amber_zone_days: Number(data.amber_zone_days),
+//         red_zone_days: Number(data.red_zone_days),
+//         black_zone_days: data.black_zone_days ? Number(data.black_zone_days) : 0,
+//         medical_conditions: data.has_medical_conditions ? data.medical_conditions?.filter(item => item && item.trim() !== "") : [],
+//         allergies: data.has_allergies ? data.allergies?.filter(item => item && item.trim() !== "") : [],
+//         current_medications: data.has_current_medications ? data.current_medications?.filter(item => item && item.trim() !== "") : [],
+//     };
+//     console.log("Form Data Submitted:", finalData);
+//     alert("Form submitted! Check console.");
+//   };
+
+//   const nextStep = async () => {
+//     const currentStepFields = fieldsByStep[step] as Array<Path<InsuranceFormValues>>;
+//     const currentStepValidationResult = await trigger(currentStepFields, { shouldFocus: true });
+
+
+//     if (!currentStepValidationResult) {
+//       // Scroll to the first error on the current step if validation fails
+//       const firstErrorKeyOnCurrentStep = currentStepFields.find(
+//         (fieldName) => getError(fieldName as string) !== undefined
+//       );
+//       if (firstErrorKeyOnCurrentStep) {
+//         const element = document.querySelector(`[name='${firstErrorKeyOnCurrentStep}']`) || document.getElementById(firstErrorKeyOnCurrentStep as string);
+//         element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+//       }
+//       return;
+//     }
+
+//     // If on Step 0, after current step fields are valid, check the Joi .custom() rule for sum.
+//     if (step === 0) {
+//       // Trigger validation for the whole form to specifically invoke Joi's .custom() rule
+//       // We need to ensure this re-evaluates based on current values.
+//       // Passing all field names might be more robust for Joi resolver with custom rule.
+//       const allFieldNames = Object.keys(getValues()) as Array<Path<InsuranceFormValues>>;
+//       const overallValidationResult = await trigger(allFieldNames, { shouldFocus: false });
+
+
+//       if (formState.errors.root?.message) {
+//         alert(formState.errors.root.message + "\nPlease check the sum of Green, Amber, and Red zone days against the Total Risk Zone Days.");
+//         const zoneDayElement = document.querySelector(`[name='green_zone_days']`);
+//         zoneDayElement?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+//         return;
+//       }
+//       // If overallValidationResult is false here but no root error, it implies an error
+//       // on a *future* step, which we don't want to block Step 0 progression for if current step is fine.
+//     }
+
+//     if (step < steps.length - 1) {
+//       setStep((prev) => prev + 1);
+//     }
+//   };
+
+
+//   const prevStep = () => setStep((prev) => Math.max(prev - 1, 0));
+
+//   const getError = (fieldName: string): FieldError | undefined => {
+//     const keys = fieldName.split('.');
+//     let error: FieldErrors | FieldError | undefined = formState.errors;
+//     try {
+//         for (const key of keys) {
+//              const k = key.match(/^\d+$/) ? parseInt(key, 10) : key;
+//             if (error && typeof error === 'object' && k in error) {
+//                 error = (error as any)[k];
+//             } else {
+//                 return undefined;
+//             }
+//         }
+//         return (error && typeof error === 'object' && 'message' in error) ? error as FieldError : undefined;
+//     } catch (e) {
+//         return undefined;
+//     }
+//   };
+
+//   const calculateAge = (birthdate: string) => {
+//     if (!birthdate) return "";
+//     const birthDate = new Date(birthdate);
+//     if (isNaN(birthDate.getTime())) return "";
+//     const today = new Date();
+//     let age = today.getFullYear() - birthDate.getFullYear();
+//     const m = today.getMonth() - birthDate.getMonth();
+//     if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+//         age--;
+//     }
+//     return age >= 0 ? age.toString() : "";
+//   };
+
+//   const watchedEmergencyMedical = watch("emergency_medical_coverage");
+//   const watchedPACoverage = watch("personal_accident_coverage_level");
+//   const watchedTransit = watch("add_transit_coverage");
+//   const watchedFullNameForDisplay = watch("c_name");
+//   const watchedBirthdateForAge = watch("c_birthdate");
+//   const watchedNationalityForDisplay = watch("c_nationality");
+//   const watchedTripPurposeForDisplay = watch("trip_purpose");
+//   const watchedPrimaryCitiesRegionsForDisplay = watch("primary_cities_regions_ukraine");
+//   const watchedEmergencyNameForDisplay = watch("emergency_contact_name");
+//   const watchedEmergencyPhoneForDisplay = watch("emergency_contact_phone");
+//   const watchedGreenZoneDaysForDisplay = watch("green_zone_days");
+//   const watchedAmberZoneDaysForDisplay = watch("amber_zone_days");
+//   const watchedRedZoneDaysForDisplay = watch("red_zone_days");
+
+
+//   const getEmergencyMedicalLabel = (value: string) => emergencyMedicalCoverageOptions.find(opt => opt.value === value)?.label || value;
+//   const getPALabel = (value: string) => personalAccidentCoverageOptions.find(opt => opt.value === value)?.label || value;
+//   const getTripPurposeLabel = (value: string) => tripPurposes.map(p => ({ value: p, label: p.charAt(0) + p.slice(1).toLowerCase().replace(/_/g, " ") })).find(opt => opt.value === value)?.label || value;
+//   const getNationalityLabel = (value: string) => nationalityOptions.find(opt => opt.value === value)?.label || value;
+
+//   return (
+//     <div className="flex justify-center px-4 py-10 bg-gray-100">
+//       <div className="w-full max-w-4xl">
+//         <div className="mb-8 space-y-4">
+//           <div className="flex items-center justify-between">
+//             {steps.map((label, index) => (
+//               <div key={index} className="flex-1 text-center text-sm">
+//                 <div
+//                   className={`w-8 h-8 mx-auto rounded-full flex items-center justify-center ${index <= step
+//                     ? "bg-[#1A2C50] text-white"
+//                     : "bg-[#00BBD3] text-white"
+//                     }`}
+//                 >
+//                   {index + 1}
+//                 </div>
+//                 <div className="mt-1">{label}</div>
+//               </div>
+//             ))}
+//           </div>
+//           <div className="h-2 bg-[#00BBD3] rounded-full">
+//             <div
+//               className="h-2 bg-[#1A2C50] rounded-full transition-all duration-300"
+//               style={{ width: `${((step + 1) / steps.length) * 100}%` }}
+//             />
+//           </div>
+//         </div>
+
+//         <div className="bg-white p-6 md:p-8 shadow-lg rounded-md">
+//           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+//             {step === 0 && (
+//               <>
+//                 <h2 className="text-2xl font-semibold mb-6 text-[#1A2C50]">Where and When Are You Travelling?</h2>
+//                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+//                   <InputWithLabel label="Travel Start Date" name="trip_start_date" type="date" register={form.register} error={getError("trip_start_date")} />
+//                   <InputWithLabel label="Travel End Date" name="trip_end_date" type="date" register={form.register} error={getError("trip_end_date")} />
+//                 </div>
+
+//                 <h3 className="text-xl font-semibold mb-1 text-[#1A2C50]">Risk Zone Days:</h3>
+//                 <div className="mb-4 p-4 border rounded-md bg-slate-50">
+//                     <div className="font-medium">Total Risk Zone Days:
+//                         <span className="ml-2 font-bold text-lg text-blue-600">{totalRiskZoneDays !== null ? totalRiskZoneDays : "Select dates"}</span>
+//                     </div>
+//                 </div>
+//                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+//                   <InputWithLabel label="Green Zone Days" name="green_zone_days" type="number" register={form.register} error={getError("green_zone_days")} />
+//                   <InputWithLabel label="Amber Zone Days" name="amber_zone_days" type="number" register={form.register} error={getError("amber_zone_days")} />
+//                   <InputWithLabel label="Red Zone Days" name="red_zone_days" type="number" register={form.register} error={getError("red_zone_days")} />
+//                 </div>
+//                 {formState.errors.root && <p className="text-sm text-red-500 mb-4">{formState.errors.root.message}</p>}
+//                 <p className="text-sm text-gray-500 mb-6">Note: Black Zone not selectable – for reference only (Value: {watch("black_zone_days") || 0})</p>
+
+//                 <h3 className="text-xl font-semibold mb-4 text-[#1A2C50]">Coverage Options:</h3>
+//                 <div className="space-y-4 mb-6">
+//                   <SelectWithLabel
+//                     label="Emergency Medical"
+//                     name="emergency_medical_coverage"
+//                     control={form.control}
+//                     options={emergencyMedicalCoverageOptions}
+//                     placeholder="Select Medical Coverage"
+//                     error={getError("emergency_medical_coverage")}
+//                   />
+//                   <SelectWithLabel
+//                     label="PA (Personal Accident)"
+//                     name="personal_accident_coverage_level"
+//                     control={form.control}
+//                     options={personalAccidentCoverageOptions}
+//                     placeholder="Select PA Coverage"
+//                     error={getError("personal_accident_coverage_level")}
+//                   />
+//                   <div className="flex items-center space-x-2">
+//                     <Controller name="add_transit_coverage" control={form.control} render={({ field }) => <Checkbox id="add_transit_coverage" checked={field.value} onCheckedChange={field.onChange} />} />
+//                     <Label htmlFor="add_transit_coverage">Add on transit cover 250k</Label>
+//                   </div>
+//                 </div>
+
+//                 <div className="mt-8 p-6 bg-gray-50 rounded-md border">
+//                   <h3 className="text-xl font-semibold text-[#1A2C50] mb-2">Quote Summary:</h3>
+//                   <p className="text-2xl font-bold text-[#00BBD3]">$[Calculated Price Placeholder]</p>
+//                   <div className="text-sm mt-2">
+//                     <p>Medical: {getEmergencyMedicalLabel(watchedEmergencyMedical)}</p>
+//                     <p>PA: {getPALabel(watchedPACoverage)}</p>
+//                     <p>Transit: {watchedTransit ? "Yes (250k)" : "No"}</p>
+//                   </div>
+//                 </div>
+//               </>
+//             )}
+
+//             {step === 1 && (
+//               <>
+//                 <h2 className="text-2xl font-semibold mb-6 text-[#1A2C50]">Your Details</h2>
+//                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+//                   <InputWithLabel label="Full Name" name="c_name" register={form.register} error={getError("c_name")} />
+//                   <div>
+//                     <InputWithLabel label="Date of Birth" name="c_birthdate" type="date" register={form.register} error={getError("c_birthdate")} />
+//                     {watch("c_birthdate") && <p className="text-sm text-gray-600 mt-1">Age: {calculateAge(watch("c_birthdate"))}</p>}
+//                   </div>
+//                   <InputWithLabel label="Phone Number" name="c_phone" type="tel" register={form.register} error={getError("c_phone")} />
+//                   <InputWithLabel label="WhatsApp (optional)" name="c_whats_app" type="tel" register={form.register} error={getError("c_whats_app")} />
+//                   <InputWithLabel label="Email Address" name="c_email" type="email" register={form.register} error={getError("c_email")} />
+//                   <SelectWithLabel label="Nationality" name="c_nationality" control={form.control} options={nationalityOptions} placeholder="Select Nationality" error={getError("c_nationality")} />
+//                   <InputWithLabel label="City of Residence" name="city_of_residence" register={form.register} error={getError("city_of_residence")} />
+//                   <SelectWithLabel label="Country Travelling To" name="trip_countries.0" control={form.control} options={countryOptions} placeholder="Select Country" error={getError("trip_countries.0") || getError("trip_countries")} />
+//                 </div>
+//               </>
+//             )}
+
+//             {step === 2 && (
+//               <>
+//                 <h2 className="text-2xl font-semibold mb-6 text-[#1A2C50]">Tell Us About Your Trip</h2>
+//                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+//                   <InputWithLabel label="Arrival in Ukraine (Optional)" name="arrival_in_ukraine" type="date" register={form.register} error={getError("arrival_in_ukraine")} />
+//                   <InputWithLabel label="Departure from Ukraine (Optional)" name="departure_from_ukraine" type="date" register={form.register} error={getError("departure_from_ukraine")} />
+//                 </div>
+//                 <div className="mt-6"><InputWithLabel label="Primary Cities/Regions (in Ukraine, Optional)" name="primary_cities_regions_ukraine" register={form.register} error={getError("primary_cities_regions_ukraine")} /></div>
+//                 <div className="mt-6"><SelectWithLabel label="Purpose of Travel" name="trip_purpose" control={form.control} options={tripPurposes.map(p => ({ value: p, label: p.charAt(0) + p.slice(1).toLowerCase().replace(/_/g, " ") }))} placeholder="Select Purpose" error={getError("trip_purpose")} /></div>
+//                 <div className="mt-6"><InputWithLabel label="Hotel/Accommodation Name (Optional)" name="stay_name" register={form.register} error={getError("stay_name")} /></div>
+//                 <div className="mt-6"><InputWithLabel label="Company Arranging Travel (Optional)" name="company_name" register={form.register} error={getError("company_name")} /></div>
+//                 <p className="mt-6 text-sm text-orange-600"><span className="font-bold">⚠ Ensure your zone-day breakdown matches Page 1</span></p>
+//               </>
+//             )}
+
+//             {step === 3 && (
+//               <>
+//                 <h2 className="text-2xl font-semibold mb-6 text-[#1A2C50]">Emergency Contact Information</h2>
+//                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+//                   <InputWithLabel label="Contact Name" name="emergency_contact_name" register={form.register} error={getError("emergency_contact_name")} />
+//                   <InputWithLabel label="Contact Number" name="emergency_contact_phone" type="tel" register={form.register} error={getError("emergency_contact_phone")} />
+//                   <InputWithLabel label="Relationship" name="emergency_contact_relation" register={form.register} error={getError("emergency_contact_relation")} />
+//                 </div>
+//                 <h3 className="text-xl font-semibold mt-8 mb-4 text-[#1A2C50]">Optional Medical Info (Confidential):</h3>
+//                 <div className="space-y-4">
+//                   <div className="flex items-center space-x-2"><Controller name="has_medical_conditions" control={form.control} render={({ field }) => <Checkbox id="has_medical_conditions" checked={field.value} onCheckedChange={field.onChange} />} /><Label htmlFor="has_medical_conditions">Pre-existing Medical Conditions</Label></div>
+//                   {watch("has_medical_conditions") && (<ControlledTextareaArray name="medical_conditions" control={form.control} label="List Conditions" error={getError("medical_conditions")} />)}
+//                   <div className="flex items-center space-x-2"><Controller name="has_allergies" control={form.control} render={({ field }) => <Checkbox id="has_allergies" checked={field.value} onCheckedChange={field.onChange} />} /><Label htmlFor="has_allergies">Allergies</Label></div>
+//                   {watch("has_allergies") && (<ControlledTextareaArray name="allergies" control={form.control} label="List Allergies" error={getError("allergies")} />)}
+//                   <div className="flex items-center space-x-2"><Controller name="has_current_medications" control={form.control} render={({ field }) => <Checkbox id="has_current_medications" checked={field.value} onCheckedChange={field.onChange} />} /><Label htmlFor="has_current_medications">Current Medications</Label></div>
+//                   {watch("has_current_medications") && (<ControlledTextareaArray name="current_medications" control={form.control} label="List Medications" error={getError("current_medications")} />)}
+//                   <InputWithLabel label="Blood Type (Optional)" name="blood_type" register={form.register} error={getError("blood_type")} />
+//                   <TextareaWithLabel label="Special Assistance Requirements (Optional)" name="special_assistance" register={form.register} error={getError("special_assistance")} />
+//                 </div>
+//               </>
+//             )}
+
+//             {step === 4 && (
+//                <>
+//                 <h2 className="text-2xl font-semibold mb-6 text-[#1A2C50]">Summary of Coverage</h2>
+//                 <div className="space-y-3 p-6 bg-gray-50 rounded-md border mb-6">
+//                     <div><strong>Travel Dates:</strong> {watch("trip_start_date") || "N/A"} to {watch("trip_end_date") || "N/A"}</div>
+//                     <div><strong>Total Risk Zone Days:</strong> {totalRiskZoneDays ?? "N/A"}</div>
+//                     <div><strong>Risk Zone Breakdown:</strong></div>
+//                     <ul className="list-disc list-inside pl-4">
+//                         <li>Green: {watchedGreenZoneDaysForDisplay || 0} days</li>
+//                         <li>Amber: {watchedAmberZoneDaysForDisplay || 0} days</li>
+//                         <li>Red: {watchedRedZoneDaysForDisplay || 0} days</li>
+//                     </ul>
+//                     <div><strong>Coverage Selected:</strong></div>
+//                     <ul className="list-disc list-inside pl-4">
+//                         <li>Medical: {getEmergencyMedicalLabel(watchedEmergencyMedical) || "N/A"}</li>
+//                         <li>PA: {getPALabel(watchedPACoverage) || "N/A"}</li>
+//                         <li>Transit: {watchedTransit ? "Yes (250k Add-on)" : "No"}</li>
+//                     </ul>
+//                     <div className="mt-4 pt-3 border-t">
+//                         <strong className="text-xl">Total Quote:</strong>
+//                         <span className="text-xl font-bold text-[#00BBD3] ml-2">$[Calculated Price Placeholder]</span>
+//                     </div>
+//                 </div>
+
+//                 <h3 className="text-xl font-semibold text-[#1A2C50] mb-3">Insured Details:</h3>
+//                 <div className="space-y-1 p-4 bg-gray-50 rounded-md border mb-6">
+//                     <div><strong>Name:</strong> {watchedFullNameForDisplay || "N/A"}</div>
+//                     <div><strong>Age:</strong> {calculateAge(watchedBirthdateForAge) || "N/A"}</div>
+//                     <div><strong>Nationality:</strong> {getNationalityLabel(watchedNationalityForDisplay) || "N/A"}</div>
+//                 </div>
+
+//                 <h3 className="text-xl font-semibold text-[#1A2C50] mb-3">Trip Information:</h3>
+//                  <div className="space-y-1 p-4 bg-gray-50 rounded-md border mb-6">
+//                     <div><strong>Purpose:</strong> {getTripPurposeLabel(watchedTripPurposeForDisplay) || "N/A"}</div>
+//                     <div><strong>Primary Regions:</strong> {watchedPrimaryCitiesRegionsForDisplay || "N/A"}</div>
+//                  </div>
+
+//                 <h3 className="text-xl font-semibold text-[#1A2C50] mb-3">Emergency Contact:</h3>
+//                  <div className="space-y-1 p-4 bg-gray-50 rounded-md border mb-6">
+//                     <div><strong>Name:</strong> {watchedEmergencyNameForDisplay || "N/A"}</div>
+//                     <div><strong>Number:</strong> {watchedEmergencyPhoneForDisplay || "N/A"}</div>
+//                  </div>
+
+//                 <div className="mb-6"><InputWithLabel label="Affiliate Code (Optional)" name="affiliate_code" register={form.register} error={getError("affiliate_code")} /></div>
+
+//                 <div className="flex items-start space-x-3">
+//                    <Controller name="consent" control={form.control} render={({ field }) => (<Checkbox id="consent" checked={field.value === true} onCheckedChange={(checked) => field.onChange(checked === true ? true : undefined)} onBlur={field.onBlur} /> )} />
+//                   <div className="grid gap-1.5 leading-none">
+//                     <Label htmlFor="consent" className="font-medium leading-snug">I consent to sharing medical info in an emergency</Label>
+//                     {getError("consent") && <p className="text-sm text-red-500">{getError("consent")?.message}</p>}
+//                   </div>
+//                 </div>
+//               </>
+//             )}
+
+//             <div className="flex flex-col sm:flex-row justify-between pt-8 mt-8 border-t gap-4">
+//               {step > 0 && (
+//                 <Button type="button" variant="outline" onClick={prevStep} className="w-full sm:w-auto px-8 py-3 text-base">
+//                   Back
+//                 </Button>
+//               )}
+//               {step === 0 && (
+//                  <Button type="button" variant="outline" onClick={() => alert("Modify Choices: Implement logic to go back or reset specific fields.")} className="w-full sm:w-auto px-8 py-3 text-base">
+//                   Modify Choices
+//                 </Button>
+//               )}
+//               {step < steps.length - 1 ? (
+//                 <Button type="button" onClick={nextStep} className="w-full sm:w-auto px-8 py-3 text-base bg-[#1A2C50] hover:bg-[#2c3e6b] text-white">
+//                   Continue
+//                 </Button>
+//               ) : (
+//                 <Button type="submit" className="w-full sm:w-auto px-8 py-3 text-base bg-green-600 hover:bg-green-700 text-white" disabled={formState.isSubmitting}>
+//                   {formState.isSubmitting ? "Processing..." : "Confirm & Purchase"}
+//                 </Button>
+//               )}
+//             </div>
+//           </form>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+
+// src/components/insurance-form/InsuranceForm.tsx
+
 "use client";
 
 import { useState, useEffect } from "react";
@@ -4805,40 +6250,39 @@ import { Button } from "@/components/ui/button";
 import {
     purchaseWithoutLoginSchema,
     type InsuranceFormValues,
-    steps, // Updated step names
+    steps,
     tripPurposes,
-    // zoneTypes, // Not directly used in UI inputs now for selection
-    fieldsByStep, // Updated field mapping
-    कवरेजस्तरOptions, // coverageLevelOptions
+    fieldsByStep,
+    emergencyMedicalCoverageOptions,
+    personalAccidentCoverageOptions,
     nationalityOptions,
     countryOptions,
-} from "@/lib/insuranceFormSchema";
+} from "@/lib/insuranceFormSchema"; // Ensure this path is correct
 import {
     InputWithLabel,
     TextareaWithLabel,
     ControlledTextareaArray,
     SelectWithLabel
-} from "./FormFields";
+} from "./FormFields"; // Ensure this path is correct
 
 export default function InsuranceForm() {
   const [step, setStep] = useState(0);
+  const [totalRiskZoneDays, setTotalRiskZoneDays] = useState<number | null>(null);
 
   const form = useForm<InsuranceFormValues>({
     resolver: joiResolver(purchaseWithoutLoginSchema, {
       abortEarly: false,
     }),
     defaultValues: {
-      // Page 1
       trip_start_date: "",
       trip_end_date: "",
       green_zone_days: 0,
       amber_zone_days: 0,
       red_zone_days: 0,
-      black_zone_days: 0, // For reference
-      coverage_level: "",
+      black_zone_days: 0,
+      emergency_medical_coverage: "",
+      personal_accident_coverage_level: "0",
       add_transit_coverage: false,
-      add_personal_accident_coverage: false,
-      // Page 2
       c_name: "",
       c_birthdate: "",
       c_phone: "",
@@ -4846,15 +6290,13 @@ export default function InsuranceForm() {
       c_email: "",
       c_nationality: "",
       city_of_residence: "",
-      trip_countries: [], // Will hold one country
-      // Page 3
+      trip_countries: [],
       arrival_in_ukraine: "",
       departure_from_ukraine: "",
       primary_cities_regions_ukraine: "",
       trip_purpose: "",
       stay_name: "",
       company_name: "",
-      // Page 4
       emergency_contact_name: "",
       emergency_contact_phone: "",
       emergency_contact_relation: "",
@@ -4866,34 +6308,75 @@ export default function InsuranceForm() {
       current_medications: [],
       blood_type: "",
       special_assistance: "",
-      // Page 5
       affiliate_code: "",
       consent: undefined,
-      // Legacy/Internal (some defaults set in schema)
       c_organization: "",
-      travellers: [{ name: "", birthdate: ""}], // Will be populated by c_name, c_birthdate
+      travellers: [{ name: "", birthdate: ""}],
       is_company_arranged: false,
-      trip_cities: [], // Not directly part of new UI input flow
+      trip_cities: [],
     },
+    mode: "onChange",
   });
 
-  // Update traveller name and birthdate when c_name or c_birthdate changes
-  // This assumes a single traveller based on the new UI ("Your Details")
-  const cNameValue = form.watch("c_name");
-  const cBirthdateValue = form.watch("c_birthdate");
+  const { watch, setValue, getValues, trigger, formState } = form;
+
+  const watchedStartDate = watch("trip_start_date");
+  const watchedEndDate = watch("trip_end_date");
 
   useEffect(() => {
-    if (form.getValues("travellers").length > 0) {
-        form.setValue("travellers.0.name", cNameValue || "", { shouldValidate: step === 1 }); // Validate if on relevant step
-        form.setValue("travellers.0.birthdate", cBirthdateValue || "", { shouldValidate: step === 1 });
-    } else if (cNameValue || cBirthdateValue) { // Initialize if empty and values exist
-        form.setValue("travellers", [{ name: cNameValue || "", birthdate: cBirthdateValue || ""}]);
+    if (watchedStartDate && watchedEndDate) {
+      const start = new Date(watchedStartDate);
+      const end = new Date(watchedEndDate);
+      if (!isNaN(start.getTime()) && !isNaN(end.getTime()) && end >= start) {
+        const diffTime = end.getTime() - start.getTime();
+        const diffDays = Math.ceil(diffTime / (1000 * 3600 * 24)) + 1;
+        setTotalRiskZoneDays(diffDays);
+        setValue("green_zone_days", diffDays, { shouldValidate: true, shouldDirty: true });
+        if (getValues("amber_zone_days") !== 0) setValue("amber_zone_days", 0, { shouldValidate: true, shouldDirty: true });
+        if (getValues("red_zone_days") !== 0) setValue("red_zone_days", 0, { shouldValidate: true, shouldDirty: true });
+      } else {
+        setTotalRiskZoneDays(null);
+        if (getValues("green_zone_days") !== 0) setValue("green_zone_days", 0, { shouldValidate: true, shouldDirty: true });
+      }
+    } else {
+      setTotalRiskZoneDays(null);
+      if (getValues("green_zone_days") !== 0) setValue("green_zone_days", 0, { shouldValidate: true, shouldDirty: true });
     }
-  }, [cNameValue, cBirthdateValue, form, step]);
+  }, [watchedStartDate, watchedEndDate, setValue, getValues]);
+
+  useEffect(() => {
+    const subscription = watch((value, { name, type }) => {
+      if (
+        (name === "amber_zone_days" || name === "red_zone_days") &&
+        type === "change" &&
+        totalRiskZoneDays !== null
+      ) {
+        const amber = Number(value.amber_zone_days || 0);
+        const red = Number(value.red_zone_days || 0);
+        const newGreenDays = totalRiskZoneDays - amber - red;
+        if (getValues("green_zone_days") !== Math.max(0, newGreenDays)) {
+            setValue("green_zone_days", Math.max(0, newGreenDays), { shouldValidate: true, shouldDirty: true });
+        }
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [watch, setValue, getValues, totalRiskZoneDays]);
+
+
+  const cNameValue = watch("c_name");
+  const cBirthdateValue = watch("c_birthdate");
+
+  useEffect(() => {
+    if (getValues("travellers")?.length > 0) {
+        if (getValues("travellers.0.name") !== cNameValue) setValue("travellers.0.name", cNameValue || "", { shouldValidate: step === 1 && formState.dirtyFields.c_name });
+        if (getValues("travellers.0.birthdate") !== cBirthdateValue) setValue("travellers.0.birthdate", cBirthdateValue || "", { shouldValidate: step === 1 && formState.dirtyFields.c_birthdate });
+    } else if (cNameValue || cBirthdateValue) {
+        setValue("travellers", [{ name: cNameValue || "", birthdate: cBirthdateValue || ""}]);
+    }
+  }, [cNameValue, cBirthdateValue, setValue, getValues, step, formState.dirtyFields]);
 
 
   const onSubmit = (data: InsuranceFormValues) => {
-    // Ensure the single traveller data is correctly set from c_name and c_birthdate
     const finalData = {
         ...data,
         travellers: [{ name: data.c_name, birthdate: data.c_birthdate }],
@@ -4911,32 +6394,53 @@ export default function InsuranceForm() {
 
   const nextStep = async () => {
     const currentStepFields = fieldsByStep[step] as Array<Path<InsuranceFormValues>>;
-    const result = await form.trigger(currentStepFields);
 
-    if (!result) {
-        const firstErrorKey = currentStepFields.find(
-            (fieldName) => getError(fieldName as string)
-        );
-        if (firstErrorKey) {
-            const element = document.querySelector(`[name='${firstErrorKey}']`) || document.getElementById(firstErrorKey as string);
-            element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      return;
+    // 1. Validate fields specific to the CURRENT step first
+    const currentStepValidationResult = await trigger(currentStepFields, { shouldFocus: true });
+
+    if (!currentStepValidationResult) {
+      const firstErrorKeyOnCurrentStep = currentStepFields.find(
+        (fieldName) => getError(fieldName as string) !== undefined
+      );
+      if (firstErrorKeyOnCurrentStep) {
+        const element = document.querySelector(`[name='${firstErrorKeyOnCurrentStep}']`) || document.getElementById(firstErrorKeyOnCurrentStep as string);
+        element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      return; // Stop if current step fields have errors
+    }
+
+    // 2. If on Step 0, and current step fields are valid,
+    //    NOW specifically check the Joi .custom() rule for the sum of zone days.
+    if (step === 0) {
+      const fieldsForCustomRuleCheck: Array<Path<InsuranceFormValues>> = [
+        "trip_start_date", "trip_end_date",
+        "green_zone_days", "amber_zone_days", "red_zone_days"
+      ];
+      // Triggering these again should make Joi re-evaluate the object with the custom rule
+      await trigger(fieldsForCustomRuleCheck, { shouldFocus: false });
+
+      if (formState.errors.root?.message) {
+        alert(formState.errors.root.message + "\nPlease check the sum of Green, Amber, and Red zone days against the Total Risk Zone Days.");
+        const zoneDayElement = document.querySelector(`[name='green_zone_days']`);
+        zoneDayElement?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return; // Stop if the custom sum validation fails
+      }
     }
 
     if (step < steps.length - 1) {
-       setStep((prev) => prev + 1);
+      setStep((prev) => prev + 1);
     }
   };
+
 
   const prevStep = () => setStep((prev) => Math.max(prev - 1, 0));
 
   // const getError = (fieldName: string): FieldError | undefined => {
   //   const keys = fieldName.split('.');
-  //   let error: FieldErrors | FieldError | undefined = form.formState.errors;
+  //   let error: FieldErrors | FieldError | undefined = formState.errors;
   //   try {
   //       for (const key of keys) {
-  //            const k = key.match(/^\d+$/) ? parseInt(key, 10) : key; // Handle array indices
+  //            const k = key.match(/^\d+$/) ? parseInt(key, 10) : key;
   //           if (error && typeof error === 'object' && k in error) {
   //               error = (error as any)[k];
   //           } else {
@@ -4944,11 +6448,11 @@ export default function InsuranceForm() {
   //           }
   //       }
   //       return (error && typeof error === 'object' && 'message' in error) ? error as FieldError : undefined;
-  //   } catch (e) {
-  //       console.warn(`Error accessing field error for ${fieldName}:`, e);
+  //   } catch {
   //       return undefined;
   //   }
   // };
+
   const getError = (fieldName: string): FieldError | undefined => {
     const keys = fieldName.split('.');
     let error: FieldErrors | FieldError | undefined = form.formState.errors;
@@ -4978,6 +6482,7 @@ export default function InsuranceForm() {
     }
   };
   
+
   const calculateAge = (birthdate: string) => {
     if (!birthdate) return "";
     const birthDate = new Date(birthdate);
@@ -4991,40 +6496,29 @@ export default function InsuranceForm() {
     return age >= 0 ? age.toString() : "";
   };
 
-  // Watched values for summaries
-  const watchedTripStartDate = form.watch("trip_start_date");
-  const watchedTripEndDate = form.watch("trip_end_date");
-  const watchedGreenDays = form.watch("green_zone_days");
-  const watchedAmberDays = form.watch("amber_zone_days");
-  const watchedRedDays = form.watch("red_zone_days");
-  const watchedCoverageLevel = form.watch("coverage_level");
-  const watchedTransit = form.watch("add_transit_coverage");
-  const watchedPA = form.watch("add_personal_accident_coverage");
-  const watchedFullName = form.watch("c_name");
-  const watchedBirthdate = form.watch("c_birthdate");
-  const watchedNationality = form.watch("c_nationality");
-  const watchedTripPurpose = form.watch("trip_purpose");
-  const watchedPrimaryCitiesRegions = form.watch("primary_cities_regions_ukraine");
-  const watchedEmergencyName = form.watch("emergency_contact_name");
-  const watchedEmergencyPhone = form.watch("emergency_contact_phone");
+  const watchedEmergencyMedical = watch("emergency_medical_coverage");
+  const watchedPACoverage = watch("personal_accident_coverage_level");
+  const watchedTransit = watch("add_transit_coverage");
+  const watchedFullNameForDisplay = watch("c_name");
+  const watchedBirthdateForAge = watch("c_birthdate");
+  const watchedNationalityForDisplay = watch("c_nationality");
+  const watchedTripPurposeForDisplay = watch("trip_purpose");
+  const watchedPrimaryCitiesRegionsForDisplay = watch("primary_cities_regions_ukraine");
+  const watchedEmergencyNameForDisplay = watch("emergency_contact_name");
+  const watchedEmergencyPhoneForDisplay = watch("emergency_contact_phone");
+  const watchedGreenZoneDaysForDisplay = watch("green_zone_days");
+  const watchedAmberZoneDaysForDisplay = watch("amber_zone_days");
+  const watchedRedZoneDaysForDisplay = watch("red_zone_days");
 
 
-  const getCoverageLabel = (value: string) => {
-    return कवरेजस्तरOptions.find(opt => opt.value === value)?.label || value;
-  };
-  const getTripPurposeLabel = (value: string) => {
-    const purpose = tripPurposes.map(p => ({ value: p, label: p.charAt(0) + p.slice(1).toLowerCase().replace(/_/g, " ") })).find(opt => opt.value === value);
-    return purpose?.label || value;
-  };
-   const getNationalityLabel = (value: string) => {
-    return nationalityOptions.find(opt => opt.value === value)?.label || value;
-  };
-
+  const getEmergencyMedicalLabel = (value: string) => emergencyMedicalCoverageOptions.find(opt => opt.value === value)?.label || value;
+  const getPALabel = (value: string) => personalAccidentCoverageOptions.find(opt => opt.value === value)?.label || value;
+  const getTripPurposeLabel = (value: string) => tripPurposes.map(p => ({ value: p, label: p.charAt(0) + p.slice(1).toLowerCase().replace(/_/g, " ") })).find(opt => opt.value === value)?.label || value;
+  const getNationalityLabel = (value: string) => nationalityOptions.find(opt => opt.value === value)?.label || value;
 
   return (
     <div className="flex justify-center px-4 py-10 bg-gray-100">
       <div className="w-full max-w-4xl">
-        {/* Stepper */}
         <div className="mb-8 space-y-4">
           <div className="flex items-center justify-between">
             {steps.map((label, index) => (
@@ -5049,10 +6543,8 @@ export default function InsuranceForm() {
           </div>
         </div>
 
-        {/* Form Content Area */}
         <div className="bg-white p-6 md:p-8 shadow-lg rounded-md">
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            {/* Page 1: Trip & Coverage */}
             {step === 0 && (
               <>
                 <h2 className="text-2xl font-semibold mb-6 text-[#1A2C50]">Where and When Are You Travelling?</h2>
@@ -5061,104 +6553,90 @@ export default function InsuranceForm() {
                   <InputWithLabel label="Travel End Date" name="trip_end_date" type="date" register={form.register} error={getError("trip_end_date")} />
                 </div>
 
-                <h3 className="text-xl font-semibold mb-4 text-[#1A2C50]">Risk Zone Days:</h3>
+                <h3 className="text-xl font-semibold mb-1 text-[#1A2C50]">Risk Zone Days:</h3>
+                <div className="mb-4 p-4 border rounded-md bg-slate-50">
+                    <div className="font-medium">Total Days:
+                        <span className="ml-2 font-bold text-lg text-blue-600">{totalRiskZoneDays !== null ? totalRiskZoneDays : "Select dates"}</span>
+                    </div>
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                   <InputWithLabel label="Green Zone Days" name="green_zone_days" type="number" register={form.register} error={getError("green_zone_days")} />
                   <InputWithLabel label="Amber Zone Days" name="amber_zone_days" type="number" register={form.register} error={getError("amber_zone_days")} />
                   <InputWithLabel label="Red Zone Days" name="red_zone_days" type="number" register={form.register} error={getError("red_zone_days")} />
                 </div>
-                <p className="text-sm text-gray-500 mb-6">Note: Black Zone not selectable – for reference only (Value: {form.watch("black_zone_days") || 0})</p>
+                {formState.errors.root && <p className="text-sm text-red-500 mb-4">{formState.errors.root.message}</p>}
+                <p className="text-sm text-gray-500 mb-6">Note: Black Zone not selectable – for reference only (Value: {watch("black_zone_days") || 0})</p>
 
                 <h3 className="text-xl font-semibold mb-4 text-[#1A2C50]">Coverage Options:</h3>
                 <div className="space-y-4 mb-6">
                   <SelectWithLabel
-                    label="Coverage Level"
-                    name="coverage_level"
+                    label="Emergency Medical"
+                    name="emergency_medical_coverage"
                     control={form.control}
-                    options={कवरेजस्तरOptions}
-                    placeholder="Select Coverage Amount"
-                    error={getError("coverage_level")}
+                    options={emergencyMedicalCoverageOptions}
+                    placeholder="Select Medical Coverage"
+                    error={getError("emergency_medical_coverage")}
+                  />
+                  <SelectWithLabel
+                    label="PA (Personal Accident)"
+                    name="personal_accident_coverage_level"
+                    control={form.control}
+                    options={personalAccidentCoverageOptions}
+                    placeholder="Select PA Coverage"
+                    error={getError("personal_accident_coverage_level")}
                   />
                   <div className="flex items-center space-x-2">
                     <Controller name="add_transit_coverage" control={form.control} render={({ field }) => <Checkbox id="add_transit_coverage" checked={field.value} onCheckedChange={field.onChange} />} />
-                    <Label htmlFor="add_transit_coverage">Add Transit Coverage (10-day Europe)</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Controller name="add_personal_accident_coverage" control={form.control} render={({ field }) => <Checkbox id="add_personal_accident_coverage" checked={field.value} onCheckedChange={field.onChange} />} />
-                    <Label htmlFor="add_personal_accident_coverage">Add Personal Accident Coverage (PA)</Label>
+                    <Label htmlFor="add_transit_coverage">Add on transit cover 250k</Label>
                   </div>
                 </div>
 
                 <div className="mt-8 p-6 bg-gray-50 rounded-md border">
                   <h3 className="text-xl font-semibold text-[#1A2C50] mb-2">Quote Summary:</h3>
                   <p className="text-2xl font-bold text-[#00BBD3]">$[Calculated Price Placeholder]</p>
+                  <div className="text-sm mt-2">
+                    <p>Medical: {getEmergencyMedicalLabel(watchedEmergencyMedical)}</p>
+                    <p>PA: {getPALabel(watchedPACoverage)}</p>
+                    <p>Transit: {watchedTransit ? "Yes (250k)" : "No"}</p>
+                  </div>
                 </div>
               </>
             )}
 
-            {/* Page 2: Your Details */}
             {step === 1 && (
               <>
                 <h2 className="text-2xl font-semibold mb-6 text-[#1A2C50]">Your Details</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <InputWithLabel label="Full Name" name="c_name" register={form.register} error={getError("c_name")} />
-                  <InputWithLabel label="Date of Birth" name="c_birthdate" type="date" register={form.register} error={getError("c_birthdate")} />
+                  <div>
+                    <InputWithLabel label="Date of Birth" name="c_birthdate" type="date" register={form.register} error={getError("c_birthdate")} />
+                    {watch("c_birthdate") && <p className="text-sm text-gray-600 mt-1">Age: {calculateAge(watch("c_birthdate"))}</p>}
+                  </div>
                   <InputWithLabel label="Phone Number" name="c_phone" type="tel" register={form.register} error={getError("c_phone")} />
                   <InputWithLabel label="WhatsApp (optional)" name="c_whats_app" type="tel" register={form.register} error={getError("c_whats_app")} />
                   <InputWithLabel label="Email Address" name="c_email" type="email" register={form.register} error={getError("c_email")} />
-                  <SelectWithLabel
-                    label="Nationality"
-                    name="c_nationality"
-                    control={form.control}
-                    options={nationalityOptions} // Replace with your actual options
-                    placeholder="Select Nationality"
-                    error={getError("c_nationality")}
-                  />
-                   <InputWithLabel label="City of Residence" name="city_of_residence" register={form.register} error={getError("city_of_residence")} />
-                   <SelectWithLabel
-                    label="Country Travelling To"
-                    name="trip_countries.0" // Targets the first element of the array
-                    control={form.control}
-                    options={countryOptions} // Replace with your actual country options
-                    placeholder="Select Country"
-                    error={getError("trip_countries.0") || getError("trip_countries")}
-                  />
+                  <SelectWithLabel label="Nationality" name="c_nationality" control={form.control} options={nationalityOptions} placeholder="Select Nationality" error={getError("c_nationality")} />
+                  <InputWithLabel label="City of Residence" name="city_of_residence" register={form.register} error={getError("city_of_residence")} />
+                  <SelectWithLabel label="Country Travelling To" name="trip_countries.0" control={form.control} options={countryOptions} placeholder="Select Country" error={getError("trip_countries.0") || getError("trip_countries")} />
                 </div>
               </>
             )}
 
-            {/* Page 3: Trip Information */}
             {step === 2 && (
               <>
                 <h2 className="text-2xl font-semibold mb-6 text-[#1A2C50]">Tell Us About Your Trip</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <InputWithLabel label="Arrival in Ukraine" name="arrival_in_ukraine" type="date" register={form.register} error={getError("arrival_in_ukraine")} />
-                  <InputWithLabel label="Departure from Ukraine" name="departure_from_ukraine" type="date" register={form.register} error={getError("departure_from_ukraine")} />
+                  <InputWithLabel label="Arrival in Ukraine (Optional)" name="arrival_in_ukraine" type="date" register={form.register} error={getError("arrival_in_ukraine")} />
+                  <InputWithLabel label="Departure from Ukraine (Optional)" name="departure_from_ukraine" type="date" register={form.register} error={getError("departure_from_ukraine")} />
                 </div>
-                <div className="mt-6">
-                  <InputWithLabel label="Primary Cities/Regions (in Ukraine)" name="primary_cities_regions_ukraine" register={form.register} error={getError("primary_cities_regions_ukraine")} />
-                </div>
-                <div className="mt-6">
-                  <SelectWithLabel
-                    label="Purpose of Travel"
-                    name="trip_purpose"
-                    control={form.control}
-                    options={tripPurposes.map(p => ({ value: p, label: p.charAt(0) + p.slice(1).toLowerCase().replace(/_/g, " ") }))}
-                    placeholder="Select Purpose"
-                    error={getError("trip_purpose")}
-                  />
-                </div>
-                <div className="mt-6">
-                  <InputWithLabel label="Hotel/Accommodation Name (Optional)" name="stay_name" register={form.register} error={getError("stay_name")} />
-                </div>
-                <div className="mt-6">
-                  <InputWithLabel label="Company Arranging Travel (Optional)" name="company_name" register={form.register} error={getError("company_name")} />
-                </div>
+                <div className="mt-6"><InputWithLabel label="Primary Cities/Regions (in Ukraine, Optional)" name="primary_cities_regions_ukraine" register={form.register} error={getError("primary_cities_regions_ukraine")} /></div>
+                <div className="mt-6"><SelectWithLabel label="Purpose of Travel" name="trip_purpose" control={form.control} options={tripPurposes.map(p => ({ value: p, label: p.charAt(0) + p.slice(1).toLowerCase().replace(/_/g, " ") }))} placeholder="Select Purpose" error={getError("trip_purpose")} /></div>
+                <div className="mt-6"><InputWithLabel label="Hotel/Accommodation Name (Optional)" name="stay_name" register={form.register} error={getError("stay_name")} /></div>
+                <div className="mt-6"><InputWithLabel label="Company Arranging Travel (Optional)" name="company_name" register={form.register} error={getError("company_name")} /></div>
                 <p className="mt-6 text-sm text-orange-600"><span className="font-bold">⚠ Ensure your zone-day breakdown matches Page 1</span></p>
               </>
             )}
 
-            {/* Page 4: Medical & Emergency Contact */}
             {step === 3 && (
               <>
                 <h2 className="text-2xl font-semibold mb-6 text-[#1A2C50]">Emergency Contact Information</h2>
@@ -5167,130 +6645,98 @@ export default function InsuranceForm() {
                   <InputWithLabel label="Contact Number" name="emergency_contact_phone" type="tel" register={form.register} error={getError("emergency_contact_phone")} />
                   <InputWithLabel label="Relationship" name="emergency_contact_relation" register={form.register} error={getError("emergency_contact_relation")} />
                 </div>
-
                 <h3 className="text-xl font-semibold mt-8 mb-4 text-[#1A2C50]">Optional Medical Info (Confidential):</h3>
                 <div className="space-y-4">
-                  <div className="flex items-center space-x-2">
-                    <Controller name="has_medical_conditions" control={form.control} render={({ field }) => <Checkbox id="has_medical_conditions" checked={field.value} onCheckedChange={field.onChange} />} />
-                    <Label htmlFor="has_medical_conditions">Pre-existing Medical Conditions</Label>
-                  </div>
-                  {form.watch("has_medical_conditions") && (
-                    <ControlledTextareaArray name="medical_conditions" control={form.control} label="List Conditions" error={getError("medical_conditions")} />
-                  )}
-                  <div className="flex items-center space-x-2">
-                     <Controller name="has_allergies" control={form.control} render={({ field }) => <Checkbox id="has_allergies" checked={field.value} onCheckedChange={field.onChange} />} />
-                    <Label htmlFor="has_allergies">Allergies</Label>
-                  </div>
-                  {form.watch("has_allergies") && (
-                    <ControlledTextareaArray name="allergies" control={form.control} label="List Allergies" error={getError("allergies")} />
-                  )}
-                  <div className="flex items-center space-x-2">
-                    <Controller name="has_current_medications" control={form.control} render={({ field }) => <Checkbox id="has_current_medications" checked={field.value} onCheckedChange={field.onChange} />} />
-                    <Label htmlFor="has_current_medications">Current Medications</Label>
-                  </div>
-                  {form.watch("has_current_medications") && (
-                    <ControlledTextareaArray name="current_medications" control={form.control} label="List Medications" error={getError("current_medications")} />
-                  )}
+                  <div className="flex items-center space-x-2"><Controller name="has_medical_conditions" control={form.control} render={({ field }) => <Checkbox id="has_medical_conditions" checked={field.value} onCheckedChange={field.onChange} />} /><Label htmlFor="has_medical_conditions">Pre-existing Medical Conditions</Label></div>
+                  {watch("has_medical_conditions") && (<ControlledTextareaArray name="medical_conditions" control={form.control} label="List Conditions" error={getError("medical_conditions")} />)}
+                  <div className="flex items-center space-x-2"><Controller name="has_allergies" control={form.control} render={({ field }) => <Checkbox id="has_allergies" checked={field.value} onCheckedChange={field.onChange} />} /><Label htmlFor="has_allergies">Allergies</Label></div>
+                  {watch("has_allergies") && (<ControlledTextareaArray name="allergies" control={form.control} label="List Allergies" error={getError("allergies")} />)}
+                  <div className="flex items-center space-x-2"><Controller name="has_current_medications" control={form.control} render={({ field }) => <Checkbox id="has_current_medications" checked={field.value} onCheckedChange={field.onChange} />} /><Label htmlFor="has_current_medications">Current Medications</Label></div>
+                  {watch("has_current_medications") && (<ControlledTextareaArray name="current_medications" control={form.control} label="List Medications" error={getError("current_medications")} />)}
                   <InputWithLabel label="Blood Type (Optional)" name="blood_type" register={form.register} error={getError("blood_type")} />
                   <TextareaWithLabel label="Special Assistance Requirements (Optional)" name="special_assistance" register={form.register} error={getError("special_assistance")} />
                 </div>
               </>
             )}
 
-            {/* Page 5: Final Summary + Purchase */}
             {step === 4 && (
-              <>
+               <>
                 <h2 className="text-2xl font-semibold mb-6 text-[#1A2C50]">Summary of Coverage</h2>
-                <div className="space-y-4 p-6 bg-gray-50 rounded-md border">
-                    <div><strong>Travel Dates:</strong> {watchedTripStartDate || "N/A"} to {watchedTripEndDate || "N/A"}</div>
+                <div className="space-y-3 p-6 bg-gray-50 rounded-md border mb-6">
+                    <div><strong>Travel Dates:</strong> {watch("trip_start_date") || "N/A"} to {watch("trip_end_date") || "N/A"}</div>
+                    <div><strong>Total Days:</strong> {totalRiskZoneDays ?? "N/A"}</div>
                     <div><strong>Risk Zone Breakdown:</strong></div>
                     <ul className="list-disc list-inside pl-4">
-                        <li>Green: {watchedGreenDays || 0} days</li>
-                        <li>Amber: {watchedAmberDays || 0} days</li>
-                        <li>Red: {watchedRedDays || 0} days</li>
+                        <li>Green: {watchedGreenZoneDaysForDisplay || 0} days</li>
+                        <li>Amber: {watchedAmberZoneDaysForDisplay || 0} days</li>
+                        <li>Red: {watchedRedZoneDaysForDisplay || 0} days</li>
                     </ul>
                     <div><strong>Coverage Selected:</strong></div>
                     <ul className="list-disc list-inside pl-4">
-                        <li>Medical: {getCoverageLabel(watchedCoverageLevel) || "N/A"}</li>
-                        <li>PA: ${watchedPA ? "Amount_PA" : "0"} (Example)</li>
-                        <li>Transit: {watchedTransit ? "Yes" : "No"}</li>
+                        <li>Medical: {getEmergencyMedicalLabel(watchedEmergencyMedical) || "N/A"}</li>
+                        <li>PA: {getPALabel(watchedPACoverage) || "N/A"}</li>
+                        <li>Transit: {watchedTransit ? "Yes (250k Add-on)" : "No"}</li>
                     </ul>
-                    <div className="mt-4">
+                    <div className="mt-4 pt-3 border-t">
                         <strong className="text-xl">Total Quote:</strong>
                         <span className="text-xl font-bold text-[#00BBD3] ml-2">$[Calculated Price Placeholder]</span>
                     </div>
                 </div>
 
-                <h3 className="text-xl font-semibold mt-8 mb-4 text-[#1A2C50]">Insured Details:</h3>
-                <div className="space-y-2 p-6 bg-gray-50 rounded-md border">
-                    <div><strong>Name:</strong> {watchedFullName || "N/A"}</div>
-                    <div><strong>Age:</strong> {calculateAge(watchedBirthdate) || "N/A"}</div>
-                    <div><strong>Nationality:</strong> {getNationalityLabel(watchedNationality) || "N/A"}</div>
+                <h3 className="text-xl font-semibold text-[#1A2C50] mb-3">Insured Details:</h3>
+                <div className="space-y-1 p-4 bg-gray-50 rounded-md border mb-6">
+                    <div><strong>Name:</strong> {watchedFullNameForDisplay || "N/A"}</div>
+                    <div><strong>Age:</strong> {calculateAge(watchedBirthdateForAge) || "N/A"}</div>
+                    <div><strong>Nationality:</strong> {getNationalityLabel(watchedNationalityForDisplay) || "N/A"}</div>
                 </div>
 
-                <h3 className="text-xl font-semibold mt-8 mb-4 text-[#1A2C50]">Trip Information:</h3>
-                 <div className="space-y-2 p-6 bg-gray-50 rounded-md border">
-                    <div><strong>Purpose:</strong> {getTripPurposeLabel(watchedTripPurpose) || "N/A"}</div>
-                    <div><strong>Primary Regions:</strong> {watchedPrimaryCitiesRegions || "N/A"}</div>
+                <h3 className="text-xl font-semibold text-[#1A2C50] mb-3">Trip Information:</h3>
+                 <div className="space-y-1 p-4 bg-gray-50 rounded-md border mb-6">
+                    <div><strong>Purpose:</strong> {getTripPurposeLabel(watchedTripPurposeForDisplay) || "N/A"}</div>
+                    <div><strong>Primary Regions:</strong> {watchedPrimaryCitiesRegionsForDisplay || "N/A"}</div>
                  </div>
 
-                <h3 className="text-xl font-semibold mt-8 mb-4 text-[#1A2C50]">Emergency Contact:</h3>
-                 <div className="space-y-2 p-6 bg-gray-50 rounded-md border">
-                    <div><strong>Name:</strong> {watchedEmergencyName || "N/A"}</div>
-                    <div><strong>Number:</strong> {watchedEmergencyPhone || "N/A"}</div>
+                <h3 className="text-xl font-semibold text-[#1A2C50] mb-3">Emergency Contact:</h3>
+                 <div className="space-y-1 p-4 bg-gray-50 rounded-md border mb-6">
+                    <div><strong>Name:</strong> {watchedEmergencyNameForDisplay || "N/A"}</div>
+                    <div><strong>Number:</strong> {watchedEmergencyPhoneForDisplay || "N/A"}</div>
                  </div>
 
-                <div className="mt-8">
-                    <InputWithLabel label="Affiliate Code (Optional)" name="affiliate_code" register={form.register} error={getError("affiliate_code")} />
-                </div>
+                <div className="mb-6"><InputWithLabel label="Affiliate Code (Optional)" name="affiliate_code" register={form.register} error={getError("affiliate_code")} /></div>
 
-                <div className="mt-8 flex items-start space-x-3">
-                   <Controller
-                        name="consent"
-                        control={form.control}
-                        render={({ field }) => (
-                           <Checkbox
-                                id="consent"
-                                checked={field.value === true}
-                                onCheckedChange={(checked) => field.onChange(checked === true ? true : undefined)}
-                                onBlur={field.onBlur}
-                           />
-                        )}
-                    />
+                <div className="flex items-start space-x-3">
+                   <Controller name="consent" control={form.control} render={({ field }) => (<Checkbox id="consent" checked={field.value === true} onCheckedChange={(checked) => field.onChange(checked === true ? true : undefined)} onBlur={field.onBlur} /> )} />
                   <div className="grid gap-1.5 leading-none">
-                    <Label htmlFor="consent" className="font-medium leading-snug">
-                      I consent to sharing medical info in an emergency
-                    </Label>
+                    <Label htmlFor="consent" className="font-medium leading-snug">I consent to sharing medical info in an emergency</Label>
                     {getError("consent") && <p className="text-sm text-red-500">{getError("consent")?.message}</p>}
                   </div>
                 </div>
               </>
             )}
 
-            {/* Navigation Buttons */}
-            <div className="flex justify-between pt-8 mt-8 border-t">
+            <div className="flex flex-col sm:flex-row justify-between pt-8 mt-8 border-t gap-4">
               {step > 0 && (
-                <Button type="button" variant="outline" onClick={prevStep} className="px-8 py-3 text-base">
+                <Button type="button" variant="outline" onClick={prevStep} className="w-full sm:w-auto px-8 py-3 text-base">
                   Back
                 </Button>
               )}
-              {step === 0 && ( // "Modify Choices" on Page 1 - acts like "Back" from a conceptual next step
-                 <Button type="button" variant="outline" onClick={() => console.log("Modify Choices clicked - implement action")} className="px-8 py-3 text-base">
+              {step === 0 && (
+                 <Button type="button" variant="outline" onClick={() => alert("Modify Choices: Implement logic to go back or reset specific fields.")} className="w-full sm:w-auto px-8 py-3 text-base">
                   Modify Choices
                 </Button>
               )}
               {step < steps.length - 1 ? (
-                <Button type="button" onClick={nextStep} className="px-8 py-3 text-base bg-[#1A2C50] hover:bg-[#2c3e6b] text-white">
+                <Button type="button" onClick={nextStep} className="w-full sm:w-auto px-8 py-3 text-base bg-[#1A2C50] hover:bg-[#2c3e6b] text-white">
                   Continue
                 </Button>
               ) : (
-                <Button type="submit" className="px-8 py-3 text-base bg-green-600 hover:bg-green-700 text-white" disabled={form.formState.isSubmitting}>
-                  {form.formState.isSubmitting ? "Processing..." : "Confirm & Purchase"}
+                <Button type="submit" className="w-full sm:w-auto px-8 py-3 text-base bg-green-600 hover:bg-green-700 text-white" disabled={formState.isSubmitting}>
+                  {formState.isSubmitting ? "Processing..." : "Confirm & Purchase"}
                 </Button>
               )}
             </div>
           </form>
-        </div> {/* End of white content bg */}
+        </div>
       </div>
     </div>
   );
