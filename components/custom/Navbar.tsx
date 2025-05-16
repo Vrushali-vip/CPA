@@ -16,7 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
-import BookingDropdown from "../BookingDropdown";
+import { Button } from "../ui/button";
 
 interface Country {
   code: string;
@@ -37,6 +37,10 @@ function NavbarClient() {
   const countryDropdownRef = useRef<HTMLDivElement>(null);
   const [isDropdownOpen] = useState(false);
   const router = useRouter();
+
+  const handleBookingClick = () => {
+    router.push("/bookings");
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -567,13 +571,14 @@ function NavbarClient() {
                     </Link>
                   )}
 
-                  {/* <Button
-                    variant="default"
-                    className="ml-2 lg:ml-auto rounded-full px-4"
-                    size="sm"
-                  >
-                    Book A Demo
-                  </Button> */}
+<Button
+      variant="default"
+      className="ml-2 lg:ml-auto rounded-full px-4"
+      size="sm"
+      onClick={handleBookingClick}
+    >
+      Book A Demo
+    </Button>
                   {/* <a
                     href="https://calendar.google.com/calendar/u/0/appointments/AcZssZ052PXkGX-2pK1ppfAwtHu0_QYEZWL2Wu99D4M="
                     target="_blank"
@@ -596,7 +601,7 @@ function NavbarClient() {
                       Book A Demo
                     </Button>
                   </Link> */}
-                  <BookingDropdown />
+                  {/* <BookingDropdown /> */}
                 </div>
               </div>
             </div>
