@@ -68,9 +68,8 @@ const config: Config = {
 			}
   		},
 		fontFamily: {
-			mont: ['var(--font-mont)'],
-			robo: ['var(--font-robo)'],
-		},
+        sans: ["var(--font-montserrat)", "sans-serif"],
+      },
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
