@@ -1,18 +1,3 @@
-// import { MapPlaceholder } from "@/components/MapPlaceholder";
-// import InsuranceForm from "@/components/insurance-form/InsuranceForm";
-// import { NewsFeed } from "@/components/NewsFeed";
-
-// export default function Home() {
-//   return (
-// <main className="space-y-12 p-6 overflow-x-hidden max-w-full">
-// <MapPlaceholder />
-//       <InsuranceForm />
-//       <NewsFeed />
-//     </main>
-//   );
-// }
-
-
 "use client";
 
 import { useRef } from "react";

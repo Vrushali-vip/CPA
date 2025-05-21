@@ -1,221 +1,3 @@
-// "use client";
-
-// import Image from "next/image";
-// import Link from "next/link";
-// import { Button } from "@/components/ui/button";
-
-// export default function Navbar() {
-//   return (
-//     <header className="w-full border-b shadow-sm bg-[#1A2C50]">
-//       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
-//         {/* Logo */}
-//         <Link href="/" className="flex items-center space-x-2 bg-white">
-//           <Image
-//             src="/compass-point-assist-logo.png" // Place your logo image in public/logo.png
-//             alt="Company Logo"
-//             width={200}
-//             height={200}
-//             className="rounded-md "
-//           />
-//         </Link>
-
-//         <div className="flex items-center space-x-4">
-//           <Link href="/maps">
-//             <Button variant="ghost" className="text-lg font-semibold font-monteserrat text-[#ECCBAE]">MAPS</Button>
-//           </Link>
-//           <Link href="/articles">
-//             <Button variant="ghost" className="text-lg font-semibold font-monteserrat text-[#ECCBAE]">ARTICLES</Button>
-//           </Link>
-//         </div>
-//       </div>
-//     </header>
-//   );
-// }
-
-
-// "use client";
-
-// import Image from "next/image";
-// import Link from "next/link";
-// import { Button } from "@/components/ui/button";
-// import {
-//   DropdownMenu,
-//   DropdownMenuContent,
-//   DropdownMenuItem,
-//   DropdownMenuTrigger,
-// } from "@/components/ui/DropdownMenu";
-
-// export default function Navbar() {
-//   return (
-//     <header className="w-full border-b shadow-sm bg-[#1A2C50]">
-//       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
-//         <Link href="/" className="flex items-center space-x-2 bg-white">
-//           <Image
-//             src="/compass-point-assist-logo.png"
-//             alt="Company Logo"
-//             width={200}
-//             height={200}
-//             className="rounded-md"
-//           />
-//         </Link>
-
-//         <div className="flex items-center space-x-4">
-//           <DropdownMenu>
-//             <DropdownMenuTrigger asChild>
-//               <Button
-//                 variant="ghost"
-//                 className="text-lg font-semibold font-monteserrat text-[#ECCBAE]"
-//               >
-//                 MAPS
-//               </Button>
-//             </DropdownMenuTrigger>
-//             <DropdownMenuContent className="bg-white">
-//               <DropdownMenuItem>
-//                 <Link href="/maps/ukraine-map" className="w-full">
-//                   Ukraine Map
-//                 </Link>
-//               </DropdownMenuItem>
-//               <DropdownMenuItem>
-//                 <Link href="/maps/global-risk-map" className="w-full">
-//                   Global Risk Map
-//                 </Link>
-//               </DropdownMenuItem>
-//             </DropdownMenuContent>
-//           </DropdownMenu>
-
-//           <Link href="/articles">
-//             <Button
-//               variant="ghost"
-//               className="text-lg font-semibold font-monteserrat text-[#ECCBAE]"
-//             >
-//               ARTICLES
-//             </Button>
-//           </Link>
-//         </div>
-//       </div>
-//     </header>
-//   );
-// }
-
-// "use client";
-
-// import Image from "next/image";
-// import Link from "next/link";
-// import { Button } from "@/components/ui/button";
-// import {
-//   DropdownMenu,
-//   DropdownMenuContent,
-//   DropdownMenuItem,
-//   DropdownMenuTrigger,
-// } from "@/components/ui/DropdownMenu";
-// import { ChevronDown, ChevronUp } from "lucide-react"; 
-// import * as React from "react";
-
-// export default function Navbar() {
-//   const [isOpen, setIsOpen] = React.useState(false);
-
-//   return (
-//     <header className="w-full border-b shadow-sm bg-[#1A2C50]">
-//       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
-//         <Link href="/" className="flex items-center space-x-2 bg-white">
-//           <Image
-//             src="/compass-point-assist-logo.png"
-//             alt="Company Logo"
-//             width={200}
-//             height={200}
-//             className="rounded-md"
-//           />
-//         </Link>
-//         <div className="flex items-center space-x-4">
-//           <Link href="/articles">
-//             <Button
-//               variant="ghost"
-//               className="text-lg font-semibold font-monteserrat text-[#ECCBAE]"
-//             >
-//               ARTICLES
-//             </Button>
-//           </Link>
-//         </div>
-//       </div>
-//     </header>
-//   );
-// }
-
-// "use client";
-
-// import Image from "next/image";
-// import { Button } from "@/components/ui/button";
-// import * as React from "react";
-
-// type NavbarProps = {
-//   scrollToArticles: () => void;
-// };
-
-// export default function Navbar({ scrollToArticles }: NavbarProps) {
-
-//   return (
-//     <header className="w-full border-b shadow-sm bg-[#1A2C50]">
-//       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
-//         <div className="flex items-center space-x-2 bg-white">
-//           <Image
-//             src="/compass-point-assist-logo.png"
-//             alt="Company Logo"
-//             width={200}
-//             height={200}
-//             className="rounded-md"
-//           />
-//         </div>
-
-//         <div className="flex items-center space-x-4">
-//           <Button
-//             variant="ghost"
-//             className="text-lg font-semibold font-monteserrat text-[#ECCBAE]"
-//             onClick={scrollToArticles}
-//           >
-//             ARTICLES
-//           </Button>
-//         </div>
-//       </div>
-//     </header>
-//   );
-// }
-
-// "use client";
-
-// import Image from "next/image";
-// import { Button } from "@/components/ui/button";
-// import * as React from "react";
-
-// type NavbarProps = {
-//   scrollToArticles: () => void;
-// };
-
-// export default function Navbar({ scrollToArticles }: NavbarProps) {
-//   return (
-//     <header className="w-full border-b shadow-sm bg-[#1A2C50]">
-//       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
-//         <div className="flex items-center space-x-2 bg-white">
-//           <Image
-//             src="/compass-point-assist-logo.png"
-//             alt="Company Logo"
-//             width={200}
-//             height={200}
-//             className="rounded-md"
-//           />
-//         </div>
-//         <div className="flex items-center space-x-4">
-//           <Button
-//             variant="ghost"
-//             className="text-lg font-semibold font-monteserrat text-[#ECCBAE]"
-//             onClick={scrollToArticles}
-//           >
-//             ARTICLES
-//           </Button>
-//         </div>
-//       </div>
-//     </header>
-//   );
-// }
 
 
 "use client";
@@ -223,15 +5,33 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import * as React from "react";
+import { useTranslations } from "next-intl";
 
 type NavbarProps = {
   scrollToArticles: () => void;
 };
 
 export default function Navbar({ scrollToArticles }: NavbarProps) {
+  const t = useTranslations("navbar");
+  const [currentLocale, setCurrentLocale] = React.useState("en");
+
+  // Get the current locale from localStorage after client-side mount
+  React.useEffect(() => {
+    const storedLocale = localStorage.getItem("locale");
+    if (storedLocale) {
+      setCurrentLocale(storedLocale);
+    }
+  }, []);
+
+  const setLanguage = (locale: string) => {
+    localStorage.setItem("locale", locale);
+    window.location.reload();
+  };
+
   return (
     <header className="w-full shadow-sm bg-[#1A2C50]">
       <div className="mx-auto flex items-center justify-between">
+        {/* Logo */}
         <div className="w-2/10 bg-white flex items-center justify-center">
           <Image
             src="/compass-point-assist-logo.png"
@@ -242,16 +42,41 @@ export default function Navbar({ scrollToArticles }: NavbarProps) {
           />
         </div>
 
-        <div className="flex items-center space-x-4 w-9/10 justify-end mr-7">
-          <Button
-            variant="ghost"
-            className="text-xl font-semibold font-monteserrat text-[#ECCBAE]"
-            onClick={scrollToArticles}
-          >
-            ARTICLES
-          </Button>
+        <div className="flex items-center w-9/10 justify-end mr-7 space-x-6">
+          <div>
+            <Button
+              variant="ghost"
+              className="text-xl font-semibold font-monteserrat text-[#ECCBAE] "
+              onClick={scrollToArticles}
+            >
+              {t("articles")}
+            </Button>
+          </div>
+
+          <div className="flex items-center text-md text-[#ECCBAE] space-x-1">
+            <button
+              onClick={() => setLanguage("en")}
+              className={`text-xl font-semibold font-monteserrat transition-all duration-200 ${
+                currentLocale === "en" ? "opacity-50" : "opacity-100"
+              }`}
+            >
+              {t("language.en")}
+            </button>
+
+            <span className="text-[#ECCBAE]">|</span>
+
+            <button
+              onClick={() => setLanguage("de")}
+              className={`text-xl font-semibold font-monteserrat transition-all duration-200 ${
+                currentLocale === "de" ? "opacity-50" : "opacity-100"
+              }`}
+            >
+              {t("language.de")}
+            </button>
+          </div>
         </div>
       </div>
     </header>
   );
 }
+
