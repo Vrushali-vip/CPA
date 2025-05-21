@@ -81,7 +81,7 @@
     },
     "step2": {
       "title": "Tell Us About Your Trip",
-      "primaryCities": "Primary Citiy/Region (in Ukraine, Optional)",
+      "primaryCities": "Primary City/Region (in Ukraine, Optional)",
       "tripPurpose": "Purpose of Travel",
       "selectTripPurpose": "Select Purpose",
       "stayName": "Hotel/Accommodation Name (Optional)",
@@ -140,7 +140,7 @@
       "title": "Trip Information",
       "purpose": "Purpose",
       "primaryRegions": "Primary Regions",
-      "citiesVisiting": "Cities Visiting"
+      "citiesVisiting": "City Visiting"
     },
     "emergencyContact": {
       "title": "Emergency Contact",

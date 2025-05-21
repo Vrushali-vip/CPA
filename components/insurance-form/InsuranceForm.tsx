@@ -859,7 +859,7 @@ import {
   nationalityOptions,
   countryOptions,
   countryCodeOptions,
-} from "@/lib/insuranceFormSchema"; // Ensure this file is updated for new name fields
+} from "@/lib/insuranceFormSchema";
 import {
   InputWithLabel,
   TextareaWithLabel,
@@ -882,7 +882,7 @@ export default function InsuranceForm() {
     resolver: joiResolver(purchaseWithoutLoginSchema, {
       abortEarly: false,
     }),
-    defaultValues: { // MODIFIED: Default values for first/last names
+    defaultValues: {
       trip_start_date: "",
       trip_end_date: "",
       green_zone_days: 0,
@@ -892,8 +892,8 @@ export default function InsuranceForm() {
       emergency_medical_coverage: "",
       personal_accident_coverage_level: "0",
       add_transit_coverage: false,
-      c_first_name: "", // Was c_name
-      c_last_name: "",  // New
+      c_first_name: "",
+      c_last_name: "",
       c_birthdate: "",
       c_phone: "",
       c_phone_code: "",
@@ -905,7 +905,7 @@ export default function InsuranceForm() {
       c_nationality: "",
       city_of_residence: "",
       trip_countries: [],
-      travellers: [{ first_name: "", last_name: "", birthdate: "" }], // Was name
+      travellers: [{ first_name: "", last_name: "", birthdate: "" }],
       arrival_in_ukraine: "",
       departure_from_ukraine: "",
       primary_cities_regions_ukraine: "",
@@ -913,8 +913,8 @@ export default function InsuranceForm() {
       trip_purpose: "",
       stay_name: "",
       company_name: "",
-      emergency_contact_first_name: "", // Was emergency_contact_name
-      emergency_contact_last_name: "",  // New
+      emergency_contact_first_name: "",
+      emergency_contact_last_name: "",
       emergency_contact_phone: "",
       emergency_contact_phone_code: "",
       emergency_contact_phone_number: "",
@@ -952,17 +952,17 @@ export default function InsuranceForm() {
   const watchedEndDate = watch("trip_end_date");
   const watchedGreenDaysForDisplay = watch("green_zone_days");
 
-  const cFirstNameValue = watch("c_first_name"); // MODIFIED
-  const cLastNameValue = watch("c_last_name");   // MODIFIED
+  const cFirstNameValue = watch("c_first_name");
+  const cLastNameValue = watch("c_last_name");
   const cBirthdateValue = watch("c_birthdate");
 
-  useEffect(() => { // MODIFIED: Sync logic for first/last names
+  useEffect(() => {
     const currentTravellers = getValues("travellers");
     if (!currentTravellers || currentTravellers.length === 0) {
-      setValue("travellers", [{ 
-        first_name: cFirstNameValue || "", 
-        last_name: cLastNameValue || "", 
-        birthdate: cBirthdateValue || "" 
+      setValue("travellers", [{
+        first_name: cFirstNameValue || "",
+        last_name: cLastNameValue || "",
+        birthdate: cBirthdateValue || ""
       }], {
         shouldValidate: false,
         shouldDirty: false
@@ -1073,7 +1073,7 @@ export default function InsuranceForm() {
   }, [emergencyContactPhoneCode, emergencyContactPhoneNumber, setValue, getValues]);
 
 
-  const onSubmitForm = (data: InsuranceFormValues) => { // MODIFIED: onSubmitForm for first/last names
+  const onSubmitForm = (data: InsuranceFormValues) => {
     const finalTravellers = [...data.travellers];
     if (finalTravellers.length > 0) {
       finalTravellers[0] = {
@@ -1092,18 +1092,14 @@ export default function InsuranceForm() {
 
     const finalData = {
       ...data,
-      // Assuming InsuranceFormValues and schema are updated to have first_name, last_name
-      // If backend expects single 'name', you would combine them here.
-      // For now, passing them as separate fields as per InsuranceFormValues structure.
-      travellers: finalTravellers.map(t => ({ 
-        first_name: t.first_name, 
-        last_name: t.last_name, 
-        birthdate: t.birthdate 
+      travellers: finalTravellers.map(t => ({
+        first_name: t.first_name,
+        last_name: t.last_name,
+        birthdate: t.birthdate
       })),
       c_phone: `${getValues("c_phone_code") || ''}${getValues("c_phone_number") || ''}`,
       c_whats_app: `${getValues("c_whats_app_code") || ''}${getValues("c_whats_app_number") || ''}`,
       emergency_contact_phone: `${getValues("emergency_contact_phone_code") || ''}${getValues("emergency_contact_phone_number") || ''}`,
-      // emergency_contact_first_name and emergency_contact_last_name will be in 'data' from RHF
       green_zone_days: Number(data.green_zone_days),
       amber_zone_days: Number(data.amber_zone_days),
       red_zone_days: Number(data.red_zone_days),
@@ -1137,11 +1133,11 @@ export default function InsuranceForm() {
         (fieldName) => getError(fieldName) !== undefined
       );
 
-      if (!firstErrorKeyOnCurrentStep && formState.errors.travellers && step === 1) { 
+      if (!firstErrorKeyOnCurrentStep && formState.errors.travellers && step === 1) {
         const travellerErrors = formState.errors.travellers;
         if (Array.isArray(travellerErrors)) {
           for (let i = 0; i < travellerErrors.length; i++) {
-            const specificTravellerErrors = travellerErrors[i]; 
+            const specificTravellerErrors = travellerErrors[i];
             if (specificTravellerErrors) {
               if (specificTravellerErrors.first_name) {
                 firstErrorKeyOnCurrentStep = `travellers.${i}.first_name` as Path<InsuranceFormValues>;
@@ -1255,12 +1251,12 @@ export default function InsuranceForm() {
     }
   };
 
-  const watchedPathsForSummary = [ // MODIFIED: Watched paths for summary
+  const watchedPathsForSummary = [
     "trip_start_date", "trip_end_date",
     "emergency_medical_coverage", "personal_accident_coverage_level", "add_transit_coverage",
-    "c_first_name", "c_last_name", // Was c_name
+    "c_first_name", "c_last_name",
     "c_birthdate", "c_nationality", "trip_purpose", "primary_cities_regions_ukraine",
-    "emergency_contact_first_name", "emergency_contact_last_name", // Was emergency_contact_name
+    "emergency_contact_first_name", "emergency_contact_last_name",
     "emergency_contact_phone",
   ] as const;
 
@@ -1276,7 +1272,6 @@ export default function InsuranceForm() {
   const getTripPurposeLabel = (value: string) => tripPurposes.map(p => ({ value: p, label: p.charAt(0) + p.slice(1).toLowerCase().replace(/_/g, " ") })).find(opt => opt.value === value)?.label || value;
   const getNationalityLabel = (value: string) => nationalityOptions.find(opt => opt.value === value)?.label || value;
 
-  // Helper to display full name from first_name and last_name
   const formatFullName = (firstName?: string, lastName?: string): string => {
     const first = firstName || "";
     const last = lastName || "";
@@ -1376,13 +1371,13 @@ export default function InsuranceForm() {
                 )}
 
                 <SelectWithLabel
-                    label={t('insuranceForm.step1.countryTravellingTo')}
-                    name="trip_countries.0"
-                    control={control}
-                    options={countryOptions}
-                    placeholder={t('insuranceForm.step1.selectCountry')}
-                    error={getError("trip_countries.0" as Path<InsuranceFormValues>) || getError("trip_countries" as Path<InsuranceFormValues>)}
-                  />
+                  label={t('insuranceForm.step1.countryTravellingTo')}
+                  name="trip_countries.0"
+                  control={control}
+                  options={countryOptions}
+                  placeholder={t('insuranceForm.step1.selectCountry')}
+                  error={getError("trip_countries.0" as Path<InsuranceFormValues>) || getError("trip_countries" as Path<InsuranceFormValues>)}
+                />
 
                 <h3 className="text-xl font-semibold mb-4 text-[#1A2C50]">
                   {t("insuranceForm.coverageOptions")}
@@ -1447,7 +1442,7 @@ export default function InsuranceForm() {
                 <h2 className="text-2xl font-semibold mb-6 text-[#1A2C50]">{t('insuranceForm.step1.yourDetails')}</h2>
 
                 <h3 className="text-lg font-semibold mb-3 text-[#1A2C50]">{t('insuranceForm.step1.primaryTraveller')}</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div> 
                     <InputWithLabel
                       label={t("insuranceForm.step1.contactFirstName")}
@@ -1510,13 +1505,85 @@ export default function InsuranceForm() {
                     placeholder={t('insuranceForm.step1.selectCountry')}
                     error={getError("trip_countries.0" as Path<InsuranceFormValues>) || getError("trip_countries" as Path<InsuranceFormValues>)}
                   />
-                </div>
+                </div> */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <div className="flex items-start gap-2">
+                      <div className="flex-grow">
+                        <InputWithLabel
+                          label={t("insuranceForm.step1.contactFirstName")}
+                          name="c_first_name"
+                          register={register}
+                          placeholder={t("insuranceForm.step1.contactFirstName")}
+                          error={getError("c_first_name") || getError("travellers.0.first_name" as Path<InsuranceFormValues>)}
+                        />
+                      </div>
+                      <div className="flex-grow">
+                        <InputWithLabel
+                          label={t("insuranceForm.step1.contactLastName")}
+                          name="c_last_name"
+                          register={register}
+                          placeholder={t("insuranceForm.step1.contactLastName")}
+                          error={getError("c_last_name") || getError("travellers.0.last_name" as Path<InsuranceFormValues>)}
+                        />
+                      </div>
+                    </div>
+                  </div>
 
+                  {/* Birthdate field remains as is */}
+                  <div className="mt-1.5">
+                    <BirthDateField
+                      label={t('insuranceForm.step1.dob')}
+                      name="c_birthdate"
+                      control={control}
+                      getError={getError}
+                      watch={watch}
+                    />
+                  </div>
+
+                  <div>
+                    <p className="text-sm font-medium text-gray-900 mb-1">{t('insuranceForm.step1.phoneNumber')}</p>
+                    <div className="flex items-start gap-2">
+                      <div className="w-1/3 shrink-0">
+                        <SelectWithLabel control={control} name="c_phone_code" label="" options={countryCodeOptions} placeholder="Code" />
+                      </div>
+                      <div className="flex-grow">
+                        <InputWithLabel label="" name="c_phone_number" type="tel" register={register} placeholder={t('insuranceForm.step1.enterNumber')} />
+                      </div>
+                    </div>
+                    {getError("c_phone") && <p className="text-sm text-red-500 mt-1">{getError("c_phone")?.message}</p>}
+                  </div>
+
+                  <div>
+                    <p className="text-sm font-medium text-gray-900 mb-1">{t('insuranceForm.step1.whatsapp')}</p>
+                    <div className="flex items-start gap-2">
+                      <div className="w-1/3 shrink-0">
+                        <SelectWithLabel control={control} name="c_whats_app_code" label="" options={countryCodeOptions} placeholder="Code" />
+                      </div>
+                      <div className="flex-grow">
+                        <InputWithLabel label="" name="c_whats_app_number" type="tel" register={register} placeholder={t('insuranceForm.step1.enterNumber')} />
+                      </div>
+                    </div>
+                    {getError("c_whats_app") && <p className="text-sm text-red-500 mt-1">{getError("c_whats_app")?.message}</p>}
+                  </div>
+
+                  <InputWithLabel label={t('insuranceForm.step1.email')} name="c_email" type="email" register={register} error={getError("c_email")} />
+                  <SelectWithLabel label={t('insuranceForm.step1.nationality')} name="c_nationality" control={control} options={nationalityOptions} placeholder={t('insuranceForm.step1.selectNationality')} error={getError("c_nationality")} />
+                  <InputWithLabel label={t('insuranceForm.step1.cityOfResidence')} name="city_of_residence" register={register} error={getError("city_of_residence")} />
+                  <SelectWithLabel
+                    label={t('insuranceForm.step1.countryOfResidence')}
+                    name="trip_countries.0"
+                    control={control}
+                    options={countryOptions}
+                    placeholder={t('insuranceForm.step1.selectCountry')}
+                    error={getError("trip_countries.0" as Path<InsuranceFormValues>) || getError("trip_countries" as Path<InsuranceFormValues>)}
+                  />
+                </div>
                 {travellerFields.map((field, index) => {
                   if (index === 0) return null;
 
-                  const firstNamePath = `travellers.${index}.first_name` as Path<InsuranceFormValues>; // MODIFIED
-                  const lastNamePath = `travellers.${index}.last_name` as Path<InsuranceFormValues>;   // MODIFIED
+                  const firstNamePath = `travellers.${index}.first_name` as Path<InsuranceFormValues>;
+                  const lastNamePath = `travellers.${index}.last_name` as Path<InsuranceFormValues>;
                   const birthdatePath = `travellers.${index}.birthdate` as Path<InsuranceFormValues>;
 
                   return (
@@ -1529,16 +1596,15 @@ export default function InsuranceForm() {
                           {t("insuranceForm.step1.remove")}
                         </Button>
                       </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {/* MODIFIED: Additional Traveller Full Name split */}
-                        <div> {/* This div now contains both first and last name */}
+                      {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
                           <InputWithLabel
-                            label={t("insuranceForm.step1.contactFirstName")} 
+                            label={t("insuranceForm.step1.contactFirstName")}
                             name={firstNamePath}
                             register={register}
                             error={getError(firstNamePath)}
                           />
-                          <div className="mt-2"> 
+                          <div className="mt-2">
                             <InputWithLabel
                               label={t("insuranceForm.step1.contactLastName")}
                               name={lastNamePath}
@@ -1556,11 +1622,45 @@ export default function InsuranceForm() {
                             watch={watch}
                           />
                         </div>
+                      </div> */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                          <div className="flex items-start gap-2">
+                            <div className="flex-grow">
+                              <InputWithLabel
+                                label={t("insuranceForm.step1.contactFirstName")}
+                                name={firstNamePath}
+                                register={register}
+                                placeholder={t("insuranceForm.step1.contactFirstName")}
+                                error={getError(firstNamePath)}
+                              />
+                            </div>
+                            <div className="flex-grow">
+                              <InputWithLabel
+                                label={t("insuranceForm.step1.contactLastName")}
+                                name={lastNamePath}
+                                register={register}
+                                placeholder={t("insuranceForm.step1.contactLastName")}
+                                error={getError(lastNamePath)}
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Birthdate field remains as is */}
+                        <div className="w-full mt-1.5">
+                          <BirthDateField
+                            label={t('insuranceForm.step1.dob')}
+                            name={birthdatePath}
+                            control={control}
+                            getError={getError}
+                            watch={watch}
+                          />
+                        </div>
                       </div>
                     </div>
                   );
                 })}
-                {/* MODIFIED: appendTraveller with new structure */}
                 <Button type="button" variant="outline" onClick={() => appendTraveller({ first_name: "", last_name: "", birthdate: "" })} className="mt-6">
                   {t("insuranceForm.step1.addAdditionalTraveller")}
                 </Button>
@@ -1611,24 +1711,46 @@ export default function InsuranceForm() {
               <>
                 <h2 className="text-2xl font-semibold mb-6 text-[#1A2C50]">{t("insuranceForm.step3.title")}</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div> 
-                    <InputWithLabel 
+                  {/* <div>
+                    <InputWithLabel
                       label={t("insuranceForm.step1.contactFirstName")}
-                      name="emergency_contact_first_name" 
-                      register={register} 
-                      error={getError("emergency_contact_first_name")} 
+                      name="emergency_contact_first_name"
+                      register={register}
+                      error={getError("emergency_contact_first_name")}
                     />
-                    <div className="mt-2"> 
-                      <InputWithLabel 
+                    <div className="mt-2">
+                      <InputWithLabel
                         label={t("insuranceForm.step1.contactLastName")}
-                        name="emergency_contact_last_name" 
-                        register={register} 
-                        error={getError("emergency_contact_last_name")} 
+                        name="emergency_contact_last_name"
+                        register={register}
+                        error={getError("emergency_contact_last_name")}
                       />
+                    </div>
+                  </div> */}
+                  <div>
+                    <div className="flex items-start gap-2">
+                      <div className="flex-grow">
+                        <InputWithLabel
+                          label={t("insuranceForm.step1.contactFirstName")}
+                          name="emergency_contact_first_name"
+                          register={register}
+                          placeholder={t("insuranceForm.step1.contactFirstName")}
+                          error={getError("emergency_contact_first_name")}
+                        />
+                      </div>
+                      <div className="flex-grow">
+                        <InputWithLabel
+                          label={t("insuranceForm.step1.contactLastName")}
+                          name="emergency_contact_last_name"
+                          register={register}
+                          placeholder={t("insuranceForm.step1.contactLastName")}
+                          error={getError("emergency_contact_last_name")}
+                        />
+                      </div>
                     </div>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-900 mb-1">{t("insuranceForm.step3.contactNumber")}</p>
+                    <p className="text-sm font-medium text-gray-900 mb-1 mt-1">{t("insuranceForm.step3.contactNumber")}</p>
                     <div className="flex items-start gap-2">
                       <div className="w-1/3 shrink-0">
                         <SelectWithLabel control={control} name="emergency_contact_phone_code" label="" options={countryCodeOptions} placeholder="Code" />
@@ -1687,15 +1809,8 @@ export default function InsuranceForm() {
                         ? t("insuranceForm.step4.insuredDetails.primaryTraveller")
                         : t("insuranceForm.step4.insuredDetails.additionalTraveller").replace("{{index}}", `${index + 1}`)}
                     </p>
-                     {/* MODIFIED: Display combined first and last name */}
                     <div><strong>{t("insuranceForm.step4.insuredDetails.name")}:</strong> {formatFullName(traveller.first_name, traveller.last_name)}</div>
                     <div><strong>{t("insuranceForm.step4.insuredDetails.age")}:</strong> {calculateAge(traveller.birthdate) || "N/A"}</div>
-                    {/* Indices for watchedValuesForSummary in summary:
-                        [0]: trip_start_date, [1]: trip_end_date, [2]: emergency_medical_coverage, [3]: personal_accident_coverage_level, [4]: add_transit_coverage
-                        [5]: c_first_name, [6]: c_last_name, 
-                        [7]: c_birthdate, [8]: c_nationality, [9]: trip_purpose, [10]: primary_cities_regions_ukraine,
-                        [11]: emergency_contact_first_name, [12]: emergency_contact_last_name, [13]: emergency_contact_phone
-                    */}
                     {index === 0 && <div><strong>{t("insuranceForm.step4.insuredDetails.nationality")}:</strong> {getNationalityLabel(watchedValuesForSummary[8]) || "N/A"}</div>}
                   </div>
                 ))}
@@ -1716,7 +1831,6 @@ export default function InsuranceForm() {
 
                 <h3 className="text-xl font-semibold text-[#1A2C50] mb-3">{t("insuranceForm.step4.emergencyContact.title")}:</h3>
                 <div className="space-y-1 p-4 bg-gray-50 rounded-md border mb-6">
-                  {/* MODIFIED: Display combined first and last name for emergency contact */}
                   <div><strong>{t("insuranceForm.step4.emergencyContact.name")}:</strong> {formatFullName(watchedValuesForSummary[11], watchedValuesForSummary[12])}</div>
                   <div><strong>{t("insuranceForm.step4.emergencyContact.number")}:</strong> {watchedValuesForSummary[13] || "N/A"}</div>
                 </div>
