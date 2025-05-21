@@ -1,6 +1,6 @@
 {
   "navbar": {
-    "articles": "Articles",
+    "articles": "ARTICLES",
     "language": {
       "en": "EN",
       "de": "DE"
@@ -62,6 +62,8 @@
       "yourDetails": "Your Details",
       "primaryTraveller": "Primary Traveller",
       "fullName": "Full Name",
+      "contactLastName": "Last Name",
+      "contactFirstName": "First Name",
       "dob": "Date of Birth",
       "phoneNumber": "Phone Number",
       "whatsapp": "WhatsApp (optional)",
@@ -71,6 +73,7 @@
       "selectNationality": "Select nationality",
       "cityOfResidence": "City of Residence",
       "countryTravellingTo": "Country Travelling To",
+      "countryOfResidence": "Country of Residence",
       "selectCountry": "Select country",
       "additionalTraveller": "Additional Traveller {{index}}",
       "addAdditionalTraveller": "+ Add Additional Traveller",
@@ -78,7 +81,7 @@
     },
     "step2": {
       "title": "Tell Us About Your Trip",
-      "primaryCities": "Primary Cities/Regions (in Ukraine, Optional)",
+      "primaryCities": "Primary Citiy/Region (in Ukraine, Optional)",
       "tripPurpose": "Purpose of Travel",
       "selectTripPurpose": "Select Purpose",
       "stayName": "Hotel/Accommodation Name (Optional)",
