@@ -36,15 +36,16 @@
       "Summary & Purchase"
     ],
     "travelDetails": "Travel Details",
+    "warnings": "Important: Please read the following information carefully.",
     "travelStartDate": "Travel Start Date",
     "selectStartDate": "Select start date",
     "travelEndDate": "Travel End Date",
     "selectEndDate": "Select end date",
     "riskZoneDays": "Risk Zone Days",
     "totalDays": "Total Days",
-    "greenZoneDays": "Green Zone Days",
-    "amberZoneDays": "Amber Zone Days",
-    "redZoneDays": "Red Zone Days",
+    "greenZoneDays": "Days in Green Zone",
+    "amberZoneDays": "Days in Amber Zone",
+    "redZoneDays": "Days in Red Zone",
     "coverageOptions": "Coverage Options",
     "emergencyMedical": "Emergency Medical",
     "selectMedicalCoverage": "Select medical coverage",
@@ -75,6 +76,11 @@
       "countryTravellingTo": "Country Travelling To",
       "countryOfResidence": "Country of Residence",
       "selectCountry": "Select country",
+      "expiryDate": "Passport Expiry Date",
+      "passportNumber": "Passport Number",
+      "enterPassportNumber": "Enter passport number",
+      "selectPassportExpiry": "Select passport expiry date",
+      "whatsappSameAsPhone": "WhatsApp same as phone number",
       "additionalTraveller": "Additional Traveller {{index}}",
       "addAdditionalTraveller": "+ Add Additional Traveller",
       "remove": "Remove"
@@ -112,8 +118,8 @@
     "step4": {
     "summaryOfCoverage": {
       "title": "Summary of Coverage",
-      "travelDates": "Travel Dates",
-      "totalRiskZoneDays": "Total Risk Zone Days",
+      "travelDates": "Travel Dates: ",
+      "totalRiskZoneDays": "Total Risk Zone Days: ",
       "riskZoneBreakdown": "Risk Zone Breakdown",
       "zone": {
         "green": "Green",
@@ -130,7 +136,7 @@
     },
     "insuredDetails": {
       "title": "Insured Details",
-      "primaryTraveller": "Primary Traveller:",
+      "primaryTraveller": "Primary Traveller ",
       "additionalTraveller": "Additional Traveller {{index}}:",
       "name": "Name",
       "age": "Age",

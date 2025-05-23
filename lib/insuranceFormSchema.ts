@@ -992,7 +992,688 @@
 //   ]
 // ];
 
+
+
+
+// import Joi from "joi";
+
+
+// const namePartSchema = Joi.string().trim().required().messages({
+//   "string.empty": "This field is required.",
+//   "any.required": "This field is required."
+// });
+
+// export interface TripCity {
+//   id?: string;
+//   name: string;
+//   zoneType: "GREEN" | "AMBER" | "RED" | "BLACK";
+// }
+
+// export interface Traveller {
+//   first_name: string;
+//   last_name: string;
+//   birthdate: string;
+//   passport_number?: string;
+//   passport_expiry_date?: string;
+// }
+
+// export type InsuranceFormValues = {
+//   trip_start_date: string;
+//   trip_end_date: string;
+//   green_zone_days: number | string;
+//   amber_zone_days: number | string;
+//   red_zone_days: number | string;
+//   black_zone_days?: number | string;
+//   emergency_medical_coverage: string;
+//   personal_accident_coverage_level: string;
+//   add_transit_coverage: boolean;
+
+//   c_first_name: string;
+//   c_last_name: string;
+//   c_birthdate: string;
+//   c_passport_number?: string;
+//   c_passport_expiry_date?: string;
+//   c_is_whatsapp_same_as_phone?: boolean;
+//   c_phone: string;
+//   c_whats_app?: string;
+//   c_email: string;
+//   c_nationality: string;
+//   city_of_residence: string;
+//   trip_countries: string[];
+//   travellers: Traveller[];
+
+//   arrival_in_ukraine?: string;
+//   departure_from_ukraine?: string;
+//   primary_cities_regions_ukraine?: string;
+//   trip_cities?: TripCity[];
+//   trip_purpose: "BUSINESS" | "HUMANITARIAN_WORK" | "JOURNALISM" | "MEDICAL" | "EDUCATION" | "PERSONAL" | "OTHER" | "";
+//   stay_name?: string;
+//   company_name?: string;
+
+//   emergency_contact_first_name: string;
+//   emergency_contact_last_name: string;
+//   emergency_contact_phone: string;
+//   emergency_contact_relation: string;
+//   has_medical_conditions?: boolean;
+//   has_allergies?: boolean;
+//   has_current_medications?: boolean;
+//   medical_conditions?: string[];
+//   allergies?: string[];
+//   current_medications?: string[];
+//   blood_type?: string;
+//   special_assistance?: string;
+
+//   affiliate_code?: string;
+//   consent: boolean | undefined;
+
+//   c_organization?: string;
+//   is_company_arranged?: boolean;
+
+//   c_phone_code?: string;
+//   c_phone_number?: string;
+//   c_whats_app_code?: string;
+//   c_whats_app_number?: string;
+//   emergency_contact_phone_code?: string;
+//   emergency_contact_phone_number?: string;
+// };
+
+// const travellerJoiSchema = Joi.object().keys({
+//     first_name: namePartSchema.messages({ "string.empty": "Traveller First Name is required.", "any.required": "Traveller First Name is required." }),
+//     last_name: namePartSchema.messages({ "string.empty": "Traveller Last Name is required.", "any.required": "Traveller Last Name is required." }),
+//     birthdate: Joi.string().required()
+//       .regex(/^\d{4}-\d{2}-\d{2}$/).messages({
+//         "any.required": "Traveller Date of Birth is required.",
+//         "string.empty": "Traveller Date of Birth is required.",
+//         "string.pattern.base": "Traveller Date of Birth must be in YYYY-MM-DD format."
+//       }),
+//     passport_number: Joi.string().trim().allow('').optional().label("Passport Number"),
+//     passport_expiry_date: Joi.string().allow('').optional()
+//       .regex(/^\d{4}-\d{2}-\d{2}$/).messages({
+//         "string.pattern.base": "Passport Expiry Date must be in YYYY-MM-DD format."
+//       })
+//       .custom((value, helpers) => {
+//         if (value) {
+//           const expiryDate = new Date(value + "T00:00:00");
+//           const today = new Date();
+//           today.setHours(0,0,0,0);
+//           if (expiryDate < today) {
+//             return helpers.error("date.future", { limit: "today" });
+//           }
+//         }
+//         return value;
+//       }, 'Future date validation')
+//       .messages({
+//          "date.future": "Passport Expiry Date must be in the future."
+//       })
+//       .label("Passport Expiry Date"),
+//   });
+
+// export const purchaseWithoutLoginSchema = Joi.object<InsuranceFormValues>({
+//   trip_start_date: Joi.string()
+//     .required()
+//     .messages({
+//       "any.required": "Travel Start Date is required.",
+//       "string.empty": "Travel Start Date is required.",
+//     }),
+
+//   trip_end_date: Joi.string()
+//     .required()
+//     .custom((value, helpers) => {
+//       const { trip_start_date } = helpers.state.ancestors[0];
+//       if (trip_start_date && value) {
+//         const startDate = new Date(trip_start_date + "T00:00:00");
+//         const endDate = new Date(value + "T00:00:00");
+//         if (endDate < startDate) {
+//           return helpers.error("date.greater");
+//         }
+//       }
+//       return value;
+//     })
+//     .messages({
+//       "any.required": "Travel End Date is required.",
+//       "string.empty": "Travel End Date is required.",
+//       "date.greater": "Travel End Date must be after Travel Start Date.",
+//     }),
+
+//   green_zone_days: Joi.number().integer().min(0).required().messages({ "any.required": "Green Zone Days is required. Enter 0 if none.", "number.base": "Green zone days is required.", "number.min": "Green zone days must be at least 0." }),
+//   amber_zone_days: Joi.number().integer().min(0).required().messages({ "any.required": "Amber Zone Days is required. Enter 0 if none.", "number.base": "Amber zone days is required.", "number.min": "Amber zone days must be at least 0." }),
+//   red_zone_days: Joi.number().integer().min(0).required().messages({ "any.required": "Red Zone Days is required. Enter 0 if none.", "number.base": "Red zone days is required.", "number.min": "Red zone days must be at least 0." }),
+//   black_zone_days: Joi.number().integer().min(0).optional().default(0),
+
+//   emergency_medical_coverage: Joi.string().allow("").optional(),
+//   personal_accident_coverage_level: Joi.string().allow("").optional(),
+
+//   add_transit_coverage: Joi.boolean().default(false),
+
+//   c_first_name: namePartSchema.messages({ "string.empty": "First Name is required.", "any.required": "First Name is required." }),
+//   c_last_name: namePartSchema.messages({ "string.empty": "Last Name is required.", "any.required": "Last Name is required." }),
+
+//   c_birthdate: Joi.string().required()
+//     .regex(/^\d{4}-\d{2}-\d{2}$/).messages({
+//       "any.required": "Date of Birth is required.",
+//       "string.empty": "Date of Birth is required.",
+//       "string.pattern.base": "Date of Birth must be in YYYY-MM-DD format."
+//     }),
+//   c_passport_number: Joi.string().trim().allow('').optional().label("Primary Traveller Passport Number"),
+//   c_passport_expiry_date: Joi.string().allow('').optional()
+//     .regex(/^\d{4}-\d{2}-\d{2}$/).messages({
+//         "string.pattern.base": "Primary Traveller Passport Expiry Date must be in YYYY-MM-DD format."
+//     })
+//     .custom((value, helpers) => {
+//         if (value) {
+//           const expiryDate = new Date(value + "T00:00:00");
+//           const today = new Date();
+//           today.setHours(0,0,0,0);
+//           if (expiryDate < today) {
+//             return helpers.error("date.future", { limit: "today" });
+//           }
+//         }
+//         return value;
+//       }, 'Future date validation')
+//     .messages({
+//        "date.future": "Primary Traveller Passport Expiry Date must be in the future."
+//     })
+//     .label("Primary Traveller Passport Expiry Date"),
+//   c_is_whatsapp_same_as_phone: Joi.boolean().optional(),
+//   c_phone: Joi.string().required().trim().min(5).messages({ "string.empty": "Phone Number is required.", "string.min": "Phone Number seems too short." }),
+//   c_whats_app: Joi.string().optional().allow("").trim().min(5).messages({ "string.min": "WhatsApp Number seems too short (if provided)." }),
+//   c_email: Joi.string().email({ tlds: { allow: false } }).required().trim().messages({ "string.empty": "Email Address is required.", "string.email": "Email must be a valid email." }),
+//   c_nationality: Joi.string().required().messages({ "any.required": "Nationality is required.", "string.empty": "Nationality is required." }),
+//   city_of_residence: Joi.string().required().trim().messages({ "string.empty": "City of Residence is required." }),
+
+//   trip_countries: Joi.array().items(Joi.string().required().messages({ "any.required": "Country Travelling To is required.", "string.empty": "Country Travelling To cannot be empty." })).min(1).max(1).required().messages({
+//     "array.base": "Country Travelling To is required.",
+//     "array.min": "Please select one Country Travelling To.",
+//     "array.max": "Please select only one Country Travelling To."
+//   }),
+
+//   travellers: Joi.array().items(travellerJoiSchema).min(1).required().messages({ "array.min": "At least one traveller is required." }),
+
+//   arrival_in_ukraine: Joi.string().isoDate().optional().allow(null, ''),
+//   departure_from_ukraine: Joi.string().isoDate().optional().allow(null, '')
+//     .custom((value, helpers) => {
+//       const { arrival_in_ukraine } = helpers.state.ancestors[0];
+//       if (arrival_in_ukraine && value) {
+//         if (new Date(value) < new Date(arrival_in_ukraine)) {
+//           return helpers.error("date.greater");
+//         }
+//       }
+//       return value;
+//     })
+//     .messages({
+//       "date.greater": "Departure from Ukraine must be after Arrival in Ukraine."
+//     }),
+//   primary_cities_regions_ukraine: Joi.string().optional().allow(""),
+
+//   trip_cities: Joi.array().items(Joi.object().keys({
+//     id: Joi.string().optional().allow(""),
+//     name: Joi.string().required().trim().messages({ "string.empty": "City Name is required." }),
+//     zoneType: Joi.string().valid("GREEN", "AMBER", "RED", "BLACK").required().messages({ "any.required": "Zone type for city is required." })
+//   })).optional().min(0),
+
+//   trip_purpose: Joi.string().valid(
+//     "BUSINESS", "HUMANITARIAN_WORK", "JOURNALISM", "MEDICAL",
+//     "EDUCATION", "PERSONAL", "OTHER"
+//   ).required().messages({ "any.required": "Purpose of Travel is required.", "any.only": "Invalid Purpose of Travel." }),
+//   stay_name: Joi.string().optional().allow(""),
+//   company_name: Joi.string().optional().allow(""),
+
+//   emergency_contact_first_name: namePartSchema.messages({ "string.empty": "Emergency Contact First Name is required.", "any.required": "Emergency Contact First Name is required."  }),
+//   emergency_contact_last_name: namePartSchema.messages({ "string.empty": "Emergency Contact Last Name is required.", "any.required": "Emergency Contact Last Name is required."  }),
+//   emergency_contact_phone: Joi.string().required().trim().min(5).messages({ "string.empty": "Emergency Contact Number is required.", "string.min": "Emergency Contact Number seems too short." }),
+//   emergency_contact_relation: Joi.string().required().trim().messages({ "string.empty": "Emergency Contact Relationship is required." }),
+//   has_medical_conditions: Joi.boolean().default(false),
+//   has_allergies: Joi.boolean().default(false),
+//   has_current_medications: Joi.boolean().default(false),
+
+//   medical_conditions: Joi.when('has_medical_conditions', {
+//     is: true,
+//     then: Joi.array().items(Joi.string().trim().min(1).messages({ "string.min": "Condition cannot be empty" })).min(1).required().messages({ "array.min": "Please list at least one pre-existing medical condition or uncheck the box.", "any.required": "Please list pre-existing medical conditions." }),
+//     otherwise: Joi.array().items(Joi.string().trim().allow('')).optional().default([])
+//   }),
+//   allergies: Joi.when('has_allergies', {
+//     is: true,
+//     then: Joi.array().items(Joi.string().trim().min(1).messages({ "string.min": "Allergy cannot be empty" })).min(1).required().messages({ "array.min": "Please list at least one allergy or uncheck the box.", "any.required": "Please list allergies." }),
+//     otherwise: Joi.array().items(Joi.string().trim().allow('')).optional().default([])
+//   }),
+//   current_medications: Joi.when('has_current_medications', {
+//     is: true,
+//     then: Joi.array().items(Joi.string().trim().min(1).messages({ "string.min": "Medication cannot be empty" })).min(1).required().messages({ "array.min": "Please list at least one current medication or uncheck the box.", "any.required": "Please list current medications." }),
+//     otherwise: Joi.array().items(Joi.string().trim().allow('')).optional().default([])
+//   }),
+
+//   blood_type: Joi.string().optional().allow(""),
+//   special_assistance: Joi.string().optional().allow(""),
+
+//   affiliate_code: Joi.string().optional().allow(""),
+//   consent: Joi.boolean().valid(true).required().messages({ "any.only": "You must give consent to share medical info.", "any.required": "Consent is required." }),
+
+//   c_organization: Joi.string().optional().allow(""),
+//   is_company_arranged: Joi.boolean().default(false),
+
+//   c_phone_code: Joi.string().optional().allow(""),
+//   c_phone_number: Joi.string().optional().allow(""),
+//   c_whats_app_code: Joi.string().optional().allow(""),
+//   c_whats_app_number: Joi.string().optional().allow(""),
+//   emergency_contact_phone_code: Joi.string().optional().allow(""),
+//   emergency_contact_phone_number: Joi.string().optional().allow(""),
+
+// })
+//   .custom((value, helpers) => {
+//     if (!value.trip_start_date || !value.trip_end_date) return value;
+//     const startDateParts = value.trip_start_date.split('-');
+//     const endDateParts = value.trip_end_date.split('-');
+//     if (startDateParts.length !== 3 || endDateParts.length !== 3) return value;
+
+//     const startDate = new Date(value.trip_start_date + "T00:00:00");
+//     const endDate = new Date(value.trip_end_date + "T00:00:00");
+
+//     if (isNaN(startDate.getTime()) || isNaN(endDate.getTime()) || endDate < startDate) {
+//       return value;
+//     }
+//     const totalCalculatedDays = (endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24) + 1;
+
+//     const sumOfZoneDays = Number(value.green_zone_days || 0) + Number(value.amber_zone_days || 0) + Number(value.red_zone_days || 0);
+//     if (sumOfZoneDays !== totalCalculatedDays) {
+//       return helpers.error('object.sum', { field: 'zone_days_sum', sumOfZoneDays, totalCalculatedDays });
+//     }
+//     return value;
+//   }, 'zoneDaysSumValidation')
+//   .custom((values, helpers) => {
+//     const { emergency_medical_coverage, personal_accident_coverage_level } = values;
+//     const isEmergencyMedicalSelected = emergency_medical_coverage && emergency_medical_coverage !== "";
+//     const isPaSelected = personal_accident_coverage_level && personal_accident_coverage_level !== "" && personal_accident_coverage_level !== "0";
+
+//     if (!isEmergencyMedicalSelected && !isPaSelected) {
+//       return helpers.error('custom.coverageOr', { message: 'Please select either Emergency Medical Coverage or Personal Accident (PA) Coverage, or both.' });
+//     }
+//     return values;
+//   }, 'coverageOrValidation')
+//   .messages({
+//     'object.sum': 'The sum of Green, Amber, and Red Zone Days ({{#sumOfZoneDays}}) must equal the Total Travel Days ({{#totalCalculatedDays}}). Please adjust.',
+//     'custom.coverageOr': '{{#message}}'
+//   });
+
+// export const fieldsByStep: Array<Array<keyof InsuranceFormValues>> = [
+//   [
+//     "trip_start_date", "trip_end_date",
+//     "green_zone_days", "amber_zone_days", "red_zone_days", "black_zone_days",
+//     "emergency_medical_coverage", "personal_accident_coverage_level", "add_transit_coverage",
+//     "trip_countries"
+//   ],
+//   [
+//     "c_first_name", "c_last_name",
+//     "c_birthdate",
+//     "c_passport_number", "c_passport_expiry_date",
+//     "c_phone", "c_whats_app", "c_email",
+//     "c_nationality", "city_of_residence",
+//     "travellers",
+//     "c_phone_code", "c_phone_number", "c_whats_app_code", "c_whats_app_number",
+//     "c_is_whatsapp_same_as_phone",
+//   ],
+//   [
+//     "arrival_in_ukraine", "departure_from_ukraine",
+//     "primary_cities_regions_ukraine",
+//     "trip_purpose", "stay_name", "company_name",
+//     "trip_cities"
+//   ],
+//   [
+//     "emergency_contact_first_name", "emergency_contact_last_name",
+//     "emergency_contact_phone", "emergency_contact_relation",
+//     "has_medical_conditions", "has_allergies", "has_current_medications",
+//     "medical_conditions", "allergies", "current_medications",
+//     "blood_type", "special_assistance",
+//     "emergency_contact_phone_code", "emergency_contact_phone_number"
+//   ],
+//   [
+//     "affiliate_code", "consent", "c_organization", "is_company_arranged"
+//   ]
+// ];
+
+// export const tripPurposes = [
+//   "BUSINESS", "HUMANITARIAN_WORK", "JOURNALISM", "MEDICAL",
+//   "EDUCATION", "PERSONAL", "OTHER"
+// ];
 import Joi from "joi";
+
+
+const namePartSchema = Joi.string().trim().required().messages({
+  "string.empty": "This field is required.",
+  "any.required": "This field is required."
+});
+
+export interface TripCity {
+  id?: string;
+  name: string;
+  zoneType: "GREEN" | "AMBER" | "RED" | "BLACK";
+}
+
+export interface Traveller {
+  first_name: string;
+  last_name: string;
+  birthdate: string;
+  passport_number?: string;
+  passport_expiry_date?: string;
+}
+
+export type InsuranceFormValues = {
+  trip_start_date: string;
+  trip_end_date: string;
+  green_zone_days: number | string;
+  amber_zone_days: number | string;
+  red_zone_days: number | string;
+  black_zone_days?: number | string;
+  emergency_medical_coverage: string;
+  personal_accident_coverage_level: string;
+  add_transit_coverage: boolean;
+
+  c_first_name: string;
+  c_last_name: string;
+  c_birthdate: string;
+  c_passport_number?: string;
+  c_passport_expiry_date?: string;
+  c_is_whatsapp_same_as_phone?: boolean;
+  c_phone: string;
+  c_whats_app?: string;
+  c_email: string;
+  c_nationality: string;
+  city_of_residence: string;
+  trip_countries: string[];
+  travellers: Traveller[];
+
+  arrival_in_ukraine?: string;
+  departure_from_ukraine?: string;
+  primary_cities_regions_ukraine?: string;
+  trip_cities?: TripCity[];
+  trip_purpose: "BUSINESS" | "HUMANITARIAN_WORK" | "JOURNALISM" | "MEDICAL" | "EDUCATION" | "PERSONAL" | "OTHER" | "";
+  stay_name?: string;
+  company_name?: string;
+
+  emergency_contact_first_name: string;
+  emergency_contact_last_name: string;
+  emergency_contact_phone: string;
+  emergency_contact_relation: string;
+  has_medical_conditions?: boolean;
+  has_allergies?: boolean;
+  has_current_medications?: boolean;
+  medical_conditions?: string[];
+  allergies?: string[];
+  current_medications?: string[];
+  blood_type?: string;
+  special_assistance?: string;
+
+  affiliate_code?: string;
+  consent: boolean | undefined;
+
+  c_organization?: string;
+  is_company_arranged?: boolean;
+
+  c_phone_code?: string;
+  c_phone_number?: string;
+  c_whats_app_code?: string;
+  c_whats_app_number?: string;
+  emergency_contact_phone_code?: string;
+  emergency_contact_phone_number?: string;
+};
+
+const travellerJoiSchema = Joi.object().keys({
+    first_name: namePartSchema.messages({ "string.empty": "Traveller First Name is required.", "any.required": "Traveller First Name is required." }),
+    last_name: namePartSchema.messages({ "string.empty": "Traveller Last Name is required.", "any.required": "Traveller Last Name is required." }),
+    birthdate: Joi.string().required()
+      .regex(/^\d{4}-\d{2}-\d{2}$/).messages({
+        "any.required": "Traveller Date of Birth is required.",
+        "string.empty": "Traveller Date of Birth is required.",
+        "string.pattern.base": "Traveller Date of Birth must be in YYYY-MM-DD format."
+      }),
+    passport_number: Joi.string().trim().allow('').optional().label("Passport Number"),
+    passport_expiry_date: Joi.string().allow('').optional()
+      .regex(/^\d{4}-\d{2}-\d{2}$/).messages({
+        "string.pattern.base": "Passport Expiry Date must be in YYYY-MM-DD format."
+      })
+      .custom((value, helpers) => {
+        if (value) {
+          const expiryDate = new Date(value + "T00:00:00");
+          const today = new Date();
+          today.setHours(0,0,0,0);
+          if (expiryDate < today) {
+            return helpers.error("date.future", { limit: "today" });
+          }
+        }
+        return value;
+      }, 'Future date validation')
+      .messages({
+         "date.future": "Passport Expiry Date must be in the future."
+      })
+      .label("Passport Expiry Date"),
+  });
+
+export const purchaseWithoutLoginSchema = Joi.object<InsuranceFormValues>({
+  trip_start_date: Joi.string()
+    .required()
+    .messages({
+      "any.required": "Travel Start Date is required.",
+      "string.empty": "Travel Start Date is required.",
+    }),
+
+  trip_end_date: Joi.string()
+    .required()
+    .custom((value, helpers) => {
+      const { trip_start_date } = helpers.state.ancestors[0];
+      if (trip_start_date && value) {
+        const startDate = new Date(trip_start_date + "T00:00:00");
+        const endDate = new Date(value + "T00:00:00");
+        if (endDate < startDate) {
+          return helpers.error("date.greater");
+        }
+      }
+      return value;
+    })
+    .messages({
+      "any.required": "Travel End Date is required.",
+      "string.empty": "Travel End Date is required.",
+      "date.greater": "Travel End Date must be after Travel Start Date.",
+    }),
+
+  green_zone_days: Joi.number().integer().min(0).required().messages({ "any.required": "Green Zone Days is required. Enter 0 if none.", "number.base": "Green zone days is required.", "number.min": "Green zone days must be at least 0." }),
+  amber_zone_days: Joi.number().integer().min(0).required().messages({ "any.required": "Amber Zone Days is required. Enter 0 if none.", "number.base": "Amber zone days is required.", "number.min": "Amber zone days must be at least 0." }),
+  red_zone_days: Joi.number().integer().min(0).required().messages({ "any.required": "Red Zone Days is required. Enter 0 if none.", "number.base": "Red zone days is required.", "number.min": "Red zone days must be at least 0." }),
+  black_zone_days: Joi.number().integer().min(0).optional().default(0),
+
+  emergency_medical_coverage: Joi.string().allow("").optional(),
+  personal_accident_coverage_level: Joi.string().allow("").optional(),
+
+  add_transit_coverage: Joi.boolean().default(false),
+
+  c_first_name: namePartSchema.messages({ "string.empty": "First Name is required.", "any.required": "First Name is required." }),
+  c_last_name: namePartSchema.messages({ "string.empty": "Last Name is required.", "any.required": "Last Name is required." }),
+
+  c_birthdate: Joi.string().required()
+    .regex(/^\d{4}-\d{2}-\d{2}$/).messages({
+      "any.required": "Date of Birth is required.",
+      "string.empty": "Date of Birth is required.",
+      "string.pattern.base": "Date of Birth must be in YYYY-MM-DD format."
+    }),
+  c_passport_number: Joi.string().trim().allow('').optional().label("Primary Traveller Passport Number"),
+  c_passport_expiry_date: Joi.string().allow('').optional()
+    .regex(/^\d{4}-\d{2}-\d{2}$/).messages({
+        "string.pattern.base": "Primary Traveller Passport Expiry Date must be in YYYY-MM-DD format."
+    })
+    .custom((value, helpers) => {
+        if (value) {
+          const expiryDate = new Date(value + "T00:00:00");
+          const today = new Date();
+          today.setHours(0,0,0,0);
+          if (expiryDate < today) {
+            return helpers.error("date.future", { limit: "today" });
+          }
+        }
+        return value;
+      }, 'Future date validation')
+    .messages({
+       "date.future": "Primary Traveller Passport Expiry Date must be in the future."
+    })
+    .label("Primary Traveller Passport Expiry Date"),
+  c_is_whatsapp_same_as_phone: Joi.boolean().optional(),
+  c_phone: Joi.string().required().trim().min(5).messages({ "string.empty": "Phone Number is required.", "string.min": "Phone Number seems too short." }),
+  c_whats_app: Joi.string().optional().allow("").trim().min(5).messages({ "string.min": "WhatsApp Number seems too short (if provided)." }),
+  c_email: Joi.string().email({ tlds: { allow: false } }).required().trim().messages({ "string.empty": "Email Address is required.", "string.email": "Email must be a valid email." }),
+  c_nationality: Joi.string().required().messages({ "any.required": "Nationality is required.", "string.empty": "Nationality is required." }),
+  city_of_residence: Joi.string().required().trim().messages({ "string.empty": "City of Residence is required." }),
+
+  trip_countries: Joi.array().items(Joi.string().required().messages({ "any.required": "Country Travelling To is required.", "string.empty": "Country Travelling To cannot be empty." })).min(1).max(1).required().messages({
+    "array.base": "Country Travelling To is required.",
+    "array.min": "Please select one Country Travelling To.",
+    "array.max": "Please select only one Country Travelling To."
+  }),
+
+  travellers: Joi.array().items(travellerJoiSchema).min(1).required().messages({ "array.min": "At least one traveller is required." }),
+
+  arrival_in_ukraine: Joi.string().isoDate().optional().allow(null, ''),
+  departure_from_ukraine: Joi.string().isoDate().optional().allow(null, '')
+    .custom((value, helpers) => {
+      const { arrival_in_ukraine } = helpers.state.ancestors[0];
+      if (arrival_in_ukraine && value) {
+        if (new Date(value) < new Date(arrival_in_ukraine)) {
+          return helpers.error("date.greater");
+        }
+      }
+      return value;
+    })
+    .messages({
+      "date.greater": "Departure from Ukraine must be after Arrival in Ukraine."
+    }),
+  primary_cities_regions_ukraine: Joi.string().optional().allow(""),
+
+  trip_cities: Joi.array().items(Joi.object().keys({
+    id: Joi.string().optional().allow(""),
+    name: Joi.string().required().trim().messages({ "string.empty": "City Name is required." }),
+    zoneType: Joi.string().valid("GREEN", "AMBER", "RED", "BLACK").required().messages({ "any.required": "Zone type for city is required." })
+  })).optional().min(0),
+
+  trip_purpose: Joi.string().valid(
+    "BUSINESS", "HUMANITARIAN_WORK", "JOURNALISM", "MEDICAL",
+    "EDUCATION", "PERSONAL", "OTHER"
+  ).required().messages({ "any.required": "Purpose of Travel is required.", "any.only": "Invalid Purpose of Travel." }),
+  stay_name: Joi.string().optional().allow(""),
+  company_name: Joi.string().optional().allow(""),
+
+  emergency_contact_first_name: namePartSchema.messages({ "string.empty": "Emergency Contact First Name is required.", "any.required": "Emergency Contact First Name is required."  }),
+  emergency_contact_last_name: namePartSchema.messages({ "string.empty": "Emergency Contact Last Name is required.", "any.required": "Emergency Contact Last Name is required."  }),
+  emergency_contact_phone: Joi.string().required().trim().min(5).messages({ "string.empty": "Emergency Contact Number is required.", "string.min": "Emergency Contact Number seems too short." }),
+  emergency_contact_relation: Joi.string().required().trim().messages({ "string.empty": "Emergency Contact Relationship is required." }),
+  has_medical_conditions: Joi.boolean().default(false),
+  has_allergies: Joi.boolean().default(false),
+  has_current_medications: Joi.boolean().default(false),
+
+  medical_conditions: Joi.when('has_medical_conditions', {
+    is: true,
+    then: Joi.array().items(Joi.string().trim().min(1).messages({ "string.min": "Condition cannot be empty" })).min(1).required().messages({ "array.min": "Please list at least one pre-existing medical condition or uncheck the box.", "any.required": "Please list pre-existing medical conditions." }),
+    otherwise: Joi.array().items(Joi.string().trim().allow('')).optional().default([])
+  }),
+  allergies: Joi.when('has_allergies', {
+    is: true,
+    then: Joi.array().items(Joi.string().trim().min(1).messages({ "string.min": "Allergy cannot be empty" })).min(1).required().messages({ "array.min": "Please list at least one allergy or uncheck the box.", "any.required": "Please list allergies." }),
+    otherwise: Joi.array().items(Joi.string().trim().allow('')).optional().default([])
+  }),
+  current_medications: Joi.when('has_current_medications', {
+    is: true,
+    then: Joi.array().items(Joi.string().trim().min(1).messages({ "string.min": "Medication cannot be empty" })).min(1).required().messages({ "array.min": "Please list at least one current medication or uncheck the box.", "any.required": "Please list current medications." }),
+    otherwise: Joi.array().items(Joi.string().trim().allow('')).optional().default([])
+  }),
+
+  blood_type: Joi.string().optional().allow(""),
+  special_assistance: Joi.string().optional().allow(""),
+
+  affiliate_code: Joi.string().optional().allow(""),
+  consent: Joi.boolean().valid(true).required().messages({ "any.only": "You must give consent to share medical info.", "any.required": "Consent is required." }),
+
+  c_organization: Joi.string().optional().allow(""),
+  is_company_arranged: Joi.boolean().default(false),
+
+  c_phone_code: Joi.string().optional().allow(""),
+  c_phone_number: Joi.string().optional().allow(""),
+  c_whats_app_code: Joi.string().optional().allow(""),
+  c_whats_app_number: Joi.string().optional().allow(""),
+  emergency_contact_phone_code: Joi.string().optional().allow(""),
+  emergency_contact_phone_number: Joi.string().optional().allow(""),
+
+})
+  .custom((value, helpers) => {
+    if (!value.trip_start_date || !value.trip_end_date) return value;
+    const startDateParts = value.trip_start_date.split('-');
+    const endDateParts = value.trip_end_date.split('-');
+    if (startDateParts.length !== 3 || endDateParts.length !== 3) return value;
+
+    const startDate = new Date(value.trip_start_date + "T00:00:00");
+    const endDate = new Date(value.trip_end_date + "T00:00:00");
+
+    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime()) || endDate < startDate) {
+      return value;
+    }
+    const totalCalculatedDays = (endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24) + 1;
+
+    const sumOfZoneDays = Number(value.green_zone_days || 0) + Number(value.amber_zone_days || 0) + Number(value.red_zone_days || 0);
+    if (sumOfZoneDays !== totalCalculatedDays) {
+      return helpers.error('object.sum', { field: 'zone_days_sum', sumOfZoneDays, totalCalculatedDays });
+    }
+    return value;
+  }, 'zoneDaysSumValidation')
+  .custom((values, helpers) => {
+    const { emergency_medical_coverage, personal_accident_coverage_level } = values;
+    const isEmergencyMedicalSelected = emergency_medical_coverage && emergency_medical_coverage !== "";
+    const isPaSelected = personal_accident_coverage_level && personal_accident_coverage_level !== "" && personal_accident_coverage_level !== "0";
+
+    if (!isEmergencyMedicalSelected && !isPaSelected) {
+      return helpers.error('custom.coverageOr', { message: 'Please select either Emergency Medical Coverage or Personal Accident (PA) Coverage, or both.' });
+    }
+    return values;
+  }, 'coverageOrValidation')
+  .messages({
+    'object.sum': 'The sum of Green, Amber, and Red Zone Days ({{#sumOfZoneDays}}) must equal the Total Travel Days ({{#totalCalculatedDays}}). Please adjust.',
+    'custom.coverageOr': '{{#message}}'
+  });
+
+export const fieldsByStep: Array<Array<keyof InsuranceFormValues>> = [
+  [
+    "trip_start_date", "trip_end_date",
+    "green_zone_days", "amber_zone_days", "red_zone_days", "black_zone_days",
+    "emergency_medical_coverage", "personal_accident_coverage_level", "add_transit_coverage",
+    "trip_countries"
+  ],
+  [
+    "c_first_name", "c_last_name",
+    "c_birthdate",
+    "c_passport_number", "c_passport_expiry_date",
+    "c_phone", "c_whats_app", "c_email",
+    "c_nationality", "city_of_residence",
+    "travellers",
+    "c_phone_code", "c_phone_number", "c_whats_app_code", "c_whats_app_number",
+    "c_is_whatsapp_same_as_phone",
+  ],
+  [
+    "arrival_in_ukraine", "departure_from_ukraine",
+    "primary_cities_regions_ukraine",
+    "trip_purpose", "stay_name", "company_name",
+    "trip_cities"
+  ],
+  [
+    "emergency_contact_first_name", "emergency_contact_last_name",
+    "emergency_contact_phone", "emergency_contact_relation",
+    "has_medical_conditions", "has_allergies", "has_current_medications",
+    "medical_conditions", "allergies", "current_medications",
+    "blood_type", "special_assistance",
+    "emergency_contact_phone_code", "emergency_contact_phone_number"
+  ],
+  [
+    "affiliate_code", "consent", "c_organization", "is_company_arranged"
+  ]
+];
+
+export const tripPurposes = [
+  "BUSINESS", "HUMANITARIAN_WORK", "JOURNALISM", "MEDICAL",
+  "EDUCATION", "PERSONAL", "OTHER"
+];
+
 
 
 export const countryCodeOptions = [
@@ -1207,19 +1888,19 @@ export const countryCodeOptions = [
 
 export const emergencyMedicalCoverageOptions = [
   { value: "0", label: "No Medical Coverage" },
+  { value: "25000", label: "$25,000" },
   { value: "50000", label: "$50,000" },
   { value: "100000", label: "$100,000" },
   { value: "150000", label: "$150,000" },
-  { value: "200000", label: "$200,000" },
   { value: "250000", label: "$250,000" },
 ];
 
 export const personalAccidentCoverageOptions = [
-  { value: "0", label: "No PA Coverage" }, 
+  { value: "0", label: "Select PA Coverage" }, 
+  { value: "25000", label: "$25,000" },
   { value: "50000", label: "$50,000" },
   { value: "100000", label: "$100,000" },
   { value: "150000", label: "$150,000" },
-  { value: "200000", label: "$200,000" },
   { value: "250000", label: "$250,000" },
 ];
 
@@ -1532,609 +2213,3 @@ export const countryOptions = [
   { value: "ZM", label: "Zambia" },
   { value: "ZW", label: "Zimbabwe" }
 ];
-
-
-// --- Main Schema ---
-// export const purchaseWithoutLoginSchema = Joi.object<InsuranceFormValues>({ // Added type hint
-//   trip_start_date: Joi.string()
-//     .required()
-//     .messages({
-//       "any.required": "Travel Start Date is required.",
-//       "string.empty": "Travel Start Date is required.",
-//     }),
-
-//   trip_end_date: Joi.string() // Dates from RHF are strings in YYYY-MM-DD
-//     .required()
-//     .custom((value, helpers) => {
-//       const { trip_start_date } = helpers.state.ancestors[0];
-//       if (trip_start_date && value) {
-//         const startDate = new Date(trip_start_date + "T00:00:00");
-//         const endDate = new Date(value + "T00:00:00");
-//         if (endDate < startDate) {
-//           return helpers.error("date.greater");
-//         }
-//       }
-//       return value;
-//     })
-//     .messages({
-//       "any.required": "Travel End Date is required.",
-//       "string.empty": "Travel End Date is required.",
-//       "date.greater": "Travel End Date must be after Travel Start Date.",
-//     }),
-
-//   green_zone_days: Joi.number().integer().min(0).required().messages({ "any.required": "Green Zone Days is required. Enter 0 if none.", "number.base": "Green zone days is required.", "number.min": "Green zone days must be at least 0." }),
-//   amber_zone_days: Joi.number().integer().min(0).required().messages({ "any.required": "Amber Zone Days is required. Enter 0 if none.", "number.base": "Amber zone days is required.", "number.min": "Amber zone days must be at least 0." }),
-//   red_zone_days: Joi.number().integer().min(0).required().messages({ "any.required": "Red Zone Days is required. Enter 0 if none.", "number.base": "Red zone days is required.", "number.min": "Red zone days must be at least 0." }),
-//   black_zone_days: Joi.number().integer().min(0).optional().default(0),
-
-//   // For the OR validation, individual fields are optional if the custom rule handles the requirement.
-//   // However, to make it clear a selection is expected, you might keep them required and let the custom rule override.
-//   // Or, make them allow("").optional() and let the custom rule be the primary check.
-//   // Current setup: your original schema had them as .required(), we'll keep that and the custom rule will provide the specific OR logic error.
-//   emergency_medical_coverage: Joi.string().allow("").optional(), // Allow empty for custom validation
-//   personal_accident_coverage_level: Joi.string().allow("").optional(), // Allow empty for custom validation
-
-//   add_transit_coverage: Joi.boolean().default(false),
-
-//   c_name: Joi.string().required().trim().messages({ "string.empty": "Full Name is required." }),
-//   c_birthdate: Joi.string().required() // Assuming YYYY-MM-DD from RHF
-//     .regex(/^\d{4}-\d{2}-\d{2}$/).messages({
-//       "any.required": "Date of Birth is required.",
-//       "string.empty": "Date of Birth is required.",
-//       "string.pattern.base": "Date of Birth must be in YYYY-MM-DD format."
-//     }),
-//   c_phone: Joi.string().required().trim().min(5).messages({ "string.empty": "Phone Number is required.", "string.min": "Phone Number seems too short." }),
-//   c_whats_app: Joi.string().optional().allow("").trim().min(5).messages({ "string.min": "WhatsApp Number seems too short (if provided)." }),
-//   c_email: Joi.string().email({ tlds: { allow: false } }).required().trim().messages({ "string.empty": "Email Address is required.", "string.email": "Email must be a valid email." }),
-//   c_nationality: Joi.string().required().messages({ "any.required": "Nationality is required.", "string.empty": "Nationality is required." }),
-//   city_of_residence: Joi.string().required().trim().messages({ "string.empty": "City of Residence is required." }),
-
-//   trip_countries: Joi.array().items(Joi.string().required().messages({ "any.required": "Country Travelling To is required.", "string.empty": "Country Travelling To cannot be empty." })).min(1).max(1).required().messages({
-//     "array.base": "Country Travelling To is required.",
-//     "array.min": "Please select one Country Travelling To.", // Changed message for clarity
-//     "array.max": "Please select only one Country Travelling To."
-//   }),
-
-//   travellers: Joi.array().items(Joi.object().keys({
-//     name: Joi.string().required().trim().messages({ "string.empty": "Traveller Name is required." }),
-//     birthdate: Joi.string().required() // Assuming YYYY-MM-DD from RHF
-//       .regex(/^\d{4}-\d{2}-\d{2}$/).messages({
-//         "any.required": "Traveller Date of Birth is required.",
-//         "string.empty": "Traveller Date of Birth is required.",
-//         "string.pattern.base": "Traveller Date of Birth must be in YYYY-MM-DD format."
-//       }),
-//   })).min(1).required().messages({ "array.min": "At least one traveller is required." }),
-
-//   arrival_in_ukraine: Joi.string().isoDate().optional().allow(null, ''), // Using string and isoDate
-//   departure_from_ukraine: Joi.string().isoDate().optional().allow(null, '')
-//     .custom((value, helpers) => {
-//       const { arrival_in_ukraine } = helpers.state.ancestors[0];
-//       if (arrival_in_ukraine && value) {
-//         if (new Date(value) < new Date(arrival_in_ukraine)) {
-//           return helpers.error("date.greater");
-//         }
-//       }
-//       return value;
-//     })
-//     .messages({
-//       "date.greater": "Departure from Ukraine must be after Arrival in Ukraine."
-//     }),
-//   primary_cities_regions_ukraine: Joi.string().optional().allow(""),
-
-//   trip_cities: Joi.array().items(Joi.object().keys({
-//     id: Joi.string().optional().allow(""),
-//     name: Joi.string().required().trim().messages({ "string.empty": "City Name is required." }),
-//     // stay_name: Joi.string().optional().allow(""), // stay_name was removed from TripCity interface
-//     zoneType: Joi.string().valid("GREEN", "AMBER", "RED", "BLACK").required().messages({ "any.required": "Zone type for city is required." })
-//   })).optional().min(0),
-
-//   trip_purpose: Joi.string().valid(
-//     "BUSINESS", "HUMANITARIAN_WORK", "JOURNALISM", "MEDICAL",
-//     "EDUCATION", "PERSONAL", "OTHER"
-//   ).required().messages({ "any.required": "Purpose of Travel is required.", "any.only": "Invalid Purpose of Travel." }),
-//   stay_name: Joi.string().optional().allow(""),
-//   company_name: Joi.string().optional().allow(""),
-
-//   emergency_contact_name: Joi.string().required().trim().messages({ "string.empty": "Emergency Contact Name is required." }),
-//   emergency_contact_phone: Joi.string().required().trim().min(5).messages({ "string.empty": "Emergency Contact Number is required.", "string.min": "Emergency Contact Number seems too short." }),
-//   emergency_contact_relation: Joi.string().required().trim().messages({ "string.empty": "Emergency Contact Relationship is required." }),
-//   has_medical_conditions: Joi.boolean().default(false),
-//   has_allergies: Joi.boolean().default(false),
-//   has_current_medications: Joi.boolean().default(false),
-
-//   medical_conditions: Joi.when('has_medical_conditions', {
-//     is: true,
-//     then: Joi.array().items(Joi.string().trim().min(1).messages({ "string.min": "Condition cannot be empty" })).min(1).required().messages({ "array.min": "Please list at least one pre-existing medical condition or uncheck the box.", "any.required": "Please list pre-existing medical conditions." }),
-//     otherwise: Joi.array().items(Joi.string().trim().allow('')).optional().default([])
-//   }),
-//   allergies: Joi.when('has_allergies', {
-//     is: true,
-//     then: Joi.array().items(Joi.string().trim().min(1).messages({ "string.min": "Allergy cannot be empty" })).min(1).required().messages({ "array.min": "Please list at least one allergy or uncheck the box.", "any.required": "Please list allergies." }),
-//     otherwise: Joi.array().items(Joi.string().trim().allow('')).optional().default([])
-//   }),
-//   current_medications: Joi.when('has_current_medications', {
-//     is: true,
-//     then: Joi.array().items(Joi.string().trim().min(1).messages({ "string.min": "Medication cannot be empty" })).min(1).required().messages({ "array.min": "Please list at least one current medication or uncheck the box.", "any.required": "Please list current medications." }),
-//     otherwise: Joi.array().items(Joi.string().trim().allow('')).optional().default([])
-//   }),
-
-//   blood_type: Joi.string().optional().allow(""),
-//   special_assistance: Joi.string().optional().allow(""),
-
-//   affiliate_code: Joi.string().optional().allow(""),
-//   consent: Joi.boolean().valid(true).required().messages({ "any.only": "You must give consent to share medical info.", "any.required": "Consent is required." }),
-
-//   c_organization: Joi.string().optional().allow(""),
-//   is_company_arranged: Joi.boolean().default(false),
-
-//   c_phone_code: Joi.string().optional().allow(""),
-//   c_phone_number: Joi.string().optional().allow(""),
-//   c_whats_app_code: Joi.string().optional().allow(""),
-//   c_whats_app_number: Joi.string().optional().allow(""),
-//   emergency_contact_phone_code: Joi.string().optional().allow(""),
-//   emergency_contact_phone_number: Joi.string().optional().allow(""),
-
-// })
-//   .custom((value, helpers) => { // First custom rule for zone days sum
-//     if (!value.trip_start_date || !value.trip_end_date) return value;
-
-//     // Ensure dates are valid before creating Date objects
-//     const startDateParts = value.trip_start_date.split('-');
-//     const endDateParts = value.trip_end_date.split('-');
-//     if (startDateParts.length !== 3 || endDateParts.length !== 3) return value; // Invalid date format
-
-//     const startDate = new Date(value.trip_start_date + "T00:00:00");
-//     const endDate = new Date(value.trip_end_date + "T00:00:00");
-
-//     if (isNaN(startDate.getTime()) || isNaN(endDate.getTime()) || endDate < startDate) {
-//       return value;
-//     }
-//     const totalCalculatedDays = (endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24) + 1;
-
-//     const sumOfZoneDays = Number(value.green_zone_days || 0) + Number(value.amber_zone_days || 0) + Number(value.red_zone_days || 0);
-//     if (sumOfZoneDays !== totalCalculatedDays) {
-//       return helpers.error('object.sum', { field: 'zone_days_sum', sumOfZoneDays, totalCalculatedDays });
-//     }
-//     return value;
-//   }, 'zoneDaysSumValidation') // Added a name for the custom rule
-//   .custom((values, helpers) => { // Second custom rule for OR validation of coverage
-//     const { emergency_medical_coverage, personal_accident_coverage_level } = values;
-
-//     const isEmergencyMedicalSelected = emergency_medical_coverage && emergency_medical_coverage !== "";
-//     const isPaSelected = personal_accident_coverage_level && personal_accident_coverage_level !== "" && personal_accident_coverage_level !== "0";
-
-//     if (!isEmergencyMedicalSelected && !isPaSelected) {
-//       return helpers.error('custom.coverageOr', { message: 'Please select either Emergency Medical Coverage or Personal Accident (PA) Coverage, or both.' });
-//     }
-//     return values;
-//   }, 'coverageOrValidation') // Added a name for the custom rule
-//   .messages({ // Moved the message for object.sum here
-//     'object.sum': 'The sum of Green, Amber, and Red Zone Days ({{#sumOfZoneDays}}) must equal the Total Travel Days ({{#totalCalculatedDays}}). Please adjust.',
-//     'custom.coverageOr': '{{#message}}' // For the custom coverage OR rule
-//   });
-
-
-// export interface TripCity {
-//   id?: string;
-//   name: string;
-//   zoneType: "GREEN" | "AMBER" | "RED" | "BLACK";
-// }
-
-// export interface Traveller {
-//   name: string;
-//   birthdate: string;
-// }
-
-// export type InsuranceFormValues = {
-//   trip_start_date: string;
-//   trip_end_date: string;
-//   green_zone_days: number | string; 
-//   amber_zone_days: number | string;
-//   red_zone_days: number | string;
-//   black_zone_days?: number | string;
-//   emergency_medical_coverage: string;
-//   personal_accident_coverage_level: string;
-//   add_transit_coverage: boolean;
-
-//   c_name: string;
-//   c_birthdate: string;
-//   c_phone: string;
-//   c_whats_app?: string;
-//   c_email: string;
-//   c_nationality: string;
-//   city_of_residence: string;
-//   trip_countries: string[];
-//   travellers: Traveller[];
-
-//   arrival_in_ukraine?: string;
-//   departure_from_ukraine?: string;
-//   primary_cities_regions_ukraine?: string;
-//   trip_cities?: TripCity[];
-//   trip_purpose: "BUSINESS" | "HUMANITARIAN_WORK" | "JOURNALISM" | "MEDICAL" | "EDUCATION" | "PERSONAL" | "OTHER" | "";
-//   stay_name?: string;
-//   company_name?: string;
-
-//   emergency_contact_name: string;
-//   emergency_contact_phone: string;
-//   emergency_contact_relation: string;
-//   has_medical_conditions?: boolean;
-//   has_allergies?: boolean;
-//   has_current_medications?: boolean;
-//   medical_conditions?: string[];
-//   allergies?: string[];
-//   current_medications?: string[];
-//   blood_type?: string;
-//   special_assistance?: string;
-
-//   affiliate_code?: string;
-//   consent: boolean | undefined;
-
-//   c_organization?: string;
-//   is_company_arranged?: boolean;
-
-//   c_phone_code?: string;
-//   c_phone_number?: string;
-//   c_whats_app_code?: string;
-//   c_whats_app_number?: string;
-//   emergency_contact_phone_code?: string;
-//   emergency_contact_phone_number?: string;
-// };
-
-// export const steps = [
-//   "Trip & Coverage",
-//   "Your Details",
-//   "Trip Information",
-//   "Medical & Emergency",
-//   "Summary & Purchase"
-// ];
-
-// export const tripPurposes = [
-//   "BUSINESS", "HUMANITARIAN_WORK", "JOURNALISM", "MEDICAL",
-//   "EDUCATION", "PERSONAL", "OTHER"
-// ];
-
-// export const zoneTypes = ["GREEN", "AMBER", "RED", "BLACK"];
-
-// export const fieldsByStep: Array<Array<Path<InsuranceFormValues>>> = [
-//   [
-//     "trip_start_date", "trip_end_date",
-//     "green_zone_days", "amber_zone_days", "red_zone_days",
-//     "emergency_medical_coverage", "personal_accident_coverage_level", "add_transit_coverage"
-//   ],
-//   [
-//     "c_name", "c_birthdate", "c_phone", "c_whats_app", "c_email",
-//     "c_nationality", "city_of_residence", "trip_countries",
-//     "travellers"
-//   ],
-//   [
-//     "primary_cities_regions_ukraine",
-//     "trip_purpose", "stay_name", "company_name",
-//     "trip_cities"
-//   ],
-//   [
-//     "emergency_contact_name", "emergency_contact_phone", "emergency_contact_relation",
-//     "has_medical_conditions", "has_allergies", "has_current_medications",
-//     "medical_conditions", "allergies", "current_medications",
-//     "blood_type", "special_assistance"
-//   ],
-//   [
-//     "affiliate_code", "consent"
-//   ]
-// ];
-
-
-// Define a reusable name part schema
-const namePartSchema = Joi.string().trim().required().messages({
-  "string.empty": "This field is required.",
-  "any.required": "This field is required."
-});
-
-export interface TripCity {
-  id?: string;
-  name: string;
-  zoneType: "GREEN" | "AMBER" | "RED" | "BLACK";
-}
-
-export interface Traveller {
-  first_name: string; 
-  last_name: string;  
-  birthdate: string;
-}
-
-export type InsuranceFormValues = {
-  trip_start_date: string;
-  trip_end_date: string;
-  green_zone_days: number | string;
-  amber_zone_days: number | string;
-  red_zone_days: number | string;
-  black_zone_days?: number | string;
-  emergency_medical_coverage: string;
-  personal_accident_coverage_level: string;
-  add_transit_coverage: boolean;
-
-  c_first_name: string;
-  c_last_name: string;  
-  c_birthdate: string;
-  c_phone: string;
-  c_whats_app?: string;
-  c_email: string;
-  c_nationality: string;
-  city_of_residence: string;
-  trip_countries: string[];
-  travellers: Traveller[];
-
-  arrival_in_ukraine?: string;
-  departure_from_ukraine?: string;
-  primary_cities_regions_ukraine?: string;
-  trip_cities?: TripCity[];
-  trip_purpose: "BUSINESS" | "HUMANITARIAN_WORK" | "JOURNALISM" | "MEDICAL" | "EDUCATION" | "PERSONAL" | "OTHER" | "";
-  stay_name?: string;
-  company_name?: string;
-
-  // emergency_contact_name: string; // Old
-  emergency_contact_first_name: string; // New
-  emergency_contact_last_name: string;  // New
-  emergency_contact_phone: string;
-  emergency_contact_relation: string;
-  has_medical_conditions?: boolean;
-  has_allergies?: boolean;
-  has_current_medications?: boolean;
-  medical_conditions?: string[];
-  allergies?: string[];
-  current_medications?: string[];
-  blood_type?: string;
-  special_assistance?: string;
-
-  affiliate_code?: string;
-  consent: boolean | undefined;
-
-  c_organization?: string;
-  is_company_arranged?: boolean;
-
-  c_phone_code?: string;
-  c_phone_number?: string;
-  c_whats_app_code?: string;
-  c_whats_app_number?: string;
-  emergency_contact_phone_code?: string;
-  emergency_contact_phone_number?: string;
-};
-
-export const purchaseWithoutLoginSchema = Joi.object<InsuranceFormValues>({
-  trip_start_date: Joi.string()
-    .required()
-    .messages({
-      "any.required": "Travel Start Date is required.",
-      "string.empty": "Travel Start Date is required.",
-    }),
-
-  trip_end_date: Joi.string()
-    .required()
-    .custom((value, helpers) => {
-      const { trip_start_date } = helpers.state.ancestors[0];
-      if (trip_start_date && value) {
-        const startDate = new Date(trip_start_date + "T00:00:00");
-        const endDate = new Date(value + "T00:00:00");
-        if (endDate < startDate) {
-          return helpers.error("date.greater");
-        }
-      }
-      return value;
-    })
-    .messages({
-      "any.required": "Travel End Date is required.",
-      "string.empty": "Travel End Date is required.",
-      "date.greater": "Travel End Date must be after Travel Start Date.",
-    }),
-
-  green_zone_days: Joi.number().integer().min(0).required().messages({ "any.required": "Green Zone Days is required. Enter 0 if none.", "number.base": "Green zone days is required.", "number.min": "Green zone days must be at least 0." }),
-  amber_zone_days: Joi.number().integer().min(0).required().messages({ "any.required": "Amber Zone Days is required. Enter 0 if none.", "number.base": "Amber zone days is required.", "number.min": "Amber zone days must be at least 0." }),
-  red_zone_days: Joi.number().integer().min(0).required().messages({ "any.required": "Red Zone Days is required. Enter 0 if none.", "number.base": "Red zone days is required.", "number.min": "Red zone days must be at least 0." }),
-  black_zone_days: Joi.number().integer().min(0).optional().default(0),
-
-  emergency_medical_coverage: Joi.string().allow("").optional(),
-  personal_accident_coverage_level: Joi.string().allow("").optional(),
-
-  add_transit_coverage: Joi.boolean().default(false),
-
-  // c_name: Joi.string().required().trim().messages({ "string.empty": "Full Name is required." }), // Old
-  c_first_name: namePartSchema.messages({ "string.empty": "First Name is required.", "any.required": "First Name is required." }), // New
-  c_last_name: namePartSchema.messages({ "string.empty": "Last Name is required.", "any.required": "Last Name is required." }),   // New
-
-  c_birthdate: Joi.string().required()
-    .regex(/^\d{4}-\d{2}-\d{2}$/).messages({
-      "any.required": "Date of Birth is required.",
-      "string.empty": "Date of Birth is required.",
-      "string.pattern.base": "Date of Birth must be in YYYY-MM-DD format."
-    }),
-  c_phone: Joi.string().required().trim().min(5).messages({ "string.empty": "Phone Number is required.", "string.min": "Phone Number seems too short." }),
-  c_whats_app: Joi.string().optional().allow("").trim().min(5).messages({ "string.min": "WhatsApp Number seems too short (if provided)." }),
-  c_email: Joi.string().email({ tlds: { allow: false } }).required().trim().messages({ "string.empty": "Email Address is required.", "string.email": "Email must be a valid email." }),
-  c_nationality: Joi.string().required().messages({ "any.required": "Nationality is required.", "string.empty": "Nationality is required." }),
-  city_of_residence: Joi.string().required().trim().messages({ "string.empty": "City of Residence is required." }),
-
-  trip_countries: Joi.array().items(Joi.string().required().messages({ "any.required": "Country Travelling To is required.", "string.empty": "Country Travelling To cannot be empty." })).min(1).max(1).required().messages({
-    "array.base": "Country Travelling To is required.",
-    "array.min": "Please select one Country Travelling To.",
-    "array.max": "Please select only one Country Travelling To."
-  }),
-
-  travellers: Joi.array().items(Joi.object().keys({
-    // name: Joi.string().required().trim().messages({ "string.empty": "Traveller Name is required." }), // Old
-    first_name: namePartSchema.messages({ "string.empty": "Traveller First Name is required.", "any.required": "Traveller First Name is required." }), // New
-    last_name: namePartSchema.messages({ "string.empty": "Traveller Last Name is required.", "any.required": "Traveller Last Name is required." }),   // New
-    birthdate: Joi.string().required()
-      .regex(/^\d{4}-\d{2}-\d{2}$/).messages({
-        "any.required": "Traveller Date of Birth is required.",
-        "string.empty": "Traveller Date of Birth is required.",
-        "string.pattern.base": "Traveller Date of Birth must be in YYYY-MM-DD format."
-      }),
-  })).min(1).required().messages({ "array.min": "At least one traveller is required." }),
-
-  arrival_in_ukraine: Joi.string().isoDate().optional().allow(null, ''),
-  departure_from_ukraine: Joi.string().isoDate().optional().allow(null, '')
-    .custom((value, helpers) => {
-      const { arrival_in_ukraine } = helpers.state.ancestors[0];
-      if (arrival_in_ukraine && value) {
-        if (new Date(value) < new Date(arrival_in_ukraine)) {
-          return helpers.error("date.greater");
-        }
-      }
-      return value;
-    })
-    .messages({
-      "date.greater": "Departure from Ukraine must be after Arrival in Ukraine."
-    }),
-  primary_cities_regions_ukraine: Joi.string().optional().allow(""),
-
-  trip_cities: Joi.array().items(Joi.object().keys({
-    id: Joi.string().optional().allow(""),
-    name: Joi.string().required().trim().messages({ "string.empty": "City Name is required." }),
-    zoneType: Joi.string().valid("GREEN", "AMBER", "RED", "BLACK").required().messages({ "any.required": "Zone type for city is required." })
-  })).optional().min(0),
-
-  trip_purpose: Joi.string().valid(
-    "BUSINESS", "HUMANITARIAN_WORK", "JOURNALISM", "MEDICAL",
-    "EDUCATION", "PERSONAL", "OTHER"
-  ).required().messages({ "any.required": "Purpose of Travel is required.", "any.only": "Invalid Purpose of Travel." }),
-  stay_name: Joi.string().optional().allow(""),
-  company_name: Joi.string().optional().allow(""),
-
-  // emergency_contact_name: Joi.string().required().trim().messages({ "string.empty": "Emergency Contact Name is required." }), // Old
-  emergency_contact_first_name: namePartSchema.messages({ "string.empty": "Emergency Contact First Name is required.", "any.required": "Emergency Contact First Name is required."  }), // New
-  emergency_contact_last_name: namePartSchema.messages({ "string.empty": "Emergency Contact Last Name is required.", "any.required": "Emergency Contact Last Name is required."  }),  // New
-  emergency_contact_phone: Joi.string().required().trim().min(5).messages({ "string.empty": "Emergency Contact Number is required.", "string.min": "Emergency Contact Number seems too short." }),
-  emergency_contact_relation: Joi.string().required().trim().messages({ "string.empty": "Emergency Contact Relationship is required." }),
-  has_medical_conditions: Joi.boolean().default(false),
-  has_allergies: Joi.boolean().default(false),
-  has_current_medications: Joi.boolean().default(false),
-
-  medical_conditions: Joi.when('has_medical_conditions', {
-    is: true,
-    then: Joi.array().items(Joi.string().trim().min(1).messages({ "string.min": "Condition cannot be empty" })).min(1).required().messages({ "array.min": "Please list at least one pre-existing medical condition or uncheck the box.", "any.required": "Please list pre-existing medical conditions." }),
-    otherwise: Joi.array().items(Joi.string().trim().allow('')).optional().default([])
-  }),
-  allergies: Joi.when('has_allergies', {
-    is: true,
-    then: Joi.array().items(Joi.string().trim().min(1).messages({ "string.min": "Allergy cannot be empty" })).min(1).required().messages({ "array.min": "Please list at least one allergy or uncheck the box.", "any.required": "Please list allergies." }),
-    otherwise: Joi.array().items(Joi.string().trim().allow('')).optional().default([])
-  }),
-  current_medications: Joi.when('has_current_medications', {
-    is: true,
-    then: Joi.array().items(Joi.string().trim().min(1).messages({ "string.min": "Medication cannot be empty" })).min(1).required().messages({ "array.min": "Please list at least one current medication or uncheck the box.", "any.required": "Please list current medications." }),
-    otherwise: Joi.array().items(Joi.string().trim().allow('')).optional().default([])
-  }),
-
-  blood_type: Joi.string().optional().allow(""),
-  special_assistance: Joi.string().optional().allow(""),
-
-  affiliate_code: Joi.string().optional().allow(""),
-  consent: Joi.boolean().valid(true).required().messages({ "any.only": "You must give consent to share medical info.", "any.required": "Consent is required." }),
-
-  c_organization: Joi.string().optional().allow(""),
-  is_company_arranged: Joi.boolean().default(false),
-
-  c_phone_code: Joi.string().optional().allow(""),
-  c_phone_number: Joi.string().optional().allow(""),
-  c_whats_app_code: Joi.string().optional().allow(""),
-  c_whats_app_number: Joi.string().optional().allow(""),
-  emergency_contact_phone_code: Joi.string().optional().allow(""),
-  emergency_contact_phone_number: Joi.string().optional().allow(""),
-
-})
-  .custom((value, helpers) => {
-    if (!value.trip_start_date || !value.trip_end_date) return value;
-
-    const startDateParts = value.trip_start_date.split('-');
-    const endDateParts = value.trip_end_date.split('-');
-    if (startDateParts.length !== 3 || endDateParts.length !== 3) return value;
-
-    const startDate = new Date(value.trip_start_date + "T00:00:00");
-    const endDate = new Date(value.trip_end_date + "T00:00:00");
-
-    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime()) || endDate < startDate) {
-      return value;
-    }
-    const totalCalculatedDays = (endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24) + 1;
-
-    const sumOfZoneDays = Number(value.green_zone_days || 0) + Number(value.amber_zone_days || 0) + Number(value.red_zone_days || 0);
-    if (sumOfZoneDays !== totalCalculatedDays) {
-      return helpers.error('object.sum', { field: 'zone_days_sum', sumOfZoneDays, totalCalculatedDays });
-    }
-    return value;
-  }, 'zoneDaysSumValidation')
-  .custom((values, helpers) => {
-    const { emergency_medical_coverage, personal_accident_coverage_level } = values;
-
-    const isEmergencyMedicalSelected = emergency_medical_coverage && emergency_medical_coverage !== "";
-    const isPaSelected = personal_accident_coverage_level && personal_accident_coverage_level !== "" && personal_accident_coverage_level !== "0";
-
-    if (!isEmergencyMedicalSelected && !isPaSelected) {
-      return helpers.error('custom.coverageOr', { message: 'Please select either Emergency Medical Coverage or Personal Accident (PA) Coverage, or both.' });
-    }
-    return values;
-  }, 'coverageOrValidation')
-  .messages({
-    'object.sum': 'The sum of Green, Amber, and Red Zone Days ({{#sumOfZoneDays}}) must equal the Total Travel Days ({{#totalCalculatedDays}}). Please adjust.',
-    'custom.coverageOr': '{{#message}}'
-  });
-
-
-export const steps = [
-  "Trip & Coverage",
-  "Your Details",
-  "Trip Information",
-  "Medical & Emergency",
-  "Summary & Purchase"
-];
-
-export const tripPurposes = [
-  "BUSINESS", "HUMANITARIAN_WORK", "JOURNALISM", "MEDICAL",
-  "EDUCATION", "PERSONAL", "OTHER"
-];
-
-
-
-
-
-
-
-
-
-
-export const zoneTypes = ["GREEN", "AMBER", "RED", "BLACK"];
-
-export const fieldsByStep: Array<Array<keyof InsuranceFormValues>> = [ // Using keyof for better type safety
-  [
-    "trip_start_date", "trip_end_date",
-    "green_zone_days", "amber_zone_days", "red_zone_days", "black_zone_days",
-    "emergency_medical_coverage", "personal_accident_coverage_level", "add_transit_coverage",
-    "trip_countries" // Assuming country travelling to is on step 0
-  ],
-  [
-    // "c_name", // Old
-    "c_first_name", "c_last_name", // New
-    "c_birthdate", "c_phone", "c_whats_app", "c_email",
-    "c_nationality", "city_of_residence", // Removed trip_countries as it's likely on step 0
-    "travellers",
-    "c_phone_code", "c_phone_number", "c_whats_app_code", "c_whats_app_number", // Added for step validation
-  ],
-  [
-    "arrival_in_ukraine", "departure_from_ukraine", // Added these as per potential schema structure
-    "primary_cities_regions_ukraine",
-    "trip_purpose", "stay_name", "company_name",
-    "trip_cities"
-  ],
-  [
-    // "emergency_contact_name", // Old
-    "emergency_contact_first_name", "emergency_contact_last_name", // New
-    "emergency_contact_phone", "emergency_contact_relation",
-    "has_medical_conditions", "has_allergies", "has_current_medications",
-    "medical_conditions", "allergies", "current_medications",
-    "blood_type", "special_assistance",
-    "emergency_contact_phone_code", "emergency_contact_phone_number" // Added for step validation
-  ],
-  [
-    "affiliate_code", "consent", "c_organization", "is_company_arranged" // Added these as per schema
-  ]
-];
-

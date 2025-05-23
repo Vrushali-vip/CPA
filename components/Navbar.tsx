@@ -110,7 +110,6 @@ export default function Navbar({ scrollToArticles }: NavbarProps) {
   return (
     <header className="w-full shadow-sm bg-[#1A2C50]">
       <div className="mx-auto flex items-center justify-between pr-7">
-        {/* Logo */}
         <div className="bg-white flex items-center justify-center">
           <Image
             src="/compass-point-assist-logo.png"
