@@ -6589,7 +6589,7 @@ export default function InsuranceForm() {
                     </p>
                     <p>
                       {t("insuranceForm.transit")}: {" "}
-                      {watch("add_transit_coverage") ? `${t("insuranceForm.yesWithCost")} ${pricing.transitCost.toFixed(2)}` : t("insuranceForm.no")}
+                      {watch("add_transit_coverage") ? `${t("$")} ${pricing.transitCost.toFixed(2)}` : t("insuranceForm.no")}
                     </p>
                   </div>
                 </div>
@@ -6886,7 +6886,7 @@ export default function InsuranceForm() {
                   <ul className="list-disc list-inside pl-4">
                     <li>{t("insuranceForm.step4.summaryOfCoverage.coverage.medical")}: {getEmergencyMedicalLabel(watchedValuesForSummary[2])}</li>
                     <li>{t("insuranceForm.step4.summaryOfCoverage.coverage.pa")}: {getPALabel(watchedValuesForSummary[3])}</li>
-                    <li>{t("insuranceForm.step4.summaryOfCoverage.coverage.transit")}: {watchedValuesForSummary[4] ? t("insuranceForm.yesWithCost", { returnObjects: false }) : t("insuranceForm.no")}</li>
+                    <li>{t("insuranceForm.step4.summaryOfCoverage.coverage.transit")}: {watchedValuesForSummary[4] ?  { returnObjects: false } : t("insuranceForm.no")}</li>
                   </ul>
                   <div className="mt-4 pt-3 border-t">
                     <strong className="text-xl">{t("insuranceForm.step4.summaryOfCoverage.totalQuote")}:</strong>
