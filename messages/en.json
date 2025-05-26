@@ -51,7 +51,8 @@
     "selectMedicalCoverage": "Select medical coverage",
     "personalAccident": "PA (Personal Accident)",
     "selectPACoverage": "Select PA coverage",
-    "addTransitCover": "Add additional 250k transit cover",
+    "addTransitCover": "Add additional $250,000 Transit Cover for",
+    "addTransitCoverTooltip": "Departure and follow home membership",
     "quoteSummary": "Quote Summary",
     "medical": "Medical",
     "pa": "PA",
@@ -81,7 +82,7 @@
       "enterPassportNumber": "Enter passport number",
       "selectPassportExpiry": "Select passport expiry date",
       "whatsappSameAsPhone": "WhatsApp same as phone number",
-      "additionalTraveller": "Additional Traveller {{index}}",
+      "additionalTraveller": "Additional Traveller",
       "addAdditionalTraveller": "+ Add Additional Traveller",
       "remove": "Remove"
     },
@@ -137,7 +138,7 @@
     "insuredDetails": {
       "title": "Insured Details",
       "primaryTraveller": "Primary Traveller ",
-      "additionalTraveller": "Additional Traveller {{index}}:",
+      "additionalTraveller": "Additional Traveller:",
       "name": "Name",
       "age": "Age",
       "nationality": "Nationality"
@@ -165,7 +166,7 @@
       "continue": "Continue",
       "modifyChoices": "Modify Choices",
       "confirm": "Confirm & Purchase",
-      "processing": "Processing..."
+      "processing": "Processing..." 
     }
   }
 }

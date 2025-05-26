@@ -253,7 +253,7 @@ interface SelectWithLabelProps<TFieldValues extends FieldValues = FieldValues> {
     control: Control<TFieldValues>;
     name: Path<TFieldValues> | string;
     label: string;
-    options: { value: string; label: string }[];
+    options: { value: string; label: string; disabled?: boolean }[];
     placeholder?: string;
     error?: FieldError;
     readOnly?: boolean;
@@ -290,7 +290,7 @@ export function SelectWithLabel<TFieldValues extends FieldValues = FieldValues>(
                             <SelectValue placeholder={placeholder || `Select ${label ? label.toLowerCase() : '...'}`} />
                         </SelectTrigger>
                         <SelectContent className="rounded-none border border-input">
-                            {options.map(option => (
+                            {/* {options.map(option => (
                                 <SelectItem
                                     key={option.value}
                                     value={option.value}
@@ -301,7 +301,21 @@ export function SelectWithLabel<TFieldValues extends FieldValues = FieldValues>(
                                 >
                                     {option.label}
                                 </SelectItem>
-                            ))}
+                            ))} */}
+                            {options.map(option => (
+  <SelectItem
+    key={option.value}
+    value={option.value}
+    disabled={option.disabled}
+    className={cn(
+      "data-[highlighted]:bg-[#00BBD3] data-[highlighted]:text-white",
+      "focus:bg-[#00BBD3] focus:text-white"
+    )}
+  >
+    {option.label}
+  </SelectItem>
+))}
+
                         </SelectContent>
                     </Select>
                 )}

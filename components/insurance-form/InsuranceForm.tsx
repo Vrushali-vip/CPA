@@ -5633,6 +5633,7 @@ import {
   nationalityOptions,
   countryOptions,
   countryCodeOptions,
+  countryTravellingToOptions,
 } from "@/lib/insuranceFormSchema";
 import {
   InputWithLabel,
@@ -5645,6 +5646,8 @@ import { format as formatDateFn } from "date-fns";
 import BirthDateField from "../form/BirthDateField"; // Assuming this path is correct
 import { useTranslation } from "@/hooks/useTranslation"; // Assuming this path is correct
 import dayjs from 'dayjs';
+import { Tooltip, TooltipContent, TooltipProvider } from "../ui/tooltip";
+import { TooltipTrigger } from "@radix-ui/react-tooltip";
 
 type Integer = number & { __brand: 'integer' };
 
@@ -5842,6 +5845,7 @@ function generateQuote(data: GenerateQuotePayload): QuoteResult {
 
 
 export default function InsuranceForm() {
+  const [showQuote, setShowQuote] = useState(false);
   const { t } = useTranslation();
   const steps = t("insuranceForm.steps", { returnObjects: true }) as string[];
   const [step, setStep] = useState(0);
@@ -5877,7 +5881,7 @@ export default function InsuranceForm() {
       c_email: "",
       c_nationality: "",
       city_of_residence: "",
-      trip_countries: [],
+      trip_countries: ["UA"],
       travellers: [{
         first_name: "",
         last_name: "",
@@ -6409,7 +6413,7 @@ export default function InsuranceForm() {
   };
 
   const renderQuoteDisplay = () => {
-    if (!quoteResult) return "$0.00 (Calculating...)";
+    if (!quoteResult) return "$0.00 ";
     if (!quoteResult.ok) return `$0.00 (${quoteResult.message || "Error"})`;
     if (quoteResult.data) return `$${quoteResult.data.totalAmount.toFixed(2)}`;
     return "$0.00 (Unavailable)";
@@ -6471,22 +6475,45 @@ export default function InsuranceForm() {
                   {t("insuranceForm.travelDetails")}
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                  <DatePickerField
+                  {/* <DatePickerField
                     label={t("insuranceForm.travelStartDate")}
                     name="trip_start_date"
                     control={control}
                     error={getError("trip_start_date")}
                     placeholder={t("insuranceForm.selectStartDate")}
                     maxDate={watchedEndDate ? dayjs(watchedEndDate).toDate() : undefined}
-                  />
+                  /> */}
                   <DatePickerField
+  label={t("insuranceForm.travelStartDate")}
+  name="trip_start_date"
+  control={control}
+  error={getError("trip_start_date")}
+  placeholder={t("insuranceForm.selectStartDate")}
+  minDate={dayjs().add(1, 'day').startOf('day').toDate()} 
+  maxDate={watchedEndDate ? dayjs(watchedEndDate).toDate() : undefined}
+/>
+
+                  {/* <DatePickerField
                     label={t("insuranceForm.travelEndDate")}
                     name="trip_end_date"
                     control={control}
                     error={getError("trip_end_date")}
                     placeholder={t("insuranceForm.selectEndDate")}
                     minDate={watchedStartDate ? dayjs(watchedStartDate).toDate() : undefined}
-                  />
+                  /> */}
+                  <DatePickerField
+  label={t("insuranceForm.travelEndDate")}
+  name="trip_end_date"
+  control={control}
+  error={getError("trip_end_date")}
+  placeholder={t("insuranceForm.selectEndDate")}
+  minDate={
+    watchedStartDate
+      ? dayjs(watchedStartDate).add(1, "day").startOf("day").toDate()
+      : undefined
+  }
+/>
+
                 </div>
 
                 <h3 className="text-xl font-semibold mb-1 text-[#1A2C50]">
@@ -6529,15 +6556,25 @@ export default function InsuranceForm() {
                   <p className="text-sm text-red-500 mb-4">{formState.errors.root.message}</p>
                 )}
 
-                <SelectWithLabel
+                {/* <SelectWithLabel
                   label={t('insuranceForm.step1.countryTravellingTo')}
                   name="trip_countries.0"
                   control={control}
                   options={countryOptions}
                   placeholder={t('insuranceForm.step1.selectCountry')}
                   error={getError("trip_countries.0" as Path<InsuranceFormValues>) || getError("trip_countries" as Path<InsuranceFormValues>)}
-                />
-
+                /> */}
+<SelectWithLabel
+  label={t('insuranceForm.step1.countryTravellingTo')}
+  name="trip_countries.0"
+  control={control}
+  options={countryTravellingToOptions}
+  placeholder={t('insuranceForm.step1.selectCountry')}
+  error={
+    getError("trip_countries.0" as Path<InsuranceFormValues>) ||
+    getError("trip_countries" as Path<InsuranceFormValues>)
+  }
+/>
                 <h3 className="text-xl font-semibold mb-4 text-[#1A2C50]">
                   {t("insuranceForm.coverageOptions")}
                 </h3>
@@ -6558,7 +6595,7 @@ export default function InsuranceForm() {
                     placeholder={t("insuranceForm.selectPACoverage")}
                     error={getError("personal_accident_coverage_level")}
                   />
-                  <div className="flex items-center space-x-2">
+                  {/* <div className="flex items-center space-x-2">
                     <Controller
                       name="add_transit_coverage"
                       control={control}
@@ -6570,11 +6607,43 @@ export default function InsuranceForm() {
                         />
                       )}
                     />
-                    <Label htmlFor="add_transit_coverage">{t("insuranceForm.addTransitCover")}</Label>
-                  </div>
+                    <Label htmlFor="add_transit_coverage">{t("insuranceForm.addTransitCover")} <strong>$25</strong></Label>
+                  </div> */}
+                  <TooltipProvider>
+                    <div className="flex items-center space-x-2">
+                      <Controller
+                        name="add_transit_coverage"
+                        control={control}
+                        render={({ field }) => (
+                          <Checkbox
+                            id="add_transit_coverage"
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        )}
+                      />
+
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Label htmlFor="add_transit_coverage">
+                            {t("insuranceForm.addTransitCover")} <strong>$25</strong>
+                          </Label>
+                        </TooltipTrigger>
+
+                        <TooltipContent side="bottom" align="start" sideOffset={4}>
+                          <div className="relative">
+                            <div className="bg-muted px-3 py-2 text-sm shadow">
+                              {t("insuranceForm.addTransitCoverTooltip")}
+                            </div>
+                            <div className="absolute top-0 left-2.5 -translate-y-full w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-muted" />
+                          </div>
+                        </TooltipContent>
+                      </Tooltip>
+                    </div>
+                  </TooltipProvider>
                 </div>
 
-                <div className="mt-8 p-6 bg-gray-50 rounded-md border">
+                {/* <div className="mt-8 p-6 bg-gray-50 rounded-md border">
                   <h3 className="text-xl font-semibold text-[#1A2C50] mb-2">
                     {t("insuranceForm.quoteSummary")}
                   </h3>
@@ -6592,7 +6661,38 @@ export default function InsuranceForm() {
                       {watch("add_transit_coverage") ? `${t("$")} ${pricing.transitCost.toFixed(2)}` : t("insuranceForm.no")}
                     </p>
                   </div>
-                </div>
+                </div> */}
+
+
+                <Button onClick={() => setShowQuote(true)} className="mt-6 w-full">
+                  Get Quote
+                </Button>
+
+                {showQuote && (
+                  <div className="mt-8 p-6 bg-gray-50 rounded-md border">
+                    <h3 className="text-xl font-semibold text-[#1A2C50] mb-2">
+                      {t("insuranceForm.quoteSummary")}
+                    </h3>
+                    <p className="text-2xl font-bold text-[#00BBD3]">{renderQuoteDisplay()}</p>
+                    {renderQuoteWarnings()}
+                    <div className="text-sm mt-2">
+                      <p>
+                        {t("insuranceForm.medical")}:{" "}
+                        {getEmergencyMedicalLabel(watch("emergency_medical_coverage"))}
+                      </p>
+                      <p>
+                        {t("insuranceForm.pa")}:{" "}
+                        {getPALabel(watch("personal_accident_coverage_level"))}
+                      </p>
+                      <p>
+                        {t("insuranceForm.transit")}:{" "}
+                        {watch("add_transit_coverage")
+                          ? `${t("$")} ${pricing.transitCost.toFixed(2)}`
+                          : t("insuranceForm.no")}
+                      </p>
+                    </div>
+                  </div>
+                )}
               </>
             )}
 
@@ -6639,7 +6739,7 @@ export default function InsuranceForm() {
                     <p className="text-sm font-medium text-gray-900 mb-1">{t('insuranceForm.step1.phoneNumber')}</p>
                     <div className="flex items-start gap-2">
                       <div className="w-1/3 shrink-0">
-                        <SelectWithLabel control={control} name="c_phone_code" label="" options={countryCodeOptions} placeholder={t("insuranceForm.codePlaceholder")} error={getError("c_phone_code")} />
+                        <SelectWithLabel control={control} name="c_phone_code" label="" options={countryCodeOptions} placeholder={t("insuranceForm.step3.codePlaceholder")} error={getError("c_phone_code")} />
                       </div>
                       <div className="flex-grow">
                         <InputWithLabel label="" name="c_phone_number" type="tel" register={register} placeholder={t('insuranceForm.step1.enterNumber')} error={getError("c_phone_number")} />
@@ -6657,7 +6757,7 @@ export default function InsuranceForm() {
                           name="c_whats_app_code"
                           label=""
                           options={countryCodeOptions}
-                          placeholder={t("insuranceForm.codePlaceholder")}
+                          placeholder={t("insuranceForm.step3.codePlaceholder")}
                           readOnly={cIsWhatsAppSameAsPhone}
                           error={getError("c_whats_app_code")}
                         />
@@ -6717,7 +6817,7 @@ export default function InsuranceForm() {
                     <div key={field.id} className="mt-6 pt-6 border-t">
                       <div className="flex justify-between items-center mb-3">
                         <h3 className="text-lg font-semibold text-[#1A2C50]">
-                          {t(`insuranceForm.step1.additionalTraveller${index + 1}`)}
+                          {t(`insuranceForm.step1.additionalTraveller`)}
                         </h3>
                         <Button type="button" variant="destructive" size="sm" onClick={() => removeTraveller(index)}>
                           {t("insuranceForm.step1.remove")}
@@ -6842,7 +6942,7 @@ export default function InsuranceForm() {
                     <p className="text-sm font-medium text-gray-900 mb-1 mt-1">{t("insuranceForm.step3.contactNumber")}</p>
                     <div className="flex items-start gap-2">
                       <div className="w-1/3 shrink-0">
-                        <SelectWithLabel control={control} name="emergency_contact_phone_code" label="" options={countryCodeOptions} placeholder={t("insuranceForm.codePlaceholder", { returnObjects: true })} error={getError("emergency_contact_phone_code")} />
+                        <SelectWithLabel control={control} name="emergency_contact_phone_code" label="" options={countryCodeOptions} placeholder={t("insuranceForm.step3.codePlaceholder", { returnObjects: true })} error={getError("emergency_contact_phone_code")} />
                       </div>
                       <div className="flex-grow">
                         <InputWithLabel label="" name="emergency_contact_phone_number" type="tel" register={register} placeholder={t("insuranceForm.step3.numberPlaceholder")} error={getError("emergency_contact_phone_number")} />
@@ -6886,7 +6986,7 @@ export default function InsuranceForm() {
                   <ul className="list-disc list-inside pl-4">
                     <li>{t("insuranceForm.step4.summaryOfCoverage.coverage.medical")}: {getEmergencyMedicalLabel(watchedValuesForSummary[2])}</li>
                     <li>{t("insuranceForm.step4.summaryOfCoverage.coverage.pa")}: {getPALabel(watchedValuesForSummary[3])}</li>
-                    <li>{t("insuranceForm.step4.summaryOfCoverage.coverage.transit")}: {watchedValuesForSummary[4] ?  { returnObjects: false } : t("insuranceForm.no")}</li>
+                    <li>{t("insuranceForm.step4.summaryOfCoverage.coverage.transit")}: {watchedValuesForSummary[4] ? { returnObjects: false } : t("insuranceForm.no")}</li>
                   </ul>
                   <div className="mt-4 pt-3 border-t">
                     <strong className="text-xl">{t("insuranceForm.step4.summaryOfCoverage.totalQuote")}:</strong>
@@ -6959,7 +7059,7 @@ export default function InsuranceForm() {
               )}
               {step === steps.length - 1 && (
                 <Button type="submit" className="w-full sm:w-auto px-8 py-3 text-base bg-green-600 hover:bg-green-700 text-white" disabled={formState.isSubmitting}>
-                  {formState.isSubmitting ? t("insuranceForm.actions.processing") : t("insuranceForm.actions.confirmAndPurchase")}
+                  {formState.isSubmitting ? t("insuranceForm.actions.processing") : t("insuranceForm.actions.confirm")}
                 </Button>
               )}
             </div>
