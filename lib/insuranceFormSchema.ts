@@ -1339,6 +1339,7 @@
 
 
 import Joi from "joi";
+import { validatePhoneNumber } from "./validatePhoneNumber";
 
 
 const namePartSchema = Joi.string().trim().required().messages({
@@ -1518,7 +1519,16 @@ export const purchaseWithoutLoginSchema = Joi.object<InsuranceFormValues>({
     })
     .label("Primary Traveller Passport Expiry Date"),
   c_is_whatsapp_same_as_phone: Joi.boolean().optional(),
-  c_phone: Joi.string().required().trim().min(5).messages({ "string.empty": "Phone Number is required.", "string.min": "Phone Number seems too short." }),
+  // c_phone: Joi.string().required().trim().min(5).messages({ "string.empty": "Phone Number is required.", "string.min": "Phone Number seems too short." }),
+  c_phone: Joi.string()
+  .required()
+  .trim()
+  .custom(validatePhoneNumber, "Phone number validation")
+  .messages({
+    "string.empty": "Phone Number is required.",
+    "string.invalidPhone": "Phone Number is invalid.",
+  }),
+
   c_whats_app: Joi.string().optional().allow("").trim().min(5).messages({ "string.min": "WhatsApp Number seems too short (if provided)." }),
   c_email: Joi.string().email({ tlds: { allow: false } }).required().trim().messages({ "string.empty": "Email Address is required.", "string.email": "Email must be a valid email." }),
   c_nationality: Joi.string().required().messages({ "any.required": "Nationality is required.", "string.empty": "Nationality is required." }),

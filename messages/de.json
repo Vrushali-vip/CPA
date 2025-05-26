@@ -26,7 +26,6 @@
       }
     ]
   },
-  
   "insuranceForm": {
     "steps": [
       "Reise & Versicherung",
@@ -59,6 +58,17 @@
     "transit": "Transit",
     "yes250k": "Ja (250k)",
     "no": "Nein",
+
+    
+    "submissionAlert": "Formular erfolgreich eingereicht!",
+    "travelStartDateRequired": "Reisebeginn ist erforderlich.",
+    "travelEndDateRequired": "Reiseende ist erforderlich.",
+    "travelEndDateAfterStart": "Das Reiseende muss nach dem Reisebeginn liegen.",
+    "greenZoneDaysRequired": "Anzahl der Tage in der grünen Zone ist erforderlich. Geben Sie 0 ein, wenn keine.",
+    "greenZoneDaysInvalid": "Tage in der grünen Zone müssen mindestens 0 sein.",
+    "phoneRequired": "Telefonnummer ist erforderlich.",
+    "phoneInvalid": "Telefonnummer ist ungültig.",
+
 
     "step1": {
       "yourDetails": "Ihre Daten",
@@ -118,51 +128,51 @@
       "specialAssistance": "Besondere Unterstützungsanforderungen (optional)"
     },
     "step4": {
-    "summaryOfCoverage": {
-      "title": "Zusammenfassung der Versicherung",
-      "travelDates": "Reisedaten: ",
-      "totalRiskZoneDays": "Gesamttage in Risikozonen: ",
-      "riskZoneBreakdown": "Aufschlüsselung der Risikozonen",
-      "zone": {
-        "green": "Grün",
-        "amber": "Gelb",
-        "red": "Rot"
+      "summaryOfCoverage": {
+        "title": "Zusammenfassung der Versicherung",
+        "travelDates": "Reisedaten: ",
+        "totalRiskZoneDays": "Gesamttage in Risikozonen: ",
+        "riskZoneBreakdown": "Aufschlüsselung der Risikozonen",
+        "zone": {
+          "green": "Grün",
+          "amber": "Gelb",
+          "red": "Rot"
+        },
+        "coverageSelected": "Ausgewählter Versicherungsschutz",
+        "coverage": {
+          "medical": "Medizinisch",
+          "pa": "Unfallversicherung",
+          "transit": "Transit"
+        },
+        "totalQuote": "Gesamtkosten"
       },
-      "coverageSelected": "Ausgewählter Versicherungsschutz",
-      "coverage": {
-        "medical": "Medizinisch",
-        "pa": "Unfallversicherung",
-        "transit": "Transit"
+      "insuredDetails": {
+        "title": "Versicherte Personen",
+        "primaryTraveller": "Hauptreisender",
+        "additionalTraveller": "Zusätzlicher Reisender {{index}}:",
+        "name": "Name",
+        "age": "Alter",
+        "nationality": "Staatsangehörigkeit"
       },
-      "totalQuote": "Gesamtkosten"
+      "tripInformation": {
+        "title": "Reiseinformationen",
+        "purpose": "Zweck",
+        "primaryRegions": "Hauptregionen",
+        "citiesVisiting": "Besuchte Städte"
+      },
+      "emergencyContact": {
+        "title": "Notfallkontakt",
+        "name": "Name",
+        "number": "Nummer"
+      },
+      "affiliateCode": {
+        "label": "Affiliate-Code (optional)"
+      },
+      "consent": {
+        "label": "Ich stimme der Weitergabe meiner medizinischen Informationen im Notfall sowie der Erhebung, Speicherung und Nutzung meiner persönlichen Daten zu diesem Zweck zu"
+      }
     },
-    "insuredDetails": {
-      "title": "Versicherte Personen",
-      "primaryTraveller": "Hauptreisender",
-      "additionalTraveller": "Zusätzlicher Reisender {{index}}:",
-      "name": "Name",
-      "age": "Alter",
-      "nationality": "Staatsangehörigkeit"
-    },
-    "tripInformation": {
-      "title": "Reiseinformationen",
-      "purpose": "Zweck",
-      "primaryRegions": "Hauptregionen",
-      "citiesVisiting": "Besuchte Städte"
-    },
-    "emergencyContact": {
-      "title": "Notfallkontakt",
-      "name": "Name",
-      "number": "Nummer"
-    },
-    "affiliateCode": {
-      "label": "Affiliate-Code (optional)"
-    },
-    "consent": {
-      "label": "Ich stimme der Weitergabe meiner medizinischen Informationen im Notfall sowie der Erhebung, Speicherung und Nutzung meiner persönlichen Daten zu diesem Zweck zu"
-    }
-  },
-  "actions": {
+    "actions": {
       "back": "Zurück",
       "continue": "Weiter",
       "modifyChoices": "Auswahl ändern",

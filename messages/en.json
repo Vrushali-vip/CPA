@@ -26,9 +26,8 @@
       }
     ]
   },
-  
   "insuranceForm": {
-     "steps": [
+    "steps": [
       "Trip & Coverage",
       "Your Details",
       "Trip Information",
@@ -60,6 +59,18 @@
     "yes250k": "Yes (250k)",
     "no": "No",
 
+
+    "submissionAlert": "Form submitted successfully!",
+    "travelStartDateRequired": "Travel Start Date is required.",
+    "travelEndDateRequired": "Travel End Date is required.",
+    "travelEndDateAfterStart": "Travel End Date must be after Travel Start Date.",
+    "greenZoneDaysRequired": "Green Zone Days is required. Enter 0 if none.",
+    "greenZoneDaysInvalid": "Green zone days must be at least 0.",
+    "phoneRequired": "Phone Number is required.",
+    "phoneInvalid": "Phone Number is invalid.",
+
+
+    
     "step1": {
       "yourDetails": "Your Details",
       "primaryTraveller": "Primary Traveller",
@@ -117,56 +128,56 @@
       "specialAssistance": "Special Assistance Requirements (Optional)"
     },
     "step4": {
-    "summaryOfCoverage": {
-      "title": "Summary of Coverage",
-      "travelDates": "Travel Dates: ",
-      "totalRiskZoneDays": "Total Risk Zone Days: ",
-      "riskZoneBreakdown": "Risk Zone Breakdown",
-      "zone": {
-        "green": "Green",
-        "amber": "Amber",
-        "red": "Red"
+      "summaryOfCoverage": {
+        "title": "Summary of Coverage",
+        "travelDates": "Travel Dates: ",
+        "totalRiskZoneDays": "Total Risk Zone Days: ",
+        "riskZoneBreakdown": "Risk Zone Breakdown",
+        "zone": {
+          "green": "Green",
+          "amber": "Amber",
+          "red": "Red"
+        },
+        "coverageSelected": "Coverage Selected",
+        "coverage": {
+          "medical": "Medical",
+          "pa": "PA",
+          "transit": "Transit"
+        },
+        "totalQuote": "Total Quote"
       },
-      "coverageSelected": "Coverage Selected",
-      "coverage": {
-        "medical": "Medical",
-        "pa": "PA",
-        "transit": "Transit"
+      "insuredDetails": {
+        "title": "Insured Details",
+        "primaryTraveller": "Primary Traveller ",
+        "additionalTraveller": "Additional Traveller:",
+        "name": "Name",
+        "age": "Age",
+        "nationality": "Nationality"
       },
-      "totalQuote": "Total Quote"
+      "tripInformation": {
+        "title": "Trip Information",
+        "purpose": "Purpose",
+        "primaryRegions": "Primary Regions",
+        "citiesVisiting": "City Visiting"
+      },
+      "emergencyContact": {
+        "title": "Emergency Contact",
+        "name": "Name",
+        "number": "Number"
+      },
+      "affiliateCode": {
+        "label": "Affiliate Code (Optional)"
+      },
+      "consent": {
+        "label": "I Consent to the Sharing of My Medical Information in an Emergency and Authorize the Collection, Storage, and Use of My Personal Information for That Purpose"
+      }
     },
-    "insuredDetails": {
-      "title": "Insured Details",
-      "primaryTraveller": "Primary Traveller ",
-      "additionalTraveller": "Additional Traveller:",
-      "name": "Name",
-      "age": "Age",
-      "nationality": "Nationality"
-    },
-    "tripInformation": {
-      "title": "Trip Information",
-      "purpose": "Purpose",
-      "primaryRegions": "Primary Regions",
-      "citiesVisiting": "City Visiting"
-    },
-    "emergencyContact": {
-      "title": "Emergency Contact",
-      "name": "Name",
-      "number": "Number"
-    },
-    "affiliateCode": {
-      "label": "Affiliate Code (Optional)"
-    },
-    "consent": {
-      "label": "I Consent to the Sharing of My Medical Information in an Emergency and Authorize the Collection, Storage, and Use of My Personal Information for That Purpose"
-    }
-  },
-  "actions": {
+    "actions": {
       "back": "Back",
       "continue": "Continue",
       "modifyChoices": "Modify Choices",
       "confirm": "Confirm & Purchase",
-      "processing": "Processing..." 
+      "processing": "Processing..."
     }
   }
 }
