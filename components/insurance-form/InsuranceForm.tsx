@@ -7359,7 +7359,7 @@ export default function InsuranceForm() {
   const cBirthdateValue = watch("c_birthdate");
   const cPassportNumberValue = watch("c_passport_number");
   const cPassportExpiryDateValue = watch("c_passport_expiry_date");
-  
+
   const coverageDisabled = !watchedStartDate || !watchedEndDate;
 
 
@@ -7691,32 +7691,32 @@ export default function InsuranceForm() {
         overallValidationPassed = false;
       }
     }
-    
+
     // 3. Special root validation for step 0 (zone days)
     //    Only proceed if previous validations were okay.
     if (overallValidationPassed && step === 0) {
       const values = getValues();
       // Ensure dates are present before trying to parse them or calculate with them
       if (values.trip_start_date && values.trip_end_date) {
-          const startDate = dayjs(values.trip_start_date + "T00:00:00");
-          const endDate = dayjs(values.trip_end_date + "T00:00:00");
-          if (startDate.isValid() && endDate.isValid() && (endDate.isSame(startDate) || endDate.isAfter(startDate))) {
-            const totalTripDays = endDate.diff(startDate, 'day') + 1;
-            const sumZoneDays = Number(values.green_zone_days || 0) + Number(values.amber_zone_days || 0) + Number(values.red_zone_days || 0) + Number(values.black_zone_days || 0);
-            if (totalTripDays !== sumZoneDays) {
-              form.setError("root", { type: "manual", message: `Total Travel Days (${totalTripDays}) must equal the sum of Green, Amber, Red, and Black Zone Days (${sumZoneDays}).` });
-              overallValidationPassed = false; 
-            } else {
-              form.clearErrors("root");
-            }
+        const startDate = dayjs(values.trip_start_date + "T00:00:00");
+        const endDate = dayjs(values.trip_end_date + "T00:00:00");
+        if (startDate.isValid() && endDate.isValid() && (endDate.isSame(startDate) || endDate.isAfter(startDate))) {
+          const totalTripDays = endDate.diff(startDate, 'day') + 1;
+          const sumZoneDays = Number(values.green_zone_days || 0) + Number(values.amber_zone_days || 0) + Number(values.red_zone_days || 0) + Number(values.black_zone_days || 0);
+          if (totalTripDays !== sumZoneDays) {
+            form.setError("root", { type: "manual", message: `Total Travel Days (${totalTripDays}) must equal the sum of Green, Amber, Red, and Black Zone Days (${sumZoneDays}).` });
+            overallValidationPassed = false;
           } else {
-            // This case (dates present but invalid range) should ideally be caught by Joi,
-            // but if not, consider it a validation failure.
-            // If Joi handles it, formState.errors would reflect it, and trigger would return false.
-            // If it's a specific logic not in Joi, you might need to set an error.
-            // For now, we assume Joi schema validation for date ranges is active.
-            // If `overallValidationPassed` is still true here, it implies Joi didn't catch an invalid range.
+            form.clearErrors("root");
           }
+        } else {
+          // This case (dates present but invalid range) should ideally be caught by Joi,
+          // but if not, consider it a validation failure.
+          // If Joi handles it, formState.errors would reflect it, and trigger would return false.
+          // If it's a specific logic not in Joi, you might need to set an error.
+          // For now, we assume Joi schema validation for date ranges is active.
+          // If `overallValidationPassed` is still true here, it implies Joi didn't catch an invalid range.
+        }
       } else {
         // If dates are missing, Joi's .required() on date fields should make trigger() return false,
         // so overallValidationPassed should already be false. This else block might be redundant
@@ -7761,7 +7761,7 @@ export default function InsuranceForm() {
           }
         }
       }
-      
+
       if (!firstErrorKeyFound && formState.errors.root?.message) {
         const zoneDayElement = document.querySelector(`[name='amber_zone_days']`) || document.querySelector(`[name='red_zone_days']`) || document.querySelector(`[name='green_zone_days']`);
         zoneDayElement?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -7772,7 +7772,7 @@ export default function InsuranceForm() {
         const element = document.querySelector(`[name='${firstErrorKeyFound}']`) || document.getElementById(firstErrorKeyFound as string);
         element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
-      return; 
+      return;
     }
 
     // 5. If all validations passed, proceed to the next step.
@@ -7938,10 +7938,10 @@ export default function InsuranceForm() {
                     control={control}
                     error={getError("trip_start_date")}
                     placeholder={t("insuranceForm.selectStartDate")}
-                    minDate={dayjs().startOf('day').toDate()} 
+                    minDate={dayjs().startOf('day').toDate()}
                     maxDate={watchedEndDate ? dayjs(watchedEndDate).toDate() : undefined}
                   />
-                  <DatePickerField
+                  {/* <DatePickerField
                     label={t("insuranceForm.travelEndDate")}
                     name="trip_end_date"
                     control={control}
@@ -7951,6 +7951,18 @@ export default function InsuranceForm() {
                       watchedStartDate
                         ? dayjs(watchedStartDate).add(1, "day").startOf("day").toDate()
                         : dayjs().add(1, "day").startOf("day").toDate() // Fallback if start date not selected
+                    }
+                  /> */}
+                  <DatePickerField
+                    label={t("insuranceForm.travelEndDate")}
+                    name="trip_end_date"
+                    control={control}
+                    error={getError("trip_end_date")}
+                    placeholder={t("insuranceForm.selectEndDate")}
+                    minDate={
+                      watchedStartDate
+                        ? dayjs(watchedStartDate).startOf("day").toDate()
+                        : dayjs().startOf("day").toDate()
                     }
                   />
 
