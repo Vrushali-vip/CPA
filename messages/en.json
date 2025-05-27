@@ -34,6 +34,7 @@
       "Medical & Emergency",
       "Summary & Purchase"
     ],
+    
     "travelDetails": "Travel Details",
     "warnings": "Important: Please read the following information carefully.",
     "travelStartDate": "Travel Start Date",
@@ -50,7 +51,7 @@
     "selectMedicalCoverage": "Select medical coverage",
     "personalAccident": "PA (Personal Accident)",
     "selectPACoverage": "Select PA coverage",
-    "addTransitCover": "Add additional $250,000 Transit Cover for",
+    "addTransitCover": "Add additional €250,000 Transit Cover for",
     "addTransitCoverTooltip": "Departure and follow home membership",
     "quoteSummary": "Quote Summary",
     "medical": "Medical",

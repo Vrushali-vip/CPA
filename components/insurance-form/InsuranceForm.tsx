@@ -7067,7 +7067,7 @@ import { useTranslation } from "@/hooks/useTranslation"; // Assuming this path i
 import dayjs from 'dayjs';
 import { Tooltip, TooltipContent, TooltipProvider } from "../ui/tooltip";
 import { TooltipTrigger } from "@radix-ui/react-tooltip";
-import { formatUSD } from "@/lib/formatCurrency";
+
 
 type Integer = number & { __brand: 'integer' };
 
@@ -7262,6 +7262,13 @@ function generateQuote(data: GenerateQuotePayload): QuoteResult {
     }
   };
 }
+
+const formatEuro = (amount: number) =>
+  new Intl.NumberFormat("en-IE", {
+    style: "currency",
+    currency: "EUR",
+    minimumFractionDigits: 2,
+  }).format(amount);
 
 
 export default function InsuranceForm() {
@@ -7870,10 +7877,10 @@ export default function InsuranceForm() {
   };
 
   const renderQuoteDisplay = () => {
-    if (!quoteResult) return "$0.00 ";
-    if (!quoteResult.ok) return `$0.00 (${quoteResult.message || "Error"})`;
-    if (quoteResult.data) return `$${quoteResult.data.totalAmount.toFixed(2)}`;
-    return "$0.00 (Unavailable)";
+    if (!quoteResult) return "€0.00 ";
+    if (!quoteResult.ok) return `€0.00 (${quoteResult.message || "Error"})`;
+    if (quoteResult.data) return `€${quoteResult.data.totalAmount.toFixed(2)}`;
+    return "€0.00 (Unavailable)";
   };
 
   const renderQuoteWarnings = () => {
@@ -8058,7 +8065,7 @@ export default function InsuranceForm() {
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <Label htmlFor="add_transit_coverage" className={coverageDisabled ? "text-gray-400" : ""}>
-                            {t("insuranceForm.addTransitCover")} <strong>$25</strong>
+                            {t("insuranceForm.addTransitCover")} <strong>€25</strong>
                           </Label>
                         </TooltipTrigger>
 
@@ -8098,7 +8105,7 @@ export default function InsuranceForm() {
                       <p>
                         {t("insuranceForm.transit")}:{" "}
                         {watch("add_transit_coverage")
-                          ? formatUSD(pricing.transitCost)
+                          ? formatEuro(pricing.transitCost)
                           : t("insuranceForm.no")}
                       </p>
                     </div>
@@ -8397,7 +8404,7 @@ export default function InsuranceForm() {
                   <ul className="list-disc list-inside pl-4">
                     <li>{t("insuranceForm.step4.summaryOfCoverage.coverage.medical")}: {getEmergencyMedicalLabel(watchedValuesForSummary[2])}</li>
                     <li>{t("insuranceForm.step4.summaryOfCoverage.coverage.pa")}: {getPALabel(watchedValuesForSummary[3])}</li>
-                    <li>{t("insuranceForm.step4.summaryOfCoverage.coverage.transit")}: {watchedValuesForSummary[4] ? t("insuranceForm.yes", { returnObjects: false }) : t("insuranceForm.no")}</li>
+                    <li>{t("insuranceForm.step4.summaryOfCoverage.coverage.transit")}: {watchedValuesForSummary[4] ? t("insuranceForm.yes250k", { returnObjects: false }) : t("insuranceForm.no")}</li>
                   </ul>
                   <div className="mt-4 pt-3 border-t">
                     <strong className="text-xl">{t("insuranceForm.step4.summaryOfCoverage.totalQuote")}:</strong>

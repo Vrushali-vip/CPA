@@ -1690,20 +1690,20 @@ export const tripPurposes = [
 
 export const emergencyMedicalCoverageOptions = [
   { value: "0", label: "No Medical Coverage" },
-  { value: "25000", label: "$25,000" },
-  { value: "50000", label: "$50,000" },
-  { value: "100000", label: "$100,000" },
-  { value: "150000", label: "$150,000" },
-  { value: "250000", label: "$250,000" },
+  { value: "25000", label: "€25,000" },
+  { value: "50000", label: "€50,000" },
+  { value: "100000", label: "€100,000" },
+  { value: "150000", label: "€150,000" },
+  { value: "250000", label: "€250,000" },
 ];
 
 export const personalAccidentCoverageOptions = [
   { value: "0", label: "Select PA Coverage" }, 
-  { value: "25000", label: "$25,000" },
-  { value: "50000", label: "$50,000" },
-  { value: "100000", label: "$100,000" },
-  { value: "150000", label: "$150,000" },
-  { value: "250000", label: "$250,000" },
+  { value: "25000", label: "€25,000" },
+  { value: "50000", label: "€50,000" },
+  { value: "100000", label: "€100,000" },
+  { value: "150000", label: "€150,000" },
+  { value: "250000", label: "€250,000" },
 ];
 
 
