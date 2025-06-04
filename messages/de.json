@@ -60,7 +60,8 @@
     "transit": "Transit",
     "yes250k": "Ja (250k)",
     "no": "Nein",
-
+    "validationcoverageOr": "Bitte geben Sie mindestens eine Versicherungsoption an.",
+    "validationzoneDaysSum": "Die Summe der Tage in grüner, gelber und roter Zone muss der Gesamtdauer der Reise entsprechen.",
     "submissionAlert": "Formular erfolgreich eingereicht!",
     "travelStartDateRequired": "Reisebeginn ist erforderlich.",
     "travelEndDateRequired": "Reiseende ist erforderlich.",

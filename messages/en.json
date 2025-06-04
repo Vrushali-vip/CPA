@@ -60,7 +60,8 @@
     "transit": "Transit",
     "yes250k": "Yes (250k)",
     "no": "No",
-
+    "validationcoverageOr": "Please select either Emergency Medical Coverage or Personal Accident (PA) Coverage, or both.",
+    "validationzoneDaysSum": "Green Zone Days + Amber Zone Days + Red Zone Days must equal Total Days.",
 
     "submissionAlert": "Form submitted successfully!",
     "travelStartDateRequired": "Travel Start Date is required.",
